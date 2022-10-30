@@ -1,0 +1,13 @@
+{
+  "verbose": true,
+  "ignore": [
+    "*.test.js",
+    "*.log",
+    "node_modules/*",
+    "public/*",
+    "gulpfile.js"
+  ],
+  "execMap": {
+
+  }
+}

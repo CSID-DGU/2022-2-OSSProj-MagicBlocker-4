@@ -1,0 +1,20 @@
+# OS
+*DS_store
+
+# log
+logs
+npm-debug.log
+
+# IDE
+.idea
+
+# dependency
+node_modules
+bower_components
+
+# build
+public/dist
+
+# lock
+package-lock.json
+yarn.lock
