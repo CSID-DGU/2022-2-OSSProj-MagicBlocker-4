@@ -1,0 +1,80 @@
+<html>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js></script>
+<link rel="stylesheet" type="text/css" href="/cilent/game.css">
+
+<div id="background">
+
+    <div id="signDiv">
+        <title> Login </title>
+        <div id="loginTitle">Login</div>
+        UserName:
+        <input id="signDiv-user" type="text">
+        <br>
+        <br> Password:
+        <input id="signDiv-pass" type="text">
+        <br>
+        <br>
+        <button class="button" id="signDiv-signIn">Sign In</button>
+        <button class="button" id="signDiv-signUp">Sign Up</button>
+    </div>
+
+    <div id="gameDiv" style="display: inline-block;">
+        <div width="1000" height="500">
+            <canvas id="myCanvas" width="800" height="500" style="border:1px solid black; float:left; background-color: #4caf55;"></canvas>
+
+            <div id="player-list-box" style="width: 200px; height : 500px; float:left; overflow-y:scroll">
+                <div style="font-weight : bold;">접속중인 플레이어</div>
+                <br>
+                <div id="player-list"></div>
+            </div>
+            <br>
+        </div>
+
+        <div id="chat">
+            <div id="chat-text">
+                <div>테스트 게임 2022-11-05</div>
+                <div>이동: wasd</div>
+                <div>공격: k</div>
+            </div>
+
+            <form id="chat-form">
+
+            </form>
+        </div>
+
+
+        <div id="character-select">
+            <button class="char-select-button" onclick="UpdateCharModel('tyler1')">
+                <img id="Tyler1" src="/cilent/sprites/tyler1-select.png" alt="char" style="width:60px; height:60px;">
+                <br>공주
+            </button>
+
+            <button class="char-select-button" onclick="UpdateCharModel('taeyeon')">
+                <img id="Taeyeon" src="/cilent/sprites/taeyeon-select.png" alt="char" style="width:60px; height:60px;">
+                <br>전사
+            </button>
+
+            <button class="char-select-button" onclick="UpdateCharModel('orge')">
+                <img id="Orge" src="/cilent/sprites/orge-select.png" alt="char" style="width:60px; height:60px;">
+                <br>고블린
+            </button>
+            <br>
+
+            <div id="extrabuttons">
+                <button id="kms-button">instance delete</button>
+                <button id="revive-button">부활</button>
+                <h3>서버시간</h3>
+                <div id="timeStamp">Time:</div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<head>
+    <script type="text/javascript" src="/cilent/scripts/script.js"></script>
+</head>
+
+</html>
