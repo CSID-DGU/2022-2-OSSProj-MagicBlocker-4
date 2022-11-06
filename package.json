@@ -1,0 +1,34 @@
+{
+  "name": "mmorpg",
+  "version": "1.0.0",
+  "description": "Created using NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node completeApp.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/propillow/MMORPG.git"
+  },
+  "author": "wilson shum",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/propillow/MMORPG/issues"
+  },
+  "homepage": "https://github.com/propillow/MMORPG#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongodb": "^3.1.13",
+    "parsejson": "0.0.3",
+    "promise": "^8.0.1",
+    "socket.io": "^2.4.0"
+  },
+  "engines": {
+    "node": "8.x.x"
+  },
+  "devDependencies": {
+    "grunt": "^1.3.0",
+    "grunt-contrib-concat": "^1.0.1"
+  }
+}
