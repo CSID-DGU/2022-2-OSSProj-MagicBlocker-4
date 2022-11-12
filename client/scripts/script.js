@@ -20,8 +20,12 @@ var imgHeight = 60;
 
 
 accessButton.onclick = function(){
-  //alert("access!");  
+  //alert("access!");
   //socket.emit('access');
+  signDiv.style.display='none';
+  gameDiv.style.display='inline-block';
+
+  socket.emit('signIn', { username: signDivUser.value.trim()});
 };
 
 kmsButton.onclick = function () {
@@ -31,9 +35,6 @@ kmsButton.onclick = function () {
 reviveButton.onclick = function () {
     socket.emit('revive');
 };
-
-
-gameDiv.style.display = 'inline-block';
 
 
 var chatText = document.getElementById('chat-text');
@@ -72,6 +73,7 @@ chatForm.onsubmit = function (event) {
 
 
 socket.on('renderInfo', function (playerData,bulletData) {
+
     canvas.clearRect(0, 0, 800, 500);
 
     playerListDisplay.innerHTML = '';
@@ -128,7 +130,8 @@ document.onkeyup = function (event) {
 function drawChar(player) {
 
     var playersImg = new Image();
-    playersImg.src ='../sprites/' + player.char + '.png';
+    //playersImg.src ='/client/sprites/' + player.char + '.png';
+    playersImg.src='/client/sprites/warrior.png';
 
     switch (player.lastPosition) {
         case 'down':
@@ -148,7 +151,7 @@ function drawChar(player) {
 
 function drawBullet(bullet){
     var bulletImg = new Image();
-    bulletImg.src = '../sprites/bullet.png';
+    bulletImg.src = 'client/sprites/bullet.png';
 
     canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
 }
