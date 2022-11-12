@@ -8,7 +8,7 @@ var Player = function (id, name, points) {
         id: id,
         username: name,
         points: points,
-        char: 'tyler1',
+        char: 'warrior',
 
         rightPress: false,
         leftPress: false,
