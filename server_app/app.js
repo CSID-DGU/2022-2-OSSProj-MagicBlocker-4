@@ -7,7 +7,7 @@ let io = require('socket.io')(server, {});
 //let url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
 
 let promise = require('promise');
-let dbo;
+//let dbo;
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/cilent/index.html');
@@ -49,7 +49,7 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signUpResponse', { success: res });
         })
     });
-
+/*
     socket.on('signIn', function (userData) {
         isCorrectCredential(userData).then(function (res) {
             if (res.valid)
@@ -57,7 +57,7 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signInResponse', { success: res.valid });
         })
     });
-
+*/
     socket.on('disconnect', function () {
         if (socketList[socket.id] != null) {
             delete socketList[socket.id];
@@ -65,17 +65,19 @@ io.sockets.on('connection', function (socket) {
         }
         let player = playerList[socket.id];
         if (player != null) {
+
             toAllChat(player.username + " has disconnected.");
 
             let query = {
                 username: player.username
             };
-            let newValues = { $set: { points: player.points } };
+            //let newValues = { $set: { points: player.points } };
+            /*
             dbo.collection(MONGO_REPO).updateOne(query, newValues, function (err, res) {
                 if (err) throw err;
                 console.log("MongoDB Document Updated: " + res.result);
             });
-
+            */
             delete playerList[socket.id];
         }
     });
