@@ -1,3 +1,102 @@
+/**
+ * Created by wilson on 2018-02-03.
+ */
+var Bullet = function (playerId,posX,posY,direction) {
+    var bullet = {
+        id: Math.random(),
+        x: posX + 25,
+        y: posY + 25,
+        playerId: playerId,
+        direction: direction,
+        speed: 10,
+        timer: 0,
+        toRemove: false,
+    };
+
+    bullet.update = function(){
+        bullet.updatePosition();
+        if (bullet.timer++ > 100)
+        bullet.toRemove = true;
+    };
+
+    bullet.updatePosition = function(){
+    if (bullet.direction === 'right')
+        bullet.x += bullet.speed;
+    else if (bullet.direction === 'left')
+        bullet.x -= bullet.speed;
+    else if (bullet.direction === 'up')
+        bullet.y -= bullet.speed;
+    else if (bullet.direction === 'down')
+        bullet.y += bullet.speed;
+    };
+
+    return bullet;
+}
+/**
+ * Created by wilson on 2018-02-03.
+ */
+var Player = function (id, name, points) {
+    var player = {
+        x: X_STARTING_POS,
+        y: Y_STARTING_POS,
+        id: id,
+        username: name,
+        points: points,
+        char: 'tyler1',
+
+        rightPress: false,
+        leftPress: false,
+        upPress: false,
+        downPress: false,
+        lastPosition: STARTING_DIR,
+
+        speed: PLAYER_SPEED
+    };
+
+    player.updatePosition = function () {
+        if (player.rightPress)
+            player.x += player.speed;
+        if (player.leftPress)
+            player.x -= player.speed;
+        if (player.upPress)
+            player.y -= player.speed;
+        if (player.downPress)
+            player.y += player.speed;
+    };
+
+    player.addPoint = function () {
+        player.points++;
+    };
+
+    player.shootBullet = function (){
+        var bullet = Bullet(player.id,player.x,player.y,player.lastPosition);
+        bulletList[bullet.id] = bullet;
+    };
+
+    return player;
+};
+
+
+/**
+ * Created by wilso on 2018-02-03.
+ */
+
+const SERVER_PORT = 8000;
+const REFRESH_RATE = 25;
+
+const X_STARTING_POS = 100;
+const Y_STARTING_POS = 100;
+const PLAYER_SPEED = 10;
+const STARTING_DIR = 'down';
+const MONGO_REPO = "Account";
+
+/*
+const RPS = {
+    PAPER: "Paper",
+    SCISSOR: "Scissors",
+    ROCK: "Rock"
+};
+*/
 let express = require('express');
 let app = express();
 let server = require('http').Server(app);
@@ -236,101 +335,3 @@ function onConnect(socket, name, points) {
         player.char = data.charName;
     });
 }
-/**
- * Created by wilso on 2018-02-03.
- */
-
-const SERVER_PORT = 8000;
-const REFRESH_RATE = 25;
-
-const X_STARTING_POS = 100;
-const Y_STARTING_POS = 100;
-const PLAYER_SPEED = 10;
-const STARTING_DIR = 'down';
-const MONGO_REPO = "Account";
-
-/*
-const RPS = {
-    PAPER: "Paper",
-    SCISSOR: "Scissors",
-    ROCK: "Rock"
-};
-*/
-/**
- * Created by wilson on 2018-02-03.
- */
-var Bullet = function (playerId,posX,posY,direction) {
-    var bullet = {
-        id: Math.random(),
-        x: posX + 25,
-        y: posY + 25,
-        playerId: playerId,
-        direction: direction,
-        speed: 10,
-        timer: 0,
-        toRemove: false,
-    };
-
-    bullet.update = function(){
-        bullet.updatePosition();
-        if (bullet.timer++ > 100)
-        bullet.toRemove = true;
-    };
-
-    bullet.updatePosition = function(){
-    if (bullet.direction === 'right')
-        bullet.x += bullet.speed;
-    else if (bullet.direction === 'left')
-        bullet.x -= bullet.speed;
-    else if (bullet.direction === 'up')
-        bullet.y -= bullet.speed;
-    else if (bullet.direction === 'down')
-        bullet.y += bullet.speed;
-    };
-
-    return bullet;
-}
-/**
- * Created by wilson on 2018-02-03.
- */
-var Player = function (id, name, points) {
-    var player = {
-        x: X_STARTING_POS,
-        y: Y_STARTING_POS,
-        id: id,
-        username: name,
-        points: points,
-        char: 'tyler1',
-
-        rightPress: false,
-        leftPress: false,
-        upPress: false,
-        downPress: false,
-        lastPosition: STARTING_DIR,
-
-        speed: PLAYER_SPEED
-    };
-
-    player.updatePosition = function () {
-        if (player.rightPress)
-            player.x += player.speed;
-        if (player.leftPress)
-            player.x -= player.speed;
-        if (player.upPress)
-            player.y -= player.speed;
-        if (player.downPress)
-            player.y += player.speed;
-    };
-
-    player.addPoint = function () {
-        player.points++;
-    };
-
-    player.shootBullet = function (){
-        var bullet = Bullet(player.id,player.x,player.y,player.lastPosition);
-        bulletList[bullet.id] = bullet;
-    };
-
-    return player;
-};
-
