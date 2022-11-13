@@ -33,6 +33,9 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signUpResponse', { success: res });
         })
     });
+    socket.on('signIn',function (userData){
+        onConnect(socket,userData.username);
+    });
 
     socket.on('disconnect', function () {
         if (socketList[socket.id] != null) {
@@ -92,15 +95,16 @@ setInterval(function () {
                 x: bullet.x,
                 y: bullet.y,
                 playerId: bullet.playerId
+                
             });
         }
     }
-    
 
     for (let i in socketList) {
         let socket = socketList[i];
         socket.emit('renderInfo', pack, bulletPack);
         socket.emit('Time');
+        
     }
 }, REFRESH_RATE);
 
