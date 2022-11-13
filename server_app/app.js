@@ -6,10 +6,10 @@ let io = require('socket.io')(server, {});
 let promise = require('promise');
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/cilent/index.html');
+    res.sendFile(__dirname + '/client/index.html');
 });
 
-app.use('/cilent', express.static(__dirname + '/cilent'));
+app.use('/client', express.static(__dirname + '/client'));
 
 server.listen(process.env.PORT || SERVER_PORT);
 
