@@ -3,11 +3,11 @@ let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server, {});
 
-let mongoClient = require('mongodb').MongoClient;
-let url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
+//let mongoClient = require('mongodb').MongoClient;
+//let url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
 
 let promise = require('promise');
-let dbo;
+//let dbo;
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/cilent/index.html');
@@ -23,7 +23,7 @@ let socketList = {};
 let playerList = {};
 let bulletList = {};
 
-
+/*
 mongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
     if (err) throw err;
     dbo = db.db("mmorpg");
@@ -34,6 +34,7 @@ mongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true }, fun
     });
 
 });
+*/
 
 io.sockets.on('connection', function (socket) {
 
@@ -48,7 +49,7 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signUpResponse', { success: res });
         })
     });
-
+/*
     socket.on('signIn', function (userData) {
         isCorrectCredential(userData).then(function (res) {
             if (res.valid)
@@ -56,7 +57,7 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signInResponse', { success: res.valid });
         })
     });
-
+*/
     socket.on('disconnect', function () {
         if (socketList[socket.id] != null) {
             delete socketList[socket.id];
@@ -64,17 +65,19 @@ io.sockets.on('connection', function (socket) {
         }
         let player = playerList[socket.id];
         if (player != null) {
+
             toAllChat(player.username + " has disconnected.");
 
             let query = {
                 username: player.username
             };
-            let newValues = { $set: { points: player.points } };
+            //let newValues = { $set: { points: player.points } };
+            /*
             dbo.collection(MONGO_REPO).updateOne(query, newValues, function (err, res) {
                 if (err) throw err;
                 console.log("MongoDB Document Updated: " + res.result);
             });
-
+            */
             delete playerList[socket.id];
         }
     });
@@ -132,7 +135,7 @@ setInterval(function () {
     }
 }, REFRESH_RATE);
 
-
+/*
 function isValidNewCredential(userData) {
     return new Promise(function (callback) {
         let query = {
@@ -151,7 +154,8 @@ function isValidNewCredential(userData) {
         });
     });
 }
-
+*/
+/*
 function isCorrectCredential(userData) {
     return new Promise(function (callback) {
         let query = {
@@ -171,7 +175,8 @@ function isCorrectCredential(userData) {
         });
     });
 }
-
+*/
+/*
 function insertCredential(data) {
     let account = {
         username: data.username,
@@ -183,7 +188,7 @@ function insertCredential(data) {
         console.log("MongoDB Document Inserted: " + JSON.stringify(account));
     });
 }
-
+*/
 function toAllChat(line) {
     for (let i in socketList)
         socketList[i].emit('addToChat', line);
