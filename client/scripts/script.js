@@ -13,7 +13,7 @@ var playerListDisplay = document.getElementById('player-list');
 let accessButton = document.getElementById('access');
 
 var charImg = new Image();
-charImg.src = '/cilent/sprites/tyler1.png';
+charImg.src = 'client/sprites/tyler1.png';
 var imgFrameIndex = 50;
 var imgWidth = 50;
 var imgHeight = 60;
@@ -128,7 +128,7 @@ document.onkeyup = function (event) {
 function drawChar(player) {
 
     var playersImg = new Image();
-    playersImg.src = '/cilent/sprites/' + player.char + '.png';
+    playersImg.src ='../sprites/' + player.char + '.png';
 
     switch (player.lastPosition) {
         case 'down':
@@ -148,13 +148,13 @@ function drawChar(player) {
 
 function drawBullet(bullet){
     var bulletImg = new Image();
-    bulletImg.src = '/cilent/sprites/bullet.png';
+    bulletImg.src = '../sprites/bullet.png';
 
     canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
 }
 
 function UpdateCharModel(name) {
-    charImg.src = '/cilent/sprites/' + name + '.png';
+    charImg.src = '../sprites/' + name + '.png';
     socket.emit('charUpdate', { charName: name });
 }
 
