@@ -1,3 +1,5 @@
+
+
 let express = require('express');
 let app = express();
 let server = require('http').Server(app);
@@ -26,15 +28,8 @@ io.sockets.on('connection', function (socket) {
     socketList[socket.id] = socket;
     console.log("Socket " + socket.id + " has connected");
 
-    socket.on('signUp', function (userData) {
-        isValidNewCredential(userData).then(function (res) {
-            if (res)
-                insertCredential(userData);
-            socket.emit('signUpResponse', { success: res });
-        })
-    });
     socket.on('signIn',function (userData){
-        onConnect(socket,userData.username);
+        onConnect(socket,userData.username,0);
     });
 
     socket.on('disconnect', function () {
