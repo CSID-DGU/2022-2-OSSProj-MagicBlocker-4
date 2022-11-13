@@ -3,11 +3,7 @@ let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server, {});
 
-//let mongoClient = require('mongodb').MongoClient;
-//let url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
-
 let promise = require('promise');
-//let dbo;
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/cilent/index.html');
@@ -23,18 +19,6 @@ let socketList = {};
 let playerList = {};
 let bulletList = {};
 
-/*
-mongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
-    if (err) throw err;
-    dbo = db.db("mmorpg");
-
-    dbo.collection(MONGO_REPO, function (err, res) {
-        if (err) throw err;
-        console.log("Collection created!");
-    });
-
-});
-*/
 
 io.sockets.on('connection', function (socket) {
 
@@ -49,15 +33,7 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signUpResponse', { success: res });
         })
     });
-/*
-    socket.on('signIn', function (userData) {
-        isCorrectCredential(userData).then(function (res) {
-            if (res.valid)
-                onConnect(socket, userData.username, res.points);
-            socket.emit('signInResponse', { success: res.valid });
-        })
-    });
-*/
+
     socket.on('disconnect', function () {
         if (socketList[socket.id] != null) {
             delete socketList[socket.id];
@@ -71,13 +47,6 @@ io.sockets.on('connection', function (socket) {
             let query = {
                 username: player.username
             };
-            //let newValues = { $set: { points: player.points } };
-            /*
-            dbo.collection(MONGO_REPO).updateOne(query, newValues, function (err, res) {
-                if (err) throw err;
-                console.log("MongoDB Document Updated: " + res.result);
-            });
-            */
             delete playerList[socket.id];
         }
     });
@@ -155,41 +124,8 @@ function isValidNewCredential(userData) {
     });
 }
 */
-/*
-function isCorrectCredential(userData) {
-    return new Promise(function (callback) {
-        let query = {
-            username: userData.username,
-            password: userData.password
-        };
-        dbo.collection(MONGO_REPO).find(query).toArray(function (err, result) {
-            if (err) throw err;
-            if (result.length != 0) {
-                console.log("Matching Credential: " + JSON.stringify(result[0]));
-                callback({ valid: true, points: result[0].points });
-            }
-            else {
-                callback({ valid: false, points: null });
-                console.log("incorrect user or password");
-            }
-        });
-    });
-}
-*/
-/*
-function insertCredential(data) {
-    let account = {
-        username: data.username,
-        password: data.password,
-        points: 0
-    };
-    dbo.collection(MONGO_REPO).insertOne(account, function (err, res) {
-        if (err) throw err;
-        console.log("MongoDB Document Inserted: " + JSON.stringify(account));
-    });
-}
-*/
-function toAllChat(line) {
+
+function toAllChat(line) { //채팅시스템
     for (let i in socketList)
         socketList[i].emit('addToChat', line);
 }
@@ -199,7 +135,7 @@ function onConnect(socket, name, points) {
     let player = Player(socket.id, name, points);
     playerList[socket.id] = player;
 
-    socket.on('keyPress', function (data) {            //glitchy character movement
+    socket.on('keyPress', function (data) {   //glitchy character movement
         if (data.inputId === 'right')
             player.rightPress = data.state;
         else if (data.inputId === 'left')
