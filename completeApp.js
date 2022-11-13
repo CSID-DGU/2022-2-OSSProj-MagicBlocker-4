@@ -1,24 +1,4 @@
 /**
- * Created by wilso on 2018-02-03.
- */
-
-const SERVER_PORT = 8000;
-const REFRESH_RATE = 25;
-
-const X_STARTING_POS = 100;
-const Y_STARTING_POS = 100;
-const PLAYER_SPEED = 10;
-const STARTING_DIR = 'down';
-const MONGO_REPO = "Account";
-
-/*
-const RPS = {
-    PAPER: "Paper",
-    SCISSOR: "Scissors",
-    ROCK: "Rock"
-};
-*/
-/**
  * Created by wilson on 2018-02-03.
  */
 var Bullet = function (playerId,posX,posY,direction) {
@@ -62,7 +42,7 @@ var Player = function (id, name, points) {
         id: id,
         username: name,
         points: points,
-        char: 'tyler1',
+        char: 'warrior',
 
         rightPress: false,
         leftPress: false,
@@ -97,6 +77,28 @@ var Player = function (id, name, points) {
 };
 
 
+/**
+ * Created by wilso on 2018-02-03.
+ */
+
+const SERVER_PORT = 8000;
+const REFRESH_RATE = 25;
+
+const X_STARTING_POS = 100;
+const Y_STARTING_POS = 100;
+const PLAYER_SPEED = 10;
+const STARTING_DIR = 'down';
+const MONGO_REPO = "Account";
+
+/*
+const RPS = {
+    PAPER: "Paper",
+    SCISSOR: "Scissors",
+    ROCK: "Rock"
+};
+*/
+
+
 let express = require('express');
 let app = express();
 let server = require('http').Server(app);
@@ -126,7 +128,7 @@ io.sockets.on('connection', function (socket) {
     console.log("Socket " + socket.id + " has connected");
 
     socket.on('signIn',function (userData){
-        onConnect(socket,userData.username,10);
+        onConnect(socket,userData.username,0);
     });
 
     socket.on('disconnect', function () {
