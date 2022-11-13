@@ -13,7 +13,7 @@ var playerListDisplay = document.getElementById('player-list');
 let accessButton = document.getElementById('access');
 
 var charImg = new Image();
-charImg.src = 'client/sprites/tyler1.png';
+charImg.src = 'client/sprites/warrior.png';
 var imgFrameIndex = 50;
 var imgWidth = 50;
 var imgHeight = 60;
@@ -130,8 +130,8 @@ document.onkeyup = function (event) {
 function drawChar(player) {
 
     var playersImg = new Image();
-    //playersImg.src ='/client/sprites/' + player.char + '.png';
-    playersImg.src='/client/sprites/warrior.png';
+    playersImg.src ='/client/sprites/' + player.char + '.png';
+    //playersImg.src='/client/sprites/warrior.png';
 
     switch (player.lastPosition) {
         case 'down':
@@ -157,7 +157,8 @@ function drawBullet(bullet){
 }
 
 function UpdateCharModel(name) {
-    charImg.src = '../sprites/' + name + '.png';
+    console.log('change charactor to : '+name);
+    charImg.src = 'client/sprites/' + name + '.png';
     socket.emit('charUpdate', { charName: name });
 }
 
