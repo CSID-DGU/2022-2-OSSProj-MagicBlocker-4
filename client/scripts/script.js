@@ -10,19 +10,27 @@ var reviveButton = document.getElementById('revive-button');
 var timeStamp = document.getElementById('timeStamp');
 var playerListDisplay = document.getElementById('player-list');
 
+let accessButton = document.getElementById('access');
+
 var charImg = new Image();
 charImg.src = '/cilent/sprites/tyler1.png';
 var imgFrameIndex = 50;
 var imgWidth = 50;
 var imgHeight = 60;
 
-
+/*
 signDivSignIn.onclick = function () {
     socket.emit('signIn', { username: signDivUser.value.trim(), password: signDivPass.value.trim() });
 };
-
+*/
+/*
 signDivSignUp.onclick = function () {
     socket.emit('signUp', { username: signDivUser.value.trim(), password: signDivPass.value.trim() });
+};
+*/
+accessButton.onclick = function(){
+  //alert("access!");  
+  //socket.emit('access');
 };
 
 kmsButton.onclick = function () {
@@ -33,6 +41,7 @@ reviveButton.onclick = function () {
     socket.emit('revive');
 };
 
+/*
 socket.on('signUpResponse', function (data) {
     if (data.success) {
         alert("Sign Up Successful! Log in with Your Username and Password!")
@@ -40,21 +49,28 @@ socket.on('signUpResponse', function (data) {
     else
         alert("Sign Up unsuccessful! Name already taken!");
 });
-
+*/
+gameDiv.style.display = 'inline-block';
+/*
 socket.on('signInResponse', function (data) {
     if (data.success) {
         signDiv.style.display = 'none';
-        gameDiv.style.display = 'inline-block';
+        //gameDiv.style.display = 'inline-block';
     }
     else
         alert("Sign in unsuccessful");
 });
+*/
 
 var chatText = document.getElementById('chat-text');
 var chatForm = document.getElementById('chat-form');
 var chatInput = document.getElementById('chat-input');
-var canvas = document.getElementById('myCanvas').getContext("2d");
+
+var canvas = document.getElementById('myCanvas').getContext("2d"); 
+//canvas로 렌더링작업(이미지 불러오기 등)을 하려면 getContext를 2d로 지정해야한다.
+//p5.js 로 교체하고나면 필요없는 코드.
 canvas.font = '15px Arial';
+
 
 socket.on('addToChat', function (data) {
     chatText.innerHTML += '<div>' + data + '</div>';
