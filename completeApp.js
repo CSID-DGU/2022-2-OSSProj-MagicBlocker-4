@@ -1,23 +1,4 @@
 /**
- * Created by wilso on 2018-02-03.
- */
-
-const SERVER_PORT = 8000;
-const REFRESH_RATE = 25;
-
-const X_STARTING_POS = 100;
-const Y_STARTING_POS = 100;
-const PLAYER_SPEED = 10;
-const STARTING_DIR = 'down';
-const MONGO_REPO = "Account";
-
-const RPS = {
-    PAPER: "Paper",
-    SCISSOR: "Scissors",
-    ROCK: "Rock"
-};
-
-/**
  * Created by wilson on 2018-02-03.
  */
 var Bullet = function (playerId,posX,posY,direction) {
@@ -96,14 +77,36 @@ var Player = function (id, name, points) {
 };
 
 
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server, {});
-var mongoClient = require('mongodb').MongoClient;
-var url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
-var promise = require('promise');
-var dbo;
+/**
+ * Created by wilso on 2018-02-03.
+ */
+
+const SERVER_PORT = 8000;
+const REFRESH_RATE = 25;
+
+const X_STARTING_POS = 100;
+const Y_STARTING_POS = 100;
+const PLAYER_SPEED = 10;
+const STARTING_DIR = 'down';
+const MONGO_REPO = "Account";
+
+/*
+const RPS = {
+    PAPER: "Paper",
+    SCISSOR: "Scissors",
+    ROCK: "Rock"
+};
+*/
+let express = require('express');
+let app = express();
+let server = require('http').Server(app);
+let io = require('socket.io')(server, {});
+
+//let mongoClient = require('mongodb').MongoClient;
+//let url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
+
+let promise = require('promise');
+//let dbo;
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/cilent/index.html');
@@ -112,13 +115,14 @@ app.get('/', function (req, res) {
 app.use('/cilent', express.static(__dirname + '/cilent'));
 
 server.listen(process.env.PORT || SERVER_PORT);
+
 console.log('Server Started! localhost: ' + SERVER_PORT);
 
-var socketList = {};
-var playerList = {};
-var bulletList = {};
+let socketList = {};
+let playerList = {};
+let bulletList = {};
 
-
+/*
 mongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
     if (err) throw err;
     dbo = db.db("mmorpg");
@@ -129,6 +133,7 @@ mongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true }, fun
     });
 
 });
+*/
 
 io.sockets.on('connection', function (socket) {
 
@@ -143,7 +148,7 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signUpResponse', { success: res });
         })
     });
-
+/*
     socket.on('signIn', function (userData) {
         isCorrectCredential(userData).then(function (res) {
             if (res.valid)
@@ -151,35 +156,37 @@ io.sockets.on('connection', function (socket) {
             socket.emit('signInResponse', { success: res.valid });
         })
     });
-
+*/
     socket.on('disconnect', function () {
         if (socketList[socket.id] != null) {
             delete socketList[socket.id];
             console.log(socket.id + " has disconnected");
         }
-        var player = playerList[socket.id];
+        let player = playerList[socket.id];
         if (player != null) {
+
             toAllChat(player.username + " has disconnected.");
 
-            var query = {
+            let query = {
                 username: player.username
             };
-            var newValues = { $set: { points: player.points } };
+            //let newValues = { $set: { points: player.points } };
+            /*
             dbo.collection(MONGO_REPO).updateOne(query, newValues, function (err, res) {
                 if (err) throw err;
                 console.log("MongoDB Document Updated: " + res.result);
             });
-
+            */
             delete playerList[socket.id];
         }
     });
 });
 
 setInterval(function () {
-    var pack = [];
+    let pack = [];
 
-    for (var i in playerList) {
-        var player = playerList[i];
+    for (let i in playerList) {
+        let player = playerList[i];
         player.updatePosition();
         pack.push({
             x: player.x,
@@ -191,19 +198,19 @@ setInterval(function () {
         });
     }
 
-    var bulletPack = [];
+    let bulletPack = [];
 
-    for (var i in bulletList) {
+    for (let i in bulletList) {
 
         if (bulletList[i].toRemove === true) {
             delete bulletList[i];
         }
         else{
-            var bullet = bulletList[i];
+            let bullet = bulletList[i];
             bullet.update();
             
-            for (var i in playerList) {
-                var player = playerList[i];
+            for (let i in playerList) {
+                let player = playerList[i];
                 if (bullet.x > player.x && bullet.x < player.x + 50 && bullet.y > player.y && bullet.y < player.y + 60){
                     if (player.id != bullet.playerId)
                     playerList[bullet.playerId].addPoint();
@@ -220,17 +227,17 @@ setInterval(function () {
     }
     
 
-    for (var i in socketList) {
-        var socket = socketList[i];
+    for (let i in socketList) {
+        let socket = socketList[i];
         socket.emit('renderInfo', pack, bulletPack);
         socket.emit('Time');
     }
 }, REFRESH_RATE);
 
-
+/*
 function isValidNewCredential(userData) {
     return new Promise(function (callback) {
-        var query = {
+        let query = {
             username: userData.username
         };
         dbo.collection(MONGO_REPO).find(query).toArray(function (err, result) {
@@ -246,10 +253,11 @@ function isValidNewCredential(userData) {
         });
     });
 }
-
+*/
+/*
 function isCorrectCredential(userData) {
     return new Promise(function (callback) {
-        var query = {
+        let query = {
             username: userData.username,
             password: userData.password
         };
@@ -266,9 +274,10 @@ function isCorrectCredential(userData) {
         });
     });
 }
-
+*/
+/*
 function insertCredential(data) {
-    var account = {
+    let account = {
         username: data.username,
         password: data.password,
         points: 0
@@ -278,15 +287,15 @@ function insertCredential(data) {
         console.log("MongoDB Document Inserted: " + JSON.stringify(account));
     });
 }
-
+*/
 function toAllChat(line) {
-    for (var i in socketList)
+    for (let i in socketList)
         socketList[i].emit('addToChat', line);
 }
 
 function onConnect(socket, name, points) {
 
-    var player = Player(socket.id, name, points);
+    let player = Player(socket.id, name, points);
     playerList[socket.id] = player;
 
     socket.on('keyPress', function (data) {            //glitchy character movement
@@ -306,7 +315,7 @@ function onConnect(socket, name, points) {
     });
 
     socket.on('sendMsgToServer', function (data) {
-        var playerName = ("" + player.username);
+        let playerName = ("" + player.username);
         toAllChat(playerName + ': ' + data);
     });
 
