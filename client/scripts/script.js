@@ -13,7 +13,7 @@ var playerListDisplay = document.getElementById('player-list');
 let accessButton = document.getElementById('access');
 
 var charImg = new Image();
-charImg.src = '../sprites/tyler1.png';
+charImg.src = 'client/sprites/tyler1.png';
 var imgFrameIndex = 50;
 var imgWidth = 50;
 var imgHeight = 60;
@@ -128,7 +128,7 @@ document.onkeyup = function (event) {
 function drawChar(player) {
 
     var playersImg = new Image();
-    playersImg.src = 'player.char' + '.png';
+    playersImg.src ='../sprites/' + player.char + '.png';
 
     switch (player.lastPosition) {
         case 'down':
