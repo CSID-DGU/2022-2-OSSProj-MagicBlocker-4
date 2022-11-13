@@ -10,19 +10,26 @@ var reviveButton = document.getElementById('revive-button');
 var timeStamp = document.getElementById('timeStamp');
 var playerListDisplay = document.getElementById('player-list');
 
+let accessButton = document.getElementById('access');
+
 var charImg = new Image();
 charImg.src = '/cilent/sprites/tyler1.png';
 var imgFrameIndex = 50;
 var imgWidth = 50;
 var imgHeight = 60;
 
-
+/*
 signDivSignIn.onclick = function () {
     socket.emit('signIn', { username: signDivUser.value.trim(), password: signDivPass.value.trim() });
 };
-
+*/
+/*
 signDivSignUp.onclick = function () {
     socket.emit('signUp', { username: signDivUser.value.trim(), password: signDivPass.value.trim() });
+};
+*/
+accessButton.onclick = function(){
+  alert("access!");  
 };
 
 kmsButton.onclick = function () {
@@ -33,6 +40,7 @@ reviveButton.onclick = function () {
     socket.emit('revive');
 };
 
+/*
 socket.on('signUpResponse', function (data) {
     if (data.success) {
         alert("Sign Up Successful! Log in with Your Username and Password!")
@@ -40,11 +48,12 @@ socket.on('signUpResponse', function (data) {
     else
         alert("Sign Up unsuccessful! Name already taken!");
 });
-
+*/
+gameDiv.style.display = 'inline-block';
 socket.on('signInResponse', function (data) {
     if (data.success) {
         signDiv.style.display = 'none';
-        gameDiv.style.display = 'inline-block';
+        //gameDiv.style.display = 'inline-block';
     }
     else
         alert("Sign in unsuccessful");

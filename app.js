@@ -3,8 +3,8 @@ let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server, {});
 
-let mongoClient = require('mongodb').MongoClient;
-let url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
+//let mongoClient = require('mongodb').MongoClient;
+//let url = "mongodb+srv://admin:password123456@cluster0.qsuxf.mongodb.net/mmorpgdb?retryWrites=true&w=majority";
 
 let promise = require('promise');
 let dbo;
@@ -23,7 +23,7 @@ let socketList = {};
 let playerList = {};
 let bulletList = {};
 
-
+/*
 mongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
     if (err) throw err;
     dbo = db.db("mmorpg");
@@ -34,6 +34,7 @@ mongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true }, fun
     });
 
 });
+*/
 
 io.sockets.on('connection', function (socket) {
 
@@ -132,7 +133,7 @@ setInterval(function () {
     }
 }, REFRESH_RATE);
 
-
+/*
 function isValidNewCredential(userData) {
     return new Promise(function (callback) {
         let query = {
@@ -151,7 +152,8 @@ function isValidNewCredential(userData) {
         });
     });
 }
-
+*/
+/*
 function isCorrectCredential(userData) {
     return new Promise(function (callback) {
         let query = {
@@ -171,7 +173,8 @@ function isCorrectCredential(userData) {
         });
     });
 }
-
+*/
+/*
 function insertCredential(data) {
     let account = {
         username: data.username,
@@ -183,7 +186,7 @@ function insertCredential(data) {
         console.log("MongoDB Document Inserted: " + JSON.stringify(account));
     });
 }
-
+*/
 function toAllChat(line) {
     for (let i in socketList)
         socketList[i].emit('addToChat', line);
