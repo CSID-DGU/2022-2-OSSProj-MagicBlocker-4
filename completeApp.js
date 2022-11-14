@@ -1,18 +1,30 @@
 /**
+<<<<<<< HEAD
  * 서버에서 사용되는 상수 모음
+=======
+ * Created by wilso on 2018-02-03.
+>>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
  */
 
 const SERVER_PORT = 8000;
 const REFRESH_RATE = 25;
 
+<<<<<<< HEAD
 const X_STARTING_POS = 500;
 const Y_STARTING_POS = 200;
+=======
+const X_STARTING_POS = 100;
+const Y_STARTING_POS = 100;
+>>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
 const PLAYER_SPEED = 10;
 const STARTING_DIR = 'down';
 const MONGO_REPO = "Account";
 
+<<<<<<< HEAD
 const PROJECTILE_SPEED = 10;
 
+=======
+>>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
 /*
 const RPS = {
     PAPER: "Paper",
@@ -20,6 +32,88 @@ const RPS = {
     ROCK: "Rock"
 };
 */
+<<<<<<< HEAD
+=======
+/**
+ * Created by wilson on 2018-02-03.
+ */
+var Bullet = function (playerId,posX,posY,direction) {
+    var bullet = {
+        id: Math.random(),
+        x: posX + 25,
+        y: posY + 25,
+        playerId: playerId,
+        direction: direction,
+        speed: 10,
+        timer: 0,
+        toRemove: false,
+    };
+
+    bullet.update = function(){
+        bullet.updatePosition();
+        if (bullet.timer++ > 100)
+        bullet.toRemove = true;
+    };
+
+    bullet.updatePosition = function(){
+    if (bullet.direction === 'right')
+        bullet.x += bullet.speed;
+    else if (bullet.direction === 'left')
+        bullet.x -= bullet.speed;
+    else if (bullet.direction === 'up')
+        bullet.y -= bullet.speed;
+    else if (bullet.direction === 'down')
+        bullet.y += bullet.speed;
+    };
+
+    return bullet;
+}
+/**
+ * Created by wilson on 2018-02-03.
+ */
+var Player = function (id, name, points) {
+    var player = {
+        x: X_STARTING_POS,
+        y: Y_STARTING_POS,
+        id: id,
+        username: name,
+        points: points,
+        char: 'warrior',
+
+        rightPress: false,
+        leftPress: false,
+        upPress: false,
+        downPress: false,
+        lastPosition: STARTING_DIR,
+
+        speed: PLAYER_SPEED
+    };
+
+    player.updatePosition = function () {
+        if (player.rightPress)
+            player.x += player.speed;
+        if (player.leftPress)
+            player.x -= player.speed;
+        if (player.upPress)
+            player.y -= player.speed;
+        if (player.downPress)
+            player.y += player.speed;
+    };
+
+    player.addPoint = function () {
+        player.points++;
+    };
+
+    player.shootBullet = function (){
+        var bullet = Bullet(player.id,player.x,player.y,player.lastPosition);
+        bulletList[bullet.id] = bullet;
+    };
+
+    return player;
+};
+
+
+>>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
 
 /**
  * Player 클래스
