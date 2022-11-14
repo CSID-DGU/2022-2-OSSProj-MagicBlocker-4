@@ -1,44 +1,54 @@
+
 /**
- * Created by wilson on 2018-02-03.
+ * Player 클래스
  */
-var Player = function (id, name, points) {
-    var player = {
-        x: X_STARTING_POS,
-        y: Y_STARTING_POS,
-        id: id,
-        username: name,
-        points: points,
-        char: 'warrior',
+ function Player(id, name, points) {
+    this.x = X_STARTING_POS;
+    this.y = Y_STARTING_POS;
+    this.id = id;
+    this.username = name;
+    this.points = points;
+    this.char = 'warrior';
+    this.direction = 'down';
 
-        rightPress: false,
-        leftPress: false,
-        upPress: false,
-        downPress: false,
-        lastPosition: STARTING_DIR,
-
-        speed: PLAYER_SPEED
+    this.rightPress = false;
+    this.leftPress=false;
+    this.downPress=false;
+    this.upPress=false;
+    
+    this.lastPosition=STARTING_DIR;
+    this.speed=PLAYER_SPEED;
+    
+    this.updatePosition = function () {
+        if (this.rightPress){
+            this.x += this.speed;
+            this.direction='right';
+            console.log('right!!!')
+        }                
+        if (this.leftPress){
+            this.x -= this.speed;
+            this.direction='left';
+            console.log('left!!!')
+        }   
+        if (this.upPress){
+            this.y -= this.speed;
+            this.direction='up';
+            console.log('up!!!')
+        }
+        if (this.downPress){
+            this.y += this.speed;
+            this.direction='down';
+            console.log('down!!!')
+        }
+            
     };
 
-    player.updatePosition = function () {
-        if (player.rightPress)
-            player.x += player.speed;
-        if (player.leftPress)
-            player.x -= player.speed;
-        if (player.upPress)
-            player.y -= player.speed;
-        if (player.downPress)
-            player.y += player.speed;
+    this.addPoint = function () {
+        this.points++;
     };
 
-    player.addPoint = function () {
-        player.points++;
-    };
-
-    player.shootBullet = function (){
-        var bullet = Bullet(player.id,player.x,player.y,player.lastPosition);
+    this.shootBullet = function (){
+        let bullet = new Projectile(this.id,this.x,this.y,this.direction);
         bulletList[bullet.id] = bullet;
-    };
-
-    return player;
+    };      
 };
-
