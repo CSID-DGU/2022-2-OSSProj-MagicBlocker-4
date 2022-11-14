@@ -13,10 +13,14 @@ var playerListDisplay = document.getElementById('player-list');
 let accessButton = document.getElementById('access');
 
 var charImg = new Image();
-charImg.src = 'client/sprites/warrior.png';
+//charImg.src = 'client/sprites/warrior.png';
+
+//상하좌우의 플레이어 이미지가 다르므로, 상하좌우가 붙어있는 200*60px 의 캐릭터 이미지를 잘라서 씀
+//imgFrameIndex를 기준으로 canvas가 이미지를 상하좌우를 기준으로 잘라서 가져옴
+//크기를 70으로 키우고, 정사각형으로 바꾸었음.
 var imgFrameIndex = 50;
 var imgWidth = 50;
-var imgHeight = 60;
+var imgHeight = 70;
 
 
 accessButton.onclick = function(){
@@ -41,11 +45,22 @@ var chatText = document.getElementById('chat-text');
 var chatForm = document.getElementById('chat-form');
 var chatInput = document.getElementById('chat-input');
 
+
 var canvas = document.getElementById('myCanvas').getContext("2d"); 
+//게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
+canvas.canvas.width = window.innerWidth;
+canvas.canvas.height = window.innerHeight;
+//게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
+//브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
+window.addEventListener("resize",()=>{
+    canvas.canvas.width = window.innerWidth;
+    canvas.canvas.height = window.innerHeight;
+});
+
+
 //canvas로 렌더링작업(이미지 불러오기 등)을 하려면 getContext를 2d로 지정해야한다.
 //p5.js 로 교체하고나면 필요없는 코드.
 canvas.font = '15px Arial';
-
 
 socket.on('addToChat', function (data) {
     chatText.innerHTML += '<div>' + data + '</div>';
@@ -74,7 +89,7 @@ chatForm.onsubmit = function (event) {
 
 socket.on('renderInfo', function (playerData,bulletData) {
 
-    canvas.clearRect(0, 0, 800, 500);
+    canvas.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
 
     playerListDisplay.innerHTML = '';
 
@@ -132,6 +147,7 @@ function drawChar(player) {
     var playersImg = new Image();
     playersImg.src ='/client/sprites/' + player.char + '.png';
     //playersImg.src='/client/sprites/warrior.png';
+    //playersImg.src='/client/sprites/amongus.png';
 
     switch (player.lastPosition) {
         case 'down':
