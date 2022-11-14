@@ -6,8 +6,25 @@
 
     <div id="signDiv"> <!--로그인 프롬프트창-->
         <title>  </title>
-        <div id="loginTitle">𝕸𝖆𝖌𝖎𝖈 𝕭𝖑𝖔𝖈𝖐𝖊𝖗</div>
-        <input id="signDiv-user" type="text" placeholder="             𝕹𝖎𝖈𝖐𝖓𝖆𝖒𝖊">
+        <div id="loginTitle">Magic Blocker</div>
+        <div>이동 : W A S D</div>
+        <div>발사 : K </div>
+        <input id="signDiv-user" type="text" placeholder="이름을 설정하세요">
+        <div>캐릭터 선택</div>
+        <div id="character-select">
+            <button class="char-select-button" onclick="UpdateCharModel('princess')">
+                <img id="princess-id" src="client/sprites/knight-select.png" alt="char" style="width:60px; height:60px;">
+                <br>기사
+            </button>
+            <button class="char-select-button" onclick="UpdateCharModel('warrior')">
+                <img id="warrior-id" src="client/sprites/archor-select.png" alt="char" style="width:60px; height:60px;">
+                <br>궁수
+            </button>
+            <button class="char-select-button" onclick="UpdateCharModel('goblin')">
+                <img id="goblin-id" src="client/sprites/professor-select.png" alt="char" style="width:60px; height:60px;">
+                <br>교수
+            </button>
+        </div>
         <br>
         <!--br> Password: -->
         <!--input id="signDiv-pass" type="text"-->
@@ -15,65 +32,27 @@
         <br>
             <!--button class="button" id="signDiv-signIn">Sign In</button-->
             <!--button class="button" id="signDiv-signUp">Sign Up</button-->
-        <button class="button" id="access">𝕬𝖈𝖈𝖊𝖘𝖘</button>
-        
+        <button class="button" id="access">접속</button>   
         
     </div>
 
     <div id="gameDiv" style="display: inline-block;">
         <div width="1000" height="500">
             <canvas id="myCanvas"></canvas>
-
-            <div id="player-list-box" style="width: 200px; height : 500px; float:left; overflow-y:scroll">
-                <div style="font-weight : bold;">접속중인 플레이어</div>
-                <br>
-                <div id="player-list"></div>
-            </div>
-            <br>
         </div>
-
-        <div id="chat">
-            <div id="chat-text">
-                <div>테스트 게임 2022-11-05</div>
-                <div>이동: wasd</div>
-                <div>공격: k</div>
-            </div>
-
-            <form id="chat-form">
-
-            </form>
-        </div>
-
-
-        <div id="character-select">
-            <button class="char-select-button" onclick="UpdateCharModel('princess')">
-                <img id="princess-id" src="client/sprites/princess-select.png" alt="char" style="width:60px; height:60px;">
-                <br>공주
-            </button>
-
-            <button class="char-select-button" onclick="UpdateCharModel('warrior')">
-                <img id="warrior-id" src="client/sprites/warrior-select.png" alt="char" style="width:60px; height:60px;">
-                <br>전사
-            </button>
-
-            <button class="char-select-button" onclick="UpdateCharModel('goblin')">
-                <img id="goblin-id" src="client/sprites/goblin-select.png" alt="char" style="width:60px; height:60px;">
-                <br>고블린
-            </button>
-            <br>
-
-            <div id="extrabuttons">
-                <button id="kms-button">instance delete</button>
-                <button id="revive-button">부활</button>
-                <h3>서버시간</h3>
-                <div id="timeStamp">Time:</div>
-            </div>
-        </div>
-
-
     </div>
 
 </div>
+
+
+<div class="player-list-box">
+        <div id="player-list-box" style="width: 200px; height : 500px; float:left;">
+            <div style="font-weight : bold;">접속중인 플레이어</div>
+            <br>
+            <div id="player-list"></div>
+        </div>
+</div>
+
 
 <head>
     <script type="text/javascript" src="client/scripts/script.js"></script>
