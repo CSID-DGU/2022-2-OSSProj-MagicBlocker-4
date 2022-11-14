@@ -34,9 +34,9 @@ var Player = function (id, name, points) {
         player.points++;
     };
 
-    player.shootBullet = function (){
-        var bullet = Bullet(player.id,player.x,player.y,player.lastPosition);
-        bulletList[bullet.id] = bullet;
+    player.shootSkill = function (){
+        var skill = Skill(player.id,player.x,player.y,player.lastPosition);
+        skillList[skill.id] = skill;
     };
 
     return player;

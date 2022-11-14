@@ -19,7 +19,7 @@ console.log('Server Started! localhost: ' + SERVER_PORT);
 
 let socketList = {};
 let playerList = {};
-let bulletList = {};
+let skillList = {};
 
 
 io.sockets.on('connection', function (socket) {
@@ -66,30 +66,30 @@ setInterval(function () {
         });
     }
 
-    let bulletPack = [];
+    let skillPack = [];
 
-    for (let i in bulletList) {
+    for (let i in skillList) {
 
-        if (bulletList[i].toRemove === true) {
-            delete bulletList[i];
+        if (skillList[i].toRemove === true) {
+            delete skillList[i];
         }
         else{
-            let bullet = bulletList[i];
-            bullet.update();
+            let skill = skillList[i];
+            skill.update();
             
             for (let i in playerList) {
                 let player = playerList[i];
-                if (bullet.x > player.x && bullet.x < player.x + 50 && bullet.y > player.y && bullet.y < player.y + 60){
-                    if (player.id != bullet.playerId)
-                    playerList[bullet.playerId].addPoint();
+                if (skill.x > player.x && skill.x < player.x + 50 && skill.y > player.y && skill.y < player.y + 60){
+                    if (player.id != skill.playerId)
+                    playerList[skill.playerId].addPoint();
                 }
             }
 
 
-            bulletPack.push({
-                x: bullet.x,
-                y: bullet.y,
-                playerId: bullet.playerId
+            skillPack.push({
+                x: skill.x,
+                y: skill.y,
+                playerId: skill.playerId
                 
             });
         }
@@ -97,7 +97,7 @@ setInterval(function () {
 
     for (let i in socketList) {
         let socket = socketList[i];
-        socket.emit('renderInfo', pack, bulletPack);
+        socket.emit('renderInfo', pack, skillPack);
         socket.emit('Time');
         
     }
@@ -145,7 +145,7 @@ function onConnect(socket, name, points) {
             player.downPress = data.state;
 
         if (data.inputId === 'shoot' && playerList[socket.id] != null)
-            player.shootBullet();
+            player.shootSkill();
         else
             player.lastPosition = data.inputId;
     });
