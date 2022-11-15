@@ -1,179 +1,183 @@
 
+/**
+ * 게임 서버 메인앱
+ */
 
-let express = require('express');
-let app = express();
-let server = require('http').Server(app);
-let io = require('socket.io')(server, {});
-
-let promise = require('promise');
-
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/client/index.html');
-});
-
-app.use('/client', express.static(__dirname + '/client'));
-
-server.listen(process.env.PORT || SERVER_PORT);
-
-console.log('Server Started! localhost: ' + SERVER_PORT);
-
-let socketList = {};
-let playerList = {};
-let bulletList = {};
-
-
-io.sockets.on('connection', function (socket) {
-
-    socket.id = Math.random();
-    socketList[socket.id] = socket;
-    console.log("Socket " + socket.id + " has connected");
-
-    socket.on('signIn',function (userData){
-        onConnect(socket,userData.username,0);
-    });
-
-    socket.on('disconnect', function () {
-        if (socketList[socket.id] != null) {
-            delete socketList[socket.id];
-            console.log(socket.id + " has disconnected");
-        }
-        let player = playerList[socket.id];
-        if (player != null) {
-
-            toAllChat(player.username + " has disconnected.");
-
-            let query = {
-                username: player.username
-            };
-            delete playerList[socket.id];
-        }
-    });
-});
-
-setInterval(function () {
-    let pack = [];
-
-    for (let i in playerList) {
-        let player = playerList[i];
-        player.updatePosition();
-        pack.push({
-            x: player.x,
-            y: player.y,
-            username: player.username,
-            points: player.points,
-            lastPosition: player.lastPosition,
-            char: player.char
-        });
-    }
-
-    let bulletPack = [];
-
-    for (let i in bulletList) {
-
-        if (bulletList[i].toRemove === true) {
-            delete bulletList[i];
-        }
-        else{
-            let bullet = bulletList[i];
-            bullet.update();
-            
-            for (let i in playerList) {
-                let player = playerList[i];
-                if (bullet.x > player.x && bullet.x < player.x + 50 && bullet.y > player.y && bullet.y < player.y + 60){
-                    if (player.id != bullet.playerId)
-                    playerList[bullet.playerId].addPoint();
-                }
-            }
-
-
-            bulletPack.push({
-                x: bullet.x,
-                y: bullet.y,
-                playerId: bullet.playerId
-                
-            });
-        }
-    }
-
-    for (let i in socketList) {
-        let socket = socketList[i];
-        socket.emit('renderInfo', pack, bulletPack);
-        socket.emit('Time');
-        
-    }
-}, REFRESH_RATE);
-
-/*
-function isValidNewCredential(userData) {
-    return new Promise(function (callback) {
-        let query = {
-            username: userData.username
-        };
-        dbo.collection(MONGO_REPO).find(query).toArray(function (err, result) {
-            if (err) throw err;
-            if (result.length == 0) {
-                console.log("user credential not taken yet: " + JSON.stringify(userData));
-                callback(true);
-            }
-            else {
-                callback(false);
-                console.log("User credential already exist: " + JSON.stringify(result));
-            }
-        });
-    });
-}
-*/
-
-function toAllChat(line) { //채팅시스템
-    for (let i in socketList)
-        socketList[i].emit('addToChat', line);
-}
-
-function onConnect(socket, name, points) {
-
-    let player = Player(socket.id, name, points);
-    playerList[socket.id] = player; //
-
-    socket.on('keyPress', function (data) {   //glitchy character movement
-        player.direction = data.direction;
-        if (data.inputId === 'right'){
-            player.rightPress = data.state;
-            player.direction = 'right';
-        }else if (data.inputId === 'left'){
-            player.leftPress = data.state;
-            player.direction='left';
-        }else if (data.inputId === 'up'){
-            player.upPress = data.state;
-            player.direction='up';
-        }else if (data.inputId === 'down'){
-            player.downPress = data.state;
-            player.direction='down';
-        }
-            
-        if (data.inputId === 'shoot' && playerList[socket.id] != null)
-            player.shootBullet(player.direction);
-        else
-            player.lastPosition = data.inputId;
-    });
-
-    socket.on('sendMsgToServer', function (data) {
-        let playerName = ("" + player.username);
-        toAllChat(playerName + ': ' + data);
-    });
-
-    socket.on('kms', function () {
-        if (playerList[socket.id] != null) {
-            delete playerList[socket.id];
-        }
-    });
-
-    socket.on('revive', function () {
-        if (playerList[socket.id] == null) {
-            playerList[socket.id] = player;
-        }
-    });
-
-    socket.on('charUpdate', function (data) {
-        player.char = data.charName;
-    });
-}
+ let express = require('express');
+ let app = express();
+ let server = require('http').Server(app);
+ let io = require('socket.io')(server, {});
+ 
+ let promise = require('promise');
+ 
+ app.get('/', function (req, res) {
+     res.sendFile(__dirname + '/client/index.html');
+ });
+ 
+ app.use('/client', express.static(__dirname + '/client'));
+ 
+ server.listen(process.env.PORT || SERVER_PORT);
+ 
+ console.log('Server Started! localhost: ' + SERVER_PORT);
+ 
+ //전역 객체 리스트. 서버에서 접속자, 플레이어, 투사체 객체를 보관하고, pop push함
+ let socketList = {};
+ let playerList = {};
+ let bulletList = {};
+ 
+ 
+ io.sockets.on('connection', function (socket) {
+ 
+     socket.id = Math.random();
+     socketList[socket.id] = socket;
+     console.log("Socket " + socket.id + " has connected");
+ 
+     socket.on('signIn',function (userData){
+         onConnect(socket,userData.username,0);
+     });
+ 
+     socket.on('disconnect', function () {
+         if (socketList[socket.id] != null) {
+             delete socketList[socket.id];
+             console.log(socket.id + " has disconnected");
+         }
+         let player = playerList[socket.id];
+         if (player != null) {
+ 
+             toAllChat(player.username + " has disconnected.");
+ 
+             let query = {
+                 username: player.username
+             };
+             delete playerList[socket.id];
+         }
+     });
+ });
+ 
+ setInterval(function () {
+     let pack = [];
+ 
+     for (let i in playerList) {
+         let player = playerList[i];
+         player.updatePosition();
+         pack.push({
+             x: player.x,
+             y: player.y,
+             username: player.username,
+             points: player.points,
+             lastPosition: player.lastPosition,
+             char: player.char
+         });
+     }
+ 
+     let bulletPack = [];
+ 
+     for (let i in bulletList) {
+ 
+         if (bulletList[i].toRemove === true) {
+             delete bulletList[i];
+         }
+         else{
+             let bullet = bulletList[i];
+             bullet.update();
+             
+             for (let i in playerList) {
+                 let player = playerList[i];
+                 if (bullet.x > player.x && bullet.x < player.x + 50 && bullet.y > player.y && bullet.y < player.y + 60){
+                     if (player.id != bullet.playerId)
+                     playerList[bullet.playerId].addPoint();
+                 }
+             }
+ 
+ 
+             bulletPack.push({
+                 x: bullet.x,
+                 y: bullet.y,
+                 playerId: bullet.playerId,
+                 direction:bullet.direction
+             });
+         }
+     }
+ 
+     for (let i in socketList) {
+         let socket = socketList[i];
+         socket.emit('renderInfo', pack, bulletPack);
+         socket.emit('Time');
+         
+     }
+ }, REFRESH_RATE);
+ 
+ /*
+ function isValidNewCredential(userData) {
+     return new Promise(function (callback) {
+         let query = {
+             username: userData.username
+         };
+         dbo.collection(MONGO_REPO).find(query).toArray(function (err, result) {
+             if (err) throw err;
+             if (result.length == 0) {
+                 console.log("user credential not taken yet: " + JSON.stringify(userData));
+                 callback(true);
+             }
+             else {
+                 callback(false);
+                 console.log("User credential already exist: " + JSON.stringify(result));
+             }
+         });
+     });
+ }
+ */
+ 
+ function toAllChat(line) { //채팅시스템
+     for (let i in socketList)
+         socketList[i].emit('addToChat', line);
+ }
+ 
+ function onConnect(socket, name, points) {
+ 
+     let player = new Player(socket.id, name, points);
+     playerList[socket.id] = player; //playerList는 id 여러개를 가지는 객체. player객체를 저장함
+ 
+     socket.on('keyPress', function (data) {   //glitchy character movement
+         //player.direction = data.direction;
+         if (data.inputId === 'right'){
+             player.rightPress = data.state;
+             //player.direction = 'right';
+         }else if (data.inputId === 'left'){
+             player.leftPress = data.state;
+             //player.direction='left';
+         }else if (data.inputId === 'up'){
+             player.upPress = data.state;
+             //player.direction='up';
+         }else if (data.inputId === 'down'){
+             player.downPress = data.state;
+             //player.direction='down';
+         }
+             
+         if (data.inputId === 'shoot' && playerList[socket.id] != null)
+             player.shootBullet(player.direction);
+         else
+             player.lastPosition = data.inputId;
+     });
+ 
+     socket.on('sendMsgToServer', function (data) {
+         let playerName = ("" + player.username);
+         toAllChat(playerName + ': ' + data);
+     });
+ 
+     socket.on('kms', function () {
+         if (playerList[socket.id] != null) {
+             delete playerList[socket.id];
+         }
+     });
+ 
+     socket.on('revive', function () {
+         if (playerList[socket.id] == null) {
+             playerList[socket.id] = player;
+         }
+     });
+ 
+     socket.on('charUpdate', function (data) {
+         player.char = data.charName;
+     });
+ }
