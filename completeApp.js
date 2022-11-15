@@ -35,7 +35,7 @@ var Bullet = function (playerId,posX,posY,direction) {
 
     bullet.update = function(){
         bullet.updatePosition();
-        if (bullet.timer++ > 100)
+        if (bullet.timer++ > 100) //특정 시간이 지나면 bullet 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         bullet.toRemove = true;
     };
 
@@ -89,7 +89,7 @@ var Player = function (id, name, points) {
     };
 
     player.shootBullet = function (){
-        var bullet = Bullet(player.id,player.x,player.y,player.lastPosition);
+        let bullet = Bullet(player.id,player.x,player.y,'right');
         bulletList[bullet.id] = bullet;
     };
 

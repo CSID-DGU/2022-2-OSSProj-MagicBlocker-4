@@ -35,7 +35,7 @@ var Player = function (id, name, points) {
     };
 
     player.shootBullet = function (){
-        var bullet = Bullet(player.id,player.x,player.y,player.lastPosition);
+        let bullet = Bullet(player.id,player.x,player.y,'right');
         bulletList[bullet.id] = bullet;
     };
 

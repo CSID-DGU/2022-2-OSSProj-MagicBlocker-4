@@ -18,9 +18,9 @@ var charImg = new Image();
 //상하좌우의 플레이어 이미지가 다르므로, 상하좌우가 붙어있는 200*60px 의 캐릭터 이미지를 잘라서 씀
 //imgFrameIndex를 기준으로 canvas가 이미지를 상하좌우를 기준으로 잘라서 가져옴
 //크기를 70으로 키우고, 정사각형으로 바꾸었음.
-var imgFrameIndex = 50;
-var imgWidth = 50;
-var imgHeight = 70;
+var imgFrameIndex = 100;
+var imgWidth = 100;
+var imgHeight = 100;
 
 
 accessButton.onclick = function(){
@@ -145,8 +145,8 @@ document.onkeyup = function (event) {
 function drawChar(player) {
 
     var playersImg = new Image();
-    playersImg.src ='/client/sprites/' + player.char + '.png';
-    //playersImg.src='/client/sprites/warrior.png';
+    //playersImg.src ='/client/sprites/' + player.char + '.png';
+    playersImg.src='/client/sprites/knight.png';
     //playersImg.src='/client/sprites/amongus.png';
 
     switch (player.lastPosition) {
@@ -167,9 +167,27 @@ function drawChar(player) {
 
 function drawBullet(bullet){
     var bulletImg = new Image();
-    bulletImg.src = 'client/sprites/bullet.png';
+    //bulletImg.src = 'client/sprites/bullet.png';
+    bulletImg.src = 'client/sprites/bullet_knight.png';
 
-    canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+    canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight); //원본코드(bullet방향고려x)
+    //player의 발사방향에 따라 bullet 이미지 다르게 표시
+    
+    switch(bullet.direction){
+        case 'down':
+            canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+            break;
+        case 'up':
+            canvas.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+            break;
+        case 'left':
+            canvas.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+            break;
+        case 'right':
+            canvas.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+            break;
+
+    }
 }
 
 function UpdateCharModel(name) {
