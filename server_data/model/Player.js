@@ -9,6 +9,7 @@ var Player = function (id, name, points) {
         username: name,
         points: points,
         char: 'warrior',
+        direction:'down',
 
         rightPress: false,
         leftPress: false,
@@ -22,12 +23,16 @@ var Player = function (id, name, points) {
     player.updatePosition = function () {
         if (player.rightPress)
             player.x += player.speed;
+            player.direction='right';
         if (player.leftPress)
             player.x -= player.speed;
+            player.direction='left';
         if (player.upPress)
             player.y -= player.speed;
+            player.direction='up';
         if (player.downPress)
             player.y += player.speed;
+            player.direction='down';
     };
 
     player.addPoint = function () {
