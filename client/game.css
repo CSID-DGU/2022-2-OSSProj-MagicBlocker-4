@@ -3,11 +3,11 @@
     margin: 0;
     margin-bottom: 20px;
     width: 100%;
-padding: 0;
+    padding: 0;
     font-family: aaargh, sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.99rem;
     text-align: center;
-    color:black;
+    color:whitesmoke;
 }
 
 #signDiv {
@@ -17,7 +17,10 @@ padding: 0;
     padding: 30px;
     border: none;
     box-shadow: 0 0 30px 3px rgba(0, 0, 255, 0.3);
-    background-color: rgba(0, 0, 255, 0.3);
+    /* background-color: rgba(0, 0, 255, 0.3); */
+    background-image: url(sprites/loginBack.png);
+    background-size: 100% 100%;
+    color:whitesmoke;
 
     position: fixed;
     top: 50%;
@@ -34,9 +37,9 @@ padding: 0;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
     margin: 4px 2px;
-    border-radius: 8px;
+    border-radius: 9px;
 }
 .button:active{
     background-color: #234525; /* Green */
