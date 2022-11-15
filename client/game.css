@@ -1,34 +1,77 @@
+/*웹 폰트 사용*/
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+
 
 #loginTitle {
     margin: 0;
     margin-bottom: 20px;
     width: 100%;
     padding: 0;
-    font-family: aaargh, sans-serif;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     font-size: 1.99rem;
     text-align: center;
     color:whitesmoke;
 }
 
-#signDiv {
+#signDiv { /*로그인창*/
     text-align: center;
     margin-top: 50px;
-    width: 268px;
+    width: 300px;
     padding: 30px;
     border: none;
     box-shadow: 0 0 30px 3px rgba(0, 0, 255, 0.3);
-    /* background-color: rgba(0, 0, 255, 0.3); */
-    background-image: url(sprites/loginBack.png);
+    background-color: rgba(0, 0, 205, 0.3);
+    /*background-image: url(sprites/loginBack.png);*/
     background-size: 100% 100%;
     color:whitesmoke;
 
+    border-radius: 10px; /*테두리를 둥글게*/
+
     position: fixed;
-    top: 50%;
+    top: 30%;
     left: 50%;
     margin-top: -100px;
     margin-left: -200px;
+
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+
+    animation:fadein 3s; /*서서히 나타나는(fade in) 애니메이션 효과 적용*/
 }
 
+@keyframes fadein{/*서서히 나타나는(fade in) 애니메이션 효과*/
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+
+
+#signDiv input{ /*로그인창 내부의 닉네임 입력란*/
+    border: 0;
+    
+    /*background: none;*/
+    background-color: rgba(0,0,0,0.6);
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    width: 150px;
+    height: 35px;
+    border: 1px solid #45a29e;
+    padding: 5px;
+    color: #5c6c7c;
+    outline: none;
+    border-radius: 10px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+#signDiv input[type ="text"]:focus{ /*로그인창 내부의 닉네임 입력란 클릭 효과*/
+    width: 250px;
+    border-color: #fce181;
+    border-radius: 20px;
+  } 
+  
 .button {
     background-color: #4CAF50; /* Green */
     border: none;
@@ -76,6 +119,14 @@
     font-size: 12px;
     font-weight: bold;
 }
+/*캐릭터 선택 버튼 효과*/
+.char-select-button:hover {
+    background-color: gray;
+    border: none;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
 
 #chat-text{
     width: 500px;
@@ -95,3 +146,20 @@
 #extrabuttons{
     padding-left: 50px;
 }
+
+/*
+jeho edited
+UI 디자인
+*/
+.player-list-box{
+    width: 250px;
+    padding: 20px;
+    position: absolute;
+    z-index: 1000;
+    top: 5%;
+    left: 90%;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 30px;
+    transform:translate(-50%);
+    animation:fadein 3s;
+  }

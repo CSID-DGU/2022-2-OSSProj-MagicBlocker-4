@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
 <<<<<<< HEAD
  * 서버에서 사용되는 상수 모음
@@ -22,6 +23,8 @@ const MONGO_REPO = "Account";
 
 <<<<<<< HEAD
 const PROJECTILE_SPEED = 10;
+=======
+>>>>>>> b3c46f4 ([22.11.15,전재호] 프론트엔드 수정, 로그인창 애니메이션)
 
 =======
 >>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
@@ -139,22 +142,22 @@ var Player = function (id, name, points) {
         if (this.rightPress){
             this.x += this.speed;
             this.direction='right';
-            console.log('right!!!')
+            //console.log('right!!!')
         }                
         if (this.leftPress){
             this.x -= this.speed;
             this.direction='left';
-            console.log('left!!!')
+            //console.log('left!!!')
         }   
         if (this.upPress){
             this.y -= this.speed;
             this.direction='up';
-            console.log('up!!!')
+            //console.log('up!!!')
         }
         if (this.downPress){
             this.y += this.speed;
             this.direction='down';
-            console.log('down!!!')
+            //console.log('down!!!')
         }
             
     };
@@ -200,6 +203,28 @@ var Player = function (id, name, points) {
         this.y += this.speed;
     };
 }
+/**
+ * 서버에서 사용되는 상수 모음
+ */
+
+const SERVER_PORT = 8000;
+const REFRESH_RATE = 25;
+
+const X_STARTING_POS = 500;
+const Y_STARTING_POS = 200;
+const PLAYER_SPEED = 10;
+const STARTING_DIR = 'down';
+const MONGO_REPO = "Account";
+
+const PROJECTILE_SPEED = 10;
+
+/*
+const RPS = {
+    PAPER: "Paper",
+    SCISSOR: "Scissors",
+    ROCK: "Rock"
+};
+*/
 
 /**
  * 게임 서버 메인앱
