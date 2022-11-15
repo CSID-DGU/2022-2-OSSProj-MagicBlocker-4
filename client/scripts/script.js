@@ -42,10 +42,11 @@ reviveButton.onclick = function () {
 };
 */
 
+/* 채팅방 기능
 var chatText = document.getElementById('chat-text');
 var chatForm = document.getElementById('chat-form');
 var chatInput = document.getElementById('chat-input');
-
+*/
 
 var canvas = document.getElementById('myCanvas').getContext("2d"); 
 //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
@@ -56,6 +57,7 @@ canvas.canvas.height = window.innerHeight;
 window.addEventListener("resize",()=>{
     canvas.canvas.width = window.innerWidth;
     canvas.canvas.height = window.innerHeight;
+    canvas.font = '30px Arial';
 });
 
 
@@ -63,6 +65,7 @@ window.addEventListener("resize",()=>{
 //p5.js 로 교체하고나면 필요없는 코드.
 canvas.font = '30px Arial';
 
+/*
 socket.on('addToChat', function (data) {
     chatText.innerHTML += '<div>' + data + '</div>';
     chatText.scrollTop = chatText.scrollHeight;
@@ -116,7 +119,7 @@ socket.on('Time', function () {
 */
 
 document.onkeydown = function (event) {
-    if (!inTextField(event)) {
+    //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
         if (event.keyCode === 68) //d
             socket.emit('keyPress', { inputId: 'right', state: true});
         else if (event.keyCode === 83)  //s
@@ -128,10 +131,9 @@ document.onkeydown = function (event) {
         else if (event.keyCode === 75) //k
             socket.emit('keyPress', { inputId: 'shoot', state: true});
     }
-};
-
+//};
 document.onkeyup = function (event) {
-    if (!inTextField(event)) {
+    //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
         if (event.keyCode === 68) //d
             socket.emit('keyPress', { inputId: 'right', state: false });
         else if (event.keyCode === 83)  //s
@@ -143,7 +145,7 @@ document.onkeyup = function (event) {
         else if (event.keyCode === 75) //k
             socket.emit('keyPress', { inputId: 'shoot', state: false });
     }
-};
+//};
 
 function drawChar(player) {
 
