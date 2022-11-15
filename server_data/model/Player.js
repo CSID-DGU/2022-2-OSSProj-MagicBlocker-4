@@ -23,22 +23,22 @@
         if (this.rightPress){
             this.x += this.speed;
             this.direction='right';
-            console.log('right!!!')
+            //console.log('right!!!')
         }                
         if (this.leftPress){
             this.x -= this.speed;
             this.direction='left';
-            console.log('left!!!')
+            //console.log('left!!!')
         }   
         if (this.upPress){
             this.y -= this.speed;
             this.direction='up';
-            console.log('up!!!')
+            //console.log('up!!!')
         }
         if (this.downPress){
             this.y += this.speed;
             this.direction='down';
-            console.log('down!!!')
+            //console.log('down!!!')
         }
             
     };

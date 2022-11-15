@@ -5,9 +5,9 @@ var signDivUser = document.getElementById('signDiv-user');
 var signDivPass = document.getElementById('signDiv-pass');
 var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
-var kmsButton = document.getElementById('kms-button');
-var reviveButton = document.getElementById('revive-button');
-var timeStamp = document.getElementById('timeStamp');
+//var kmsButton = document.getElementById('kms-button');
+//var reviveButton = document.getElementById('revive-button');
+//var timeStamp = document.getElementById('timeStamp');
 var playerListDisplay = document.getElementById('player-list');
 
 let accessButton = document.getElementById('access');
@@ -31,15 +31,16 @@ accessButton.onclick = function(){
 
   socket.emit('signIn', { username: signDivUser.value.trim()});
 };
-
+/*
 kmsButton.onclick = function () {
     socket.emit('kms');
 };
-
+*/
+/*
 reviveButton.onclick = function () {
     socket.emit('revive');
 };
-
+*/
 
 var chatText = document.getElementById('chat-text');
 var chatForm = document.getElementById('chat-form');
@@ -75,7 +76,7 @@ function inTextField(event) {
     return (elem.tagName == "TEXTAREA" ||
         (elem.tagName == "INPUT" && (elem.getAttribute("type") == "text")));
 }
-
+/*
 chatForm.onsubmit = function (event) {
     event.preventDefault();
     if (chatInput.value.substring(0, 1) === "/")
@@ -85,6 +86,7 @@ chatForm.onsubmit = function (event) {
 
     chatInput.value = '';
 };
+*/
 
 
 socket.on('renderInfo', function (playerData,bulletData) {
@@ -106,11 +108,12 @@ socket.on('renderInfo', function (playerData,bulletData) {
 });
 
 
-
+/*
 socket.on('Time', function () {
     var date = Date().slice(4, 24);
     timeStamp.innerHTML = date;
 });
+*/
 
 document.onkeydown = function (event) {
     if (!inTextField(event)) {
