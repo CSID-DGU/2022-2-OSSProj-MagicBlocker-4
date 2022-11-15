@@ -1,8 +1,8 @@
 /**
  * Created by wilson on 2018-02-03.
  */
-var Player = function (id, name, points) {
-    var player = {
+function Player(id, name, points) {
+    let player = {
         x: X_STARTING_POS,
         y: Y_STARTING_POS,
         id: id,
@@ -23,16 +23,12 @@ var Player = function (id, name, points) {
     player.updatePosition = function () {
         if (player.rightPress)
             player.x += player.speed;
-            player.direction='right';
         if (player.leftPress)
             player.x -= player.speed;
-            player.direction='left';
         if (player.upPress)
             player.y -= player.speed;
-            player.direction='up';
         if (player.downPress)
             player.y += player.speed;
-            player.direction='down';
     };
 
     player.addPoint = function () {
@@ -40,7 +36,8 @@ var Player = function (id, name, points) {
     };
 
     player.shootBullet = function (){
-        let bullet = Bullet(player.id,player.x,player.y,'right');
+
+        let bullet = Bullet(player.id,player.x,player.y,player.direction);
         bulletList[bullet.id] = bullet;
     };
 

@@ -132,20 +132,26 @@ function toAllChat(line) { //채팅시스템
 function onConnect(socket, name, points) {
 
     let player = Player(socket.id, name, points);
-    playerList[socket.id] = player;
+    playerList[socket.id] = player; //
 
     socket.on('keyPress', function (data) {   //glitchy character movement
-        if (data.inputId === 'right')
+        player.direction = data.direction;
+        if (data.inputId === 'right'){
             player.rightPress = data.state;
-        else if (data.inputId === 'left')
+            player.direction = 'right';
+        }else if (data.inputId === 'left'){
             player.leftPress = data.state;
-        else if (data.inputId === 'up')
+            player.direction='left';
+        }else if (data.inputId === 'up'){
             player.upPress = data.state;
-        else if (data.inputId === 'down')
+            player.direction='up';
+        }else if (data.inputId === 'down'){
             player.downPress = data.state;
-
+            player.direction='down';
+        }
+            
         if (data.inputId === 'shoot' && playerList[socket.id] != null)
-            player.shootBullet();
+            player.shootBullet(player.direction);
         else
             player.lastPosition = data.inputId;
     });

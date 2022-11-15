@@ -115,15 +115,15 @@ socket.on('Time', function () {
 document.onkeydown = function (event) {
     if (!inTextField(event)) {
         if (event.keyCode === 68) //d
-            socket.emit('keyPress', { inputId: 'right', state: true });
+            socket.emit('keyPress', { inputId: 'right', state: true});
         else if (event.keyCode === 83)  //s
-            socket.emit('keyPress', { inputId: 'down', state: true });
+            socket.emit('keyPress', { inputId: 'down', state: true});
         else if (event.keyCode === 65) //a
-            socket.emit('keyPress', { inputId: 'left', state: true });
+            socket.emit('keyPress', { inputId: 'left', state: true});
         else if (event.keyCode === 87) //w
-            socket.emit('keyPress', { inputId: 'up', state: true });
+            socket.emit('keyPress', { inputId: 'up', state: true});
         else if (event.keyCode === 75) //k
-            socket.emit('keyPress', { inputId: 'shoot', state: true });
+            socket.emit('keyPress', { inputId: 'shoot', state: true});
     }
 };
 

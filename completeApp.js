@@ -55,14 +55,15 @@ var Bullet = function (playerId,posX,posY,direction) {
 /**
  * Created by wilson on 2018-02-03.
  */
-var Player = function (id, name, points) {
-    var player = {
+let Player = function (id, name, points) {
+    let player = {
         x: X_STARTING_POS,
         y: Y_STARTING_POS,
         id: id,
         username: name,
         points: points,
         char: 'warrior',
+        direction:'down',
 
         rightPress: false,
         leftPress: false,
@@ -88,8 +89,9 @@ var Player = function (id, name, points) {
         player.points++;
     };
 
-    player.shootBullet = function (){
-        let bullet = Bullet(player.id,player.x,player.y,'right');
+    player.shootBullet = function (direction){
+        console.log(direction);
+        let bullet = Bullet(player.id,player.x,player.y,player.direction);
         bulletList[bullet.id] = bullet;
     };
 
@@ -234,17 +236,23 @@ function onConnect(socket, name, points) {
     playerList[socket.id] = player;
 
     socket.on('keyPress', function (data) {   //glitchy character movement
-        if (data.inputId === 'right')
+        player.direction = data.direction;
+        if (data.inputId === 'right'){
             player.rightPress = data.state;
-        else if (data.inputId === 'left')
+            player.direction = 'right';
+        }else if (data.inputId === 'left'){
             player.leftPress = data.state;
-        else if (data.inputId === 'up')
+            player.direction='left';
+        }else if (data.inputId === 'up'){
             player.upPress = data.state;
-        else if (data.inputId === 'down')
+            player.direction='up';
+        }else if (data.inputId === 'down'){
             player.downPress = data.state;
-
+            player.direction='down';
+        }
+            
         if (data.inputId === 'shoot' && playerList[socket.id] != null)
-            player.shootBullet();
+            player.shootBullet(player.direction);
         else
             player.lastPosition = data.inputId;
     });
