@@ -42,10 +42,11 @@ reviveButton.onclick = function () {
 };
 */
 
+/* 채팅방 기능
 var chatText = document.getElementById('chat-text');
 var chatForm = document.getElementById('chat-form');
 var chatInput = document.getElementById('chat-input');
-
+*/
 
 var canvas = document.getElementById('myCanvas').getContext("2d"); 
 //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
@@ -56,6 +57,7 @@ canvas.canvas.height = window.innerHeight;
 window.addEventListener("resize",()=>{
     canvas.canvas.width = window.innerWidth;
     canvas.canvas.height = window.innerHeight;
+    canvas.font = '30px Arial';
 });
 
 
@@ -63,6 +65,7 @@ window.addEventListener("resize",()=>{
 //p5.js 로 교체하고나면 필요없는 코드.
 canvas.font = '30px Arial';
 
+/*
 socket.on('addToChat', function (data) {
     chatText.innerHTML += '<div>' + data + '</div>';
     chatText.scrollTop = chatText.scrollHeight;
