@@ -119,7 +119,7 @@ socket.on('Time', function () {
 */
 
 document.onkeydown = function (event) {
-    if (!inTextField(event)) {
+    //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
         if (event.keyCode === 68) //d
             socket.emit('keyPress', { inputId: 'right', state: true});
         else if (event.keyCode === 83)  //s
@@ -131,10 +131,9 @@ document.onkeydown = function (event) {
         else if (event.keyCode === 75) //k
             socket.emit('keyPress', { inputId: 'shoot', state: true});
     }
-};
-
+//};
 document.onkeyup = function (event) {
-    if (!inTextField(event)) {
+    //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
         if (event.keyCode === 68) //d
             socket.emit('keyPress', { inputId: 'right', state: false });
         else if (event.keyCode === 83)  //s
@@ -146,7 +145,7 @@ document.onkeyup = function (event) {
         else if (event.keyCode === 75) //k
             socket.emit('keyPress', { inputId: 'shoot', state: false });
     }
-};
+//};
 
 function drawChar(player) {
 
