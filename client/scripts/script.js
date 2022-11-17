@@ -56,6 +56,7 @@ canvas.canvas.height = window.innerHeight;
 window.addEventListener("resize",()=>{
     canvas.canvas.width = window.innerWidth;
     canvas.canvas.height = window.innerHeight;
+    canvas.font = '30px Arial';
 });
 
 
