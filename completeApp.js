@@ -1,15 +1,27 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 /**
 <<<<<<< HEAD
  * 서버에서 사용되는 상수 모음
 =======
  * Created by wilso on 2018-02-03.
 >>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
+=======
+/**
+ * 서버에서 사용되는 상수 모음
+>>>>>>> d3c8e1e ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
+=======
+/**
+ * 서버에서 사용되는 상수 모음
+>>>>>>> c1d7b4d ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
  */
 
 const SERVER_PORT = 8000;
 const REFRESH_RATE = 25;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD
 const X_STARTING_POS = 500;
 const Y_STARTING_POS = 200;
@@ -17,10 +29,20 @@ const Y_STARTING_POS = 200;
 const X_STARTING_POS = 100;
 const Y_STARTING_POS = 100;
 >>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
+=======
+const X_STARTING_POS = 500;
+const Y_STARTING_POS = 200;
+>>>>>>> d3c8e1e ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
+=======
+const X_STARTING_POS = 500;
+const Y_STARTING_POS = 200;
+>>>>>>> c1d7b4d ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
 const PLAYER_SPEED = 10;
 const STARTING_DIR = 'down';
 const MONGO_REPO = "Account";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD
 const PROJECTILE_SPEED = 10;
 =======
@@ -28,6 +50,14 @@ const PROJECTILE_SPEED = 10;
 
 =======
 >>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
+=======
+const PROJECTILE_SPEED = 10;
+
+>>>>>>> d3c8e1e ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
+=======
+const PROJECTILE_SPEED = 10;
+
+>>>>>>> c1d7b4d ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
 /*
 const RPS = {
     PAPER: "Paper",
@@ -35,6 +65,8 @@ const RPS = {
     ROCK: "Rock"
 };
 */
+<<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /**
@@ -117,6 +149,10 @@ var Player = function (id, name, points) {
 
 
 >>>>>>> 3b060cf ([22.11.14,백성욱](Feat) 로그인창 CSS 편집)
+=======
+>>>>>>> d3c8e1e ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
+=======
+>>>>>>> c1d7b4d ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
 
 /**
  * Player 클래스
@@ -203,28 +239,6 @@ var Player = function (id, name, points) {
         this.y += this.speed;
     };
 }
-/**
- * 서버에서 사용되는 상수 모음
- */
-
-const SERVER_PORT = 8000;
-const REFRESH_RATE = 25;
-
-const X_STARTING_POS = 500;
-const Y_STARTING_POS = 200;
-const PLAYER_SPEED = 10;
-const STARTING_DIR = 'down';
-const MONGO_REPO = "Account";
-
-const PROJECTILE_SPEED = 10;
-
-/*
-const RPS = {
-    PAPER: "Paper",
-    SCISSOR: "Scissors",
-    ROCK: "Rock"
-};
-*/
 
 /**
  * 게임 서버 메인앱
