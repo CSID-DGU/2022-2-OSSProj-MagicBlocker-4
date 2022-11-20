@@ -14,6 +14,7 @@
 }
 
 #signDiv { /*로그인창*/
+    display:none;
     text-align: center;
     margin-top: 50px;
     width: 300px;
@@ -151,7 +152,7 @@
 jeho edited
 UI 디자인
 */
-#player-list-box{
+.player-list-box{
     width: 250px;
     padding: 20px;
     position: absolute;
@@ -162,6 +163,7 @@ UI 디자인
     border-radius: 30px;
     transform:translate(-50%);
     animation:fadein 3s;
+<<<<<<< HEAD
   }
 
   /*----동적생성 UI -----*/
@@ -170,7 +172,54 @@ UI 디자인
     z-index: 1000; /*쌓임높이. 높을수록 겉에 표시됨*/
     background-color: rgba(0,0,0,0.4);
     border-radius: 30px;
-    transform:translate(-50%);
-    animation:fadein 3s;
-
 }
+
+.ui{
+    text-align: center;
+    /*margin-top: 50px;*/
+    padding: 30px;
+    border: none;
+    box-shadow: 0 0 30px 3px rgba(0, 0, 255, 0.3);
+    background-color: rgba(0, 0, 205, 0.3);
+    /*background-image: url(sprites/loginBack.png);*/
+    background-size: 100% 100%;
+    color:whitesmoke;
+
+    border-radius: 10px; /*테두리를 둥글게*/
+
+    position: fixed;
+    /*
+    top: 30%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+    */
+}
+
+.title{
+    width: 300px;
+    top: 10%;
+    left: 20%;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 1.99rem;
+}
+
+.username_input{
+    height:10%;
+    top: 30%;
+    left: 20%;
+}
+
+.access_button{
+    top: 50%;
+    left: 20%;
+}
+
+.charactor-select{
+    height:30%;
+    top: 30%;
+    left: 45%;
+}
+=======
+  }
+>>>>>>> parent of ec5fbea (timeout 추가)
