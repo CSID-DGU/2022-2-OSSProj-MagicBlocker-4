@@ -10,13 +10,14 @@ setTimeout(function(){
     socket.on('connect',()=>{ 
         console.log('connected!'); //연결이 성공하면 콘솔출력
     });
-    
+
     socket.on('error', (error)=>{
         console.log(`에러 발생: ${error}`);
     });
 
 
 
+let backgroun = document.getElementById('background');
 var signDiv = document.getElementById('signDiv');
 var signDivUser = document.getElementById('signDiv-user');
 var signDivPass = document.getElementById('signDiv-pass');
@@ -26,20 +27,61 @@ let disconnect_button = document.getElementById('disconnect');
 //var kmsButton = document.getElementById('kms-button');
 //var reviveButton = document.getElementById('revive-button');
 //var timeStamp = document.getElementById('timeStamp');
-var playerListDisplay = document.getElementById('player-list');
+let playerListDisplay = document.getElementById('player-list');
 
 let accessButton = document.getElementById('access');
 
 accessButton.innerHTML = '접속!';
 
+disconnect_button.onclick=()=>{
+    console.log('click!!');
+    playerListDisplay.style.display='none'
+}
+
 //동적 ui draw template
-const temp = document.createElement('div');
+/*const temp = document.createElement('div');
+
+
+temp.classList.add('ui');
+temp.classList.add('title');
 temp.innerHTML='hello';
+
 signDiv.appendChild(temp);
+*/
+
 
 //동적 ui 생성
+const temp = document.createElement('div');
+
+temp.classList.add('ui');
+temp.classList.add('title');
+temp.innerHTML='Magic Blocker';
 
 
+background.appendChild(temp);
+
+const temp2 = document.createElement('input');
+temp2.classList.add('ui');
+temp2.classList.add('username_input');
+temp2.setAttribute('placeholder','name');
+
+background.appendChild(temp2);
+
+const temp3 = document.createElement('button');
+temp3.classList.add('ui');
+temp3.classList.add('access_button');
+temp3.innerHTML='접속!';
+background.appendChild(temp3);
+
+const temp4 = document.createElement('div');
+temp4.classList.add('ui');
+temp4.classList.add('charactor-select');
+temp4.innerHTML='여기에 캐릭터 선택창 떠야됨';
+
+background.appendChild(temp4);
+
+
+//
 
 var charImg = new Image();
 //charImg.src = 'client/sprites/warrior.png';
@@ -229,20 +271,17 @@ let char_select_button_list = document.querySelectorAll('.char-select-button');
 
 function updateCharModel(name) {
     console.log('change charactor to : '+name);
-    charImg.src = 'client/sprites/' + name + '.png';
-    socket.emit('charUpdate', { charName: name });
+    //charImg.src = 'client/sprites/' + name + '.png';
+    //socket.emit('charUpdate', { charName: name });
 }
 
 
 for(item of char_select_button_list){
-
     console.log(item.getAttribute('char'));
     item.onclick=()=>{
         updateCharModel(item.getAttribute('char'));
         };
     }
-
-char_select_button_list[1].onclick = updateCharModel('princess');
 
 },1000);
 
