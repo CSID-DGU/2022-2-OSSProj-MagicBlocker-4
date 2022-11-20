@@ -2,7 +2,19 @@
 console.log('로딩중');
 setTimeout(function(){
     console.log('로딩완료');
-    var socket = io();
+    //io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.   
+    var socket = io(); 
+
+    //socket에 저장된 소켓의 메서드 사용가능
+
+    socket.on('connect',()=>{ 
+        console.log('connected!'); //연결이 성공하면 콘솔출력
+    });
+    
+    socket.on('error', (error)=>{
+        console.log(`에러 발생: ${error}`);
+    });
+
 
 
 var signDiv = document.getElementById('signDiv');
@@ -10,6 +22,7 @@ var signDivUser = document.getElementById('signDiv-user');
 var signDivPass = document.getElementById('signDiv-pass');
 var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
+let disconnect_button = document.getElementById('disconnect');
 //var kmsButton = document.getElementById('kms-button');
 //var reviveButton = document.getElementById('revive-button');
 //var timeStamp = document.getElementById('timeStamp');
@@ -224,8 +237,10 @@ function updateCharModel(name) {
 for(item of char_select_button_list){
 
     console.log(item.getAttribute('char'));
-    item.onclick=updateCharModel(item.getAttribute('char'))
-}
+    item.onclick=()=>{
+        updateCharModel(item.getAttribute('char'));
+        };
+    }
 
 char_select_button_list[1].onclick = updateCharModel('princess');
 
