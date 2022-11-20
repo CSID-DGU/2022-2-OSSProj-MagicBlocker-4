@@ -1,7 +1,9 @@
+
 console.log('로딩중');
 setTimeout(function(){
     console.log('로딩완료');
     var socket = io();
+
 
 var signDiv = document.getElementById('signDiv');
 var signDivUser = document.getElementById('signDiv-user');
@@ -14,6 +16,12 @@ var signDivSignUp = document.getElementById('signDiv-signUp');
 var playerListDisplay = document.getElementById('player-list');
 
 let accessButton = document.getElementById('access');
+
+
+const temp = document.createElement('div');
+temp.innerHTML='hello';
+signDiv.appendChild(temp);
+
 
 var charImg = new Image();
 //charImg.src = 'client/sprites/warrior.png';
@@ -198,11 +206,23 @@ function drawBullet(bullet){
     }
 }
 
-function UpdateCharModel(name) {
+
+let char_select_button_list = document.querySelectorAll('.char-select-button');
+
+function updateCharModel(name) {
     console.log('change charactor to : '+name);
     charImg.src = 'client/sprites/' + name + '.png';
     socket.emit('charUpdate', { charName: name });
 }
+
+
+for(item of char_select_button_list){
+
+    console.log(item.getAttribute('char'));
+    item.onclick=updateCharModel(item.getAttribute('char'))
+}
+
+char_select_button_list[1].onclick = updateCharModel('princess');
 
 },1000);
 
