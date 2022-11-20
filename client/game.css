@@ -152,7 +152,7 @@
 jeho edited
 UI 디자인
 */
-#player-list-box{
+.player-list-box{
     width: 250px;
     padding: 20px;
     position: absolute;
@@ -163,6 +163,7 @@ UI 디자인
     border-radius: 30px;
     transform:translate(-50%);
     animation:fadein 3s;
+<<<<<<< HEAD
   }
 
   /*----동적생성 UI -----*/
@@ -219,3 +220,6 @@ UI 디자인
     top: 30%;
     left: 45%;
 }
+=======
+  }
+>>>>>>> parent of ec5fbea (timeout 추가)
