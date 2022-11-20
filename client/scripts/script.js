@@ -1,16 +1,45 @@
-var socket = io();
+
+console.log('로딩중');
+setTimeout(function(){
+    console.log('로딩완료');
+    //io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.   
+    var socket = io(); 
+
+    //socket에 저장된 소켓의 메서드 사용가능
+
+    socket.on('connect',()=>{ 
+        console.log('connected!'); //연결이 성공하면 콘솔출력
+    });
+    
+    socket.on('error', (error)=>{
+        console.log(`에러 발생: ${error}`);
+    });
+
+
 
 var signDiv = document.getElementById('signDiv');
 var signDivUser = document.getElementById('signDiv-user');
 var signDivPass = document.getElementById('signDiv-pass');
 var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
+let disconnect_button = document.getElementById('disconnect');
 //var kmsButton = document.getElementById('kms-button');
 //var reviveButton = document.getElementById('revive-button');
 //var timeStamp = document.getElementById('timeStamp');
 var playerListDisplay = document.getElementById('player-list');
 
 let accessButton = document.getElementById('access');
+
+accessButton.innerHTML = '접속!';
+
+//동적 ui draw template
+const temp = document.createElement('div');
+temp.innerHTML='hello';
+signDiv.appendChild(temp);
+
+//동적 ui 생성
+
+
 
 var charImg = new Image();
 //charImg.src = 'client/sprites/warrior.png';
@@ -195,9 +224,25 @@ function drawBullet(bullet){
     }
 }
 
-function UpdateCharModel(name) {
+
+let char_select_button_list = document.querySelectorAll('.char-select-button');
+
+function updateCharModel(name) {
     console.log('change charactor to : '+name);
     charImg.src = 'client/sprites/' + name + '.png';
     socket.emit('charUpdate', { charName: name });
 }
+
+
+for(item of char_select_button_list){
+
+    console.log(item.getAttribute('char'));
+    item.onclick=()=>{
+        updateCharModel(item.getAttribute('char'));
+        };
+    }
+
+char_select_button_list[1].onclick = updateCharModel('princess');
+
+},1000);
 
