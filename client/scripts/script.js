@@ -52,33 +52,49 @@ signDiv.appendChild(temp);
 
 //동적 ui 생성
 const temp = document.createElement('div');
-
 temp.classList.add('ui');
 temp.classList.add('title');
 temp.innerHTML='Magic Blocker';
-
 
 background.appendChild(temp);
 
 const temp2 = document.createElement('input');
 temp2.classList.add('ui');
 temp2.classList.add('username_input');
-temp2.setAttribute('placeholder','name');
+temp2.setAttribute('placeholder','Please Enter Nickname');
 
 background.appendChild(temp2);
 
 const temp3 = document.createElement('button');
 temp3.classList.add('ui');
 temp3.classList.add('access_button');
-temp3.innerHTML='접속!';
+temp3.innerHTML='Play';
 background.appendChild(temp3);
 
 const temp4 = document.createElement('div');
 temp4.classList.add('ui');
 temp4.classList.add('charactor-select');
-temp4.innerHTML='여기에 캐릭터 선택창 떠야됨';
+temp4.innerHTML="여기에 캐릭터 선택창 떠야됨"
 
 background.appendChild(temp4);
+
+const temp5 = document.createElement('button');
+temp5.classList.add('ui');
+temp5.classList.add('how-to-play');
+temp5.innerHTML='How to Play?';
+
+background.appendChild(temp5);
+
+const temp6 = document.createElement('div');
+temp6.classList.add('ui');
+temp6.classList.add('guide');
+temp6.innerHTML='이동 : w a s d \n 발사 : k';
+
+// background.appendChild(temp6);
+
+temp5.onclick = function(){ // How to Play? 클릭 시 도움말 뜨도록
+    background.appendChild(temp6);
+}
 
 
 //
@@ -92,6 +108,7 @@ var charImg = new Image();
 var imgFrameIndex = 100;
 var imgWidth = 100;
 var imgHeight = 100;
+
 
 
 accessButton.onclick = function(){
