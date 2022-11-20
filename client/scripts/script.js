@@ -1,4 +1,7 @@
-var socket = io();
+console.log('로딩중');
+setTimeout(function(){
+    console.log('로딩완료');
+    var socket = io();
 
 var signDiv = document.getElementById('signDiv');
 var signDivUser = document.getElementById('signDiv-user');
@@ -200,4 +203,6 @@ function UpdateCharModel(name) {
     charImg.src = 'client/sprites/' + name + '.png';
     socket.emit('charUpdate', { charName: name });
 }
+
+},1000);
 
