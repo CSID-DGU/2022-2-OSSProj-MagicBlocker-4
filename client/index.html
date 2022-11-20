@@ -1,9 +1,11 @@
 <html>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js></script>
+<!--<script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js></script>-->
+<script src="../socket.io/socket.io.js"></script><!--CDN을 사용하지않고, 서버에서 보내준 라이브러리 사용하는걸로 수정-->
 <link rel="stylesheet" type="text/css" href="/client/game.css">
 <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--favicon.ico 404오류 해결(icon이 없어서 임시로 땜빵한거임.)-->
 
 <div id="background">
+
 
     <div id="signDiv"> <!--로그인 프롬프트창-->
         <title>  </title>
@@ -46,7 +48,7 @@
 </div>
 
 
-<div class="player-list-box">
+<div>
         <div id="player-list-box" style="width: 200px; height : 500px; float:left;">
             <div style="font-weight : bold;">접속중인 플레이어</div>
             <br>

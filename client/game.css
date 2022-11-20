@@ -151,7 +151,7 @@
 jeho edited
 UI 디자인
 */
-.player-list-box{
+#player-list-box{
     width: 250px;
     padding: 20px;
     position: absolute;
