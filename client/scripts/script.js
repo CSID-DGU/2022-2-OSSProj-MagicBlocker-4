@@ -17,10 +17,15 @@ var playerListDisplay = document.getElementById('player-list');
 
 let accessButton = document.getElementById('access');
 
+accessButton.innerHTML = '접속!';
 
+//동적 ui draw template
 const temp = document.createElement('div');
 temp.innerHTML='hello';
 signDiv.appendChild(temp);
+
+//동적 ui 생성
+
 
 
 var charImg = new Image();
