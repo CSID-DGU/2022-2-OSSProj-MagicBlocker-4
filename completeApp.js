@@ -268,7 +268,6 @@ var Player = function (id, name, points) {
  
  
  io.sockets.on('connection', function (socket) {
- 
      socket.id = Math.random();
      socketList[socket.id] = socket;
      console.log("Socket " + socket.id + " has connected");

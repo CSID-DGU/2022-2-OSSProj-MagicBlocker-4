@@ -151,7 +151,7 @@
 jeho edited
 UI 디자인
 */
-.player-list-box{
+#player-list-box{
     width: 250px;
     padding: 20px;
     position: absolute;
@@ -163,3 +163,14 @@ UI 디자인
     transform:translate(-50%);
     animation:fadein 3s;
   }
+
+  /*----동적생성 UI -----*/
+
+.ui-block{/*공중에 떠있는 투명한 검은색 ui 틀*/
+    z-index: 1000; /*쌓임높이. 높을수록 겉에 표시됨*/
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 30px;
+    transform:translate(-50%);
+    animation:fadein 3s;
+
+}
