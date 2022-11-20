@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
 <<<<<<< HEAD
  * 서버에서 사용되는 상수 모음
@@ -153,6 +154,8 @@ var Player = function (id, name, points) {
 >>>>>>> d3c8e1e ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
 =======
 >>>>>>> c1d7b4d ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
+=======
+>>>>>>> b472a18 ([22.11.20,백성욱](feat)분리형 로그인 UI)
 
 /**
  * Player 클래스
@@ -239,6 +242,28 @@ var Player = function (id, name, points) {
         this.y += this.speed;
     };
 }
+/**
+ * 서버에서 사용되는 상수 모음
+ */
+
+const SERVER_PORT = 8000;
+const REFRESH_RATE = 25;
+
+const X_STARTING_POS = 500;
+const Y_STARTING_POS = 200;
+const PLAYER_SPEED = 10;
+const STARTING_DIR = 'down';
+const MONGO_REPO = "Account";
+
+const PROJECTILE_SPEED = 10;
+
+/*
+const RPS = {
+    PAPER: "Paper",
+    SCISSOR: "Scissors",
+    ROCK: "Rock"
+};
+*/
 
 /**
  * 게임 서버 메인앱
@@ -268,6 +293,7 @@ var Player = function (id, name, points) {
  
  
  io.sockets.on('connection', function (socket) {
+ 
      socket.id = Math.random();
      socketList[socket.id] = socket;
      console.log("Socket " + socket.id + " has connected");
