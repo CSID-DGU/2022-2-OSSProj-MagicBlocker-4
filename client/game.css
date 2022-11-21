@@ -153,11 +153,12 @@ jeho edited
 UI 디자인
 */
 .player-list-box{
-    width: 250px;
+    width: 15vw;
+    height: 80vh;
     padding: 20px;
     position: absolute;
     z-index: 1000;
-    top: 5%;
+    top: 7%;
     left: 90%;
     background-color: rgba(0,0,0,0.4);
     border-radius: 30px;
@@ -196,19 +197,21 @@ UI 디자인
 }
 
 .title{
-    width: 300px;
+    width: 50vw;
+    height: 20vh;
     top: 10%;
-    left: 25%;
+    left: 5%;
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     font-size: 1.99rem;
     background-color: rgba(0, 0, 0, 0);
-    box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 30rem 3rem rgba(0, 0, 0, 0);
     color: #fffff0;
     animation:fadein 2s;
 }
 
 .username_input{
-    height:7%;
+    width: 15vw;
+    height:7vh;
     top: 35%;
     left: 20%;
     padding: 28px;
@@ -216,13 +219,13 @@ UI 디자인
 }
 
 .access_button{
-    width: 15%;
-    height: 15%;
+    width: 10vw;
+    height: 8vh;
     top: 52%;
     left: 23.5%;
     padding: 3px;
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
-    font-size: 1.2em;
+    font-size: 1.2vmax;
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
     color: #fffff0;
@@ -230,9 +233,10 @@ UI 디자인
 }
 
 .charactor-select{
+    width: 25%;
     height:30%;
     top: 30%;
-    left: 45%;
+    left: 45%;  
     background-color: rgba(239, 235, 235, 0.5);
 }
 
@@ -243,6 +247,7 @@ UI 디자인
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
     color: #fffff0;
+    font-size: 0.6vmin;
 }
 
 .guide{
@@ -257,7 +262,7 @@ UI 디자인
 
 input::placeholder {
     color: #fffff0;
-    font-size: 0.4em;
+    font-size: 0.4vmax;
     opacity: 0.3;
     font-style: italic;
 }
