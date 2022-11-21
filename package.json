@@ -4,8 +4,8 @@
   "description": "Created using NodeJS",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon completeApp.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "cd client && gulp && cd .. && gulp && nodemon completeApp.js",
+    "start": " nodemon completeApp.js"
   },
   "repository": {
     "type": "git",

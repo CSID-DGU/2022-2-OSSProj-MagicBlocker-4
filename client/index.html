@@ -1,76 +1,31 @@
 <html>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js></script>
-<link rel="stylesheet" type="text/css" href="/client/game.css">
-<link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--favicon.ico 404오류 해결(icon이 없어서 임시로 땜빵한거임.)-->
-
-
-
-<div id="background">
-
-
-    <div id="signDiv"> <!--로그인 프롬프트창-->
-        <title>  </title>
-        <div id="loginTitle">Magic Blocker</div>
-        <div>이동 : W A S D</div>
-        <div>발사 : K </div>
-        <input id="signDiv-user" type="text" placeholder="이름을 설정하세요">
-        <div>캐릭터 선택</div>
-        <div id="character-select">
-            <button class="char-select-button" char='warrior'>
-                <img id="princess-id" src="client/sprites/knight-select.png" alt="char" style="width:60px; height:60px;">
-                <br>기사
-            </button>
-            <button class="char-select-button" char='princess'>
-                <img id="warrior-id" src="client/sprites/archor-select.png" alt="char" style="width:60px; height:60px;">
-                <br>궁수
-            </button>
-            <button class="char-select-button" char='professor'>
-                <img id="goblin-id" src="client/sprites/professor-select.png" alt="char" style="width:60px; height:60px;">
-                <br>교수
-            </button>
-        </div>
-        <br>
-        <!--br> Password: -->
-        <!--input id="signDiv-pass" type="text"-->
-        <br>
-        <br>
-            <!--button class="button" id="signDiv-signIn">Sign In</button-->
-            <!--button class="button" id="signDiv-signUp">Sign Up</button-->
-        <button class="button" id="access">로딩중</button>
-        <button id="disconnect">연결종료</button>
-        <div class="ui-block">
-            helloasdf
-        </div>
-        
-    </div>
-
-    <div id="gameDiv" style="display: inline-block;">
-        <div width="1000" height="500">
-            <canvas id="myCanvas"></canvas>
-        </div>
-    </div>
-    <!-- <div id="guideDiv" style="display: none;">
-        <div width="300" height="100">
-            fdsdfdsfdsfd
-        </div>
-    </div> -->
-</div>
-
-
-<div class="player-list-box">
-        <div id="player-list-box" style="width: 200px; height : 500px; float:left;">
-            <div style="font-weight : bold; color: fffff0;">접속중인 플레이어</div>
-            <br>
-            <div id="player-list"></div>
-        </div>
-</div>
 
 
 
 <head>
-
-    <script src="client/scripts/script.js"></script>
-
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js></script>
+    <link rel="stylesheet" type="text/css" href="/client/game.css">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--favicon.ico 404오류 해결(icon이 없어서 임시로 땜빵한거임.)-->
+    <script src="/client/main.js"></script>
 </head>
+<body>
+
+    <div id="ui_game">
+        <!--로그인 프롬프트창-->
+            <!--script.js에서, socket 로딩이 끝난 후, ui 요소를 동적으로 생성-->
+            <div id="ui_login"><!--동적생성위치--></div>
+
+        
+            <div id="gameDiv" style="display: inline-block;">
+                <div width="1000" height="500">
+                    <canvas id="myCanvas"></canvas>
+                </div>
+            </div>
+    </div>
+      
+
+</body>
+
+
 
 </html>
