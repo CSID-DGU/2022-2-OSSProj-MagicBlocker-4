@@ -92,24 +92,24 @@ setTimeout(function(){
     */
 
     //플레이 버튼 눌렀을때
-    document.getElementsByClassName("play_button").onclick = function(){
-        console.log("pushed!");
+    document.getElementById("play_button").onclick = function(){
+        //console.log("pushed!");
         //alert("access!");
         //socket.emit('access');
-        //ui_login.style.display='none';
-        //gameDiv.style.display='inline-block';
-        //socket.emit('signIn', { username: ui_name_input.value.trim()});
+        ui_login.style.display='none';
+        gameDiv.style.display='inline-block';
+        socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
     };
 
     socket.on('renderInfo', function (playerData,bulletData) {
 
         canvas.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
 
-        document.getElementsByClassName("player").innerHTML = '';
+        document.getElementById("player_list").innerHTML = '';
 
         for (var player of playerData) {
             canvas.fillText(player.username + ": " + player.points, player.x, player.y);
-            playerListDisplay.innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
+            document.getElementById("player_list").innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
 
             drawChar(player);
         }

@@ -4,8 +4,8 @@
 Ui={
 
     create_login_ui:function(){
-        let ui_login = document.getElementById("ui_login");
-        let ui_game = document.getElementById("ui_game");
+        const ui_login = document.getElementById("ui_login");
+        const ui_game = document.getElementById("ui_game");
 
         //동적 ui 생성
         const ui_title = document.createElement('div');
@@ -17,14 +17,14 @@ Ui={
 
         const ui_name_input = document.createElement('input');
         ui_name_input.classList.add('ui');
-        ui_name_input.classList.add('username_input');
+        ui_name_input.id='username_input';
         ui_name_input.setAttribute('placeholder','Please Enter Nickname');
 
         ui_login.appendChild(ui_name_input);
 
         const ui_play_button = document.createElement('button');
         ui_play_button.classList.add('ui');
-        ui_play_button.classList.add('play_button');
+        ui_play_button.id='play_button';
         ui_play_button.innerHTML='Play';
         ui_login.appendChild(ui_play_button);
 
@@ -51,7 +51,15 @@ Ui={
         const ui_player_list_box = document.createElement('div');
         ui_player_list_box.id = 'ui_player_list_box';
         ui_player_list_box.innerHTML='접속중인 플레이어';
-        ui_game.appendChild(ui_how_to_play_button);
+
+        ui_game.appendChild(ui_player_list_box);
+
+        const player_list = document.createElement('div');
+        player_list.id = 'player_list';
+
+        ui_player_list_box.appendChild(player_list);
+
+        
 
         ui_how_to_play_button.onclick = function(){ // How to Play? 클릭 시 도움말 뜨도록
             if(document.getElementById("guideID")==null){
