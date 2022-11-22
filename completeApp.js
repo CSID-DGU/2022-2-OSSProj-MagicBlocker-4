@@ -8,15 +8,17 @@
     this.id = id;
     this.username = name;
     this.points = points;
-    this.char = 'warrior';
-    this.direction = 'down';
+    this.char = STARTING_CHAR;
+    this.direction = STARTING_DIR;
+
+    this.cooldown = 0;
 
     this.rightPress = false;
     this.leftPress=false;
     this.downPress=false;
     this.upPress=false;
+    this.isShoot=false;
     
-    this.lastPosition=STARTING_DIR;
     this.speed=PLAYER_SPEED;
     
     this.updatePosition = function () {
@@ -25,17 +27,17 @@
             this.direction='right';
             //console.log('right!!!')
         }                
-        if (this.leftPress){
+        else if (this.leftPress){
             this.x -= this.speed;
             this.direction='left';
             //console.log('left!!!')
         }   
-        if (this.upPress){
+        else if (this.upPress){
             this.y -= this.speed;
             this.direction='up';
             //console.log('up!!!')
         }
-        if (this.downPress){
+        else if (this.downPress){
             this.y += this.speed;
             this.direction='down';
             //console.log('down!!!')
@@ -48,9 +50,18 @@
     };
 
     this.shootBullet = function (){
-        let bullet = new Projectile(this.id,this.x,this.y,this.direction);
-        bulletList[bullet.id] = bullet;
-    };      
+        if(this.isShoot&&this.cooldown===0){
+            let bullet = new Projectile(this.id,this.x,this.y,this.direction);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }
+        
+    };
+    this.updateCooldown = function(){
+        if(this.cooldown>0){
+            this.cooldown-=1;
+        }
+    }
 };
 
 /**
@@ -95,7 +106,8 @@ const X_STARTING_POS = 500;
 const Y_STARTING_POS = 200;
 const PLAYER_SPEED = 10;
 const STARTING_DIR = 'down';
-const MONGO_REPO = "Account";
+const STARTING_CHAR ='warrior';
+const COOL_TIME = 30;
 
 const PROJECTILE_SPEED = 10;
 
@@ -112,6 +124,7 @@ const RPS = {
  */
 
  let express = require('express');
+const ThenPromise = require('promise');
  let app = express();
  let server = require('http').Server(app);
  let io = require('socket.io')(server, {});
@@ -167,13 +180,18 @@ const RPS = {
  
      for (let i in playerList) {
          let player = playerList[i];
+
          player.updatePosition();
+         player.shootBullet();
+         player.updateCooldown();
+
          pack.push({
              x: player.x,
              y: player.y,
              username: player.username,
              points: player.points,
-             lastPosition: player.lastPosition,
+             cooldown:player.cooldown,
+             direction: player.direction,
              char: player.char
          });
      }
@@ -215,26 +233,6 @@ const RPS = {
      }
  }, REFRESH_RATE);
  
- /*
- function isValidNewCredential(userData) {
-     return new Promise(function (callback) {
-         let query = {
-             username: userData.username
-         };
-         dbo.collection(MONGO_REPO).find(query).toArray(function (err, result) {
-             if (err) throw err;
-             if (result.length == 0) {
-                 console.log("user credential not taken yet: " + JSON.stringify(userData));
-                 callback(true);
-             }
-             else {
-                 callback(false);
-                 console.log("User credential already exist: " + JSON.stringify(result));
-             }
-         });
-     });
- }
- */
  
  function toAllChat(line) { //채팅시스템
      for (let i in socketList)
@@ -262,10 +260,9 @@ const RPS = {
              //player.direction='down';
          }
              
-         if (data.inputId === 'shoot' && playerList[socket.id] != null)
-             player.shootBullet(player.direction);
-         else
-             player.lastPosition = data.inputId;
+         if (data.inputId === 'shoot'&& playerList[socket.id] != null)
+             player.isShoot=data.state;
+
      });
  
      socket.on('sendMsgToServer', function (data) {
