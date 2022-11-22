@@ -50,10 +50,10 @@ setTimeout(function(){
     var chatInput = document.getElementById('chat-input');
     */
 
-    var canvas = document.getElementById('myCanvas').getContext("2d"); 
+    var ctx = document.getElementById('myCanvas').getContext("2d"); 
     //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
-    canvas.canvas.width = window.innerWidth;
-    canvas.canvas.height = window.innerHeight;
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
     //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
     //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
     window.addEventListener("resize",()=>{
@@ -63,7 +63,7 @@ setTimeout(function(){
     });
     //canvas로 렌더링작업(이미지 불러오기 등)을 하려면 getContext를 2d로 지정해야한다.
     //p5.js 로 교체하고나면 필요없는 코드.
-    canvas.font = '30px Arial';
+    ctx.font = '30px Arial';
 
     /*
     socket.on('addToChat', function (data) {
@@ -103,12 +103,12 @@ setTimeout(function(){
 
     socket.on('renderInfo', function (playerData,bulletData) {
 
-        canvas.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
 
         document.getElementById("player_list").innerHTML = '';
 
         for (var player of playerData) {
-            canvas.fillText(player.username + ": " + player.points, player.x, player.y);
+            ctx.fillText(player.username + ": " + player.points, player.x, player.y);
             document.getElementById("player_list").innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
 
             drawChar(player);
@@ -127,34 +127,9 @@ setTimeout(function(){
     });
     */
 
-    document.onkeydown = function (event) {
-        //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
-            if (event.keyCode === 68) //d
-                socket.emit('keyPress', { inputId: 'right', state: true});
-            else if (event.keyCode === 83)  //s
-                socket.emit('keyPress', { inputId: 'down', state: true});
-            else if (event.keyCode === 65) //a
-                socket.emit('keyPress', { inputId: 'left', state: true});
-            else if (event.keyCode === 87) //w
-                socket.emit('keyPress', { inputId: 'up', state: true});
-            else if (event.keyCode === 75) //k
-                socket.emit('keyPress', { inputId: 'shoot', state: true});
-        }
-    //};
-    document.onkeyup = function (event) {
-        //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
-            if (event.keyCode === 68) //d
-                socket.emit('keyPress', { inputId: 'right', state: false });
-            else if (event.keyCode === 83)  //s
-                socket.emit('keyPress', { inputId: 'down', state: false });
-            else if (event.keyCode === 65) //a
-                socket.emit('keyPress', { inputId: 'left', state: false });
-            else if (event.keyCode === 87) //w
-                socket.emit('keyPress', { inputId: 'up', state: false });
-            else if (event.keyCode === 75) //k
-                socket.emit('keyPress', { inputId: 'shoot', state: false });
-        }
-    //};
+    Keyboard.mySocket = socket;
+    document.onkeydown = Keyboard.control_down;
+    document.onkeyup = Keyboard.contro_up;
 
     function drawChar(player) {
 
@@ -165,16 +140,16 @@ setTimeout(function(){
 
         switch (player.lastPosition) {
             case 'down':
-                canvas.drawImage(playersImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+                ctx.drawImage(playersImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
                 break;
             case 'up':
-                canvas.drawImage(playersImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+                ctx.drawImage(playersImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
                 break;
             case 'left':
-                canvas.drawImage(playersImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+                ctx.drawImage(playersImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
                 break;
             case 'right':
-                canvas.drawImage(playersImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+                ctx.drawImage(playersImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
                 break;
         }
     }
@@ -189,16 +164,16 @@ setTimeout(function(){
         
         switch(bullet.direction){
             case 'down':
-                canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+                ctx.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
                 break;
             case 'up':
-                canvas.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+                ctx.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
                 break;
             case 'left':
-                canvas.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+                ctx.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
                 break;
             case 'right':
-                canvas.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+                ctx.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
                 break;
 
         }
