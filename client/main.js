@@ -2,158 +2,138 @@
 // Connect.js
 //
 
-console.log('로딩중');
+//io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.   
+var socket = io(); 
+//socket에 저장된 소켓의 메서드 사용가능
+socket.on('connect',()=>{ 
+  console.log('connected!'); //연결이 성공하면 콘솔출력
+  });
+socket.on('error', (error)=>{
+  console.log(`소켓 에러 발생: ${error}`); //여기에 오류 처리를 적을 예정임. 연결오류 발생시, 소켓을 차단하고 새 소켓을 생성
+});
 
-setTimeout(function(){
-    console.log('로딩완료');
-    //io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.   
-    var socket = io(); 
+Ui.create_login_ui() //ui.js 로그인 ui 동적생성
 
-    //socket에 저장된 소켓의 메서드 사용가능
+//var charImg = new Image();
+//charImg.src = 'client/sprites/warrior.png';
 
-    socket.on('connect',()=>{ 
-        console.log('connected!'); //연결이 성공하면 콘솔출력
-    });
+//상하좌우의 플레이어 이미지가 다르므로, 상하좌우가 붙어있는 200*100px 의 캐릭터 이미지를 잘라서 씀(이를 스프라이트 방식이라고 함)
+//크기를 100으로 키우고, 정사각형으로 바꾸었음.
 
-    socket.on('error', (error)=>{
-        console.log(`소켓 에러 발생: ${error}`);
-    });
-
-    Ui.create_login_ui() //ui.js 로그인 ui 동적생성
-
-    var charImg = new Image();
-    //charImg.src = 'client/sprites/warrior.png';
-
-    //상하좌우의 플레이어 이미지가 다르므로, 상하좌우가 붙어있는 200*60px 의 캐릭터 이미지를 잘라서 씀
-    //imgFrameIndex를 기준으로 canvas가 이미지를 상하좌우를 기준으로 잘라서 가져옴
-    //크기를 70으로 키우고, 정사각형으로 바꾸었음.
-
-    var imgFrameIndex = 100;
-    var imgWidth = 100;
-    var imgHeight = 100;
+var imgFrameIndex = 100; //기준자
+var imgWidth = 100;
+var imgHeight = 100;
 
     
-    //캔버스 방식 렌더링으로 복구한 것. p5 렌더링은 모바일에서 너무 느림이 관찰되었다.
-    let canvas = document.getElementById('myCanvas').getContext("2d"); 
-    //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
-    canvas.canvas.width = window.innerWidth;
-    canvas.canvas.height = window.innerHeight;
-    canvas.font = '30px Arial';
-    //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
-    //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
-    window.addEventListener("resize",()=>{
-        canvas.canvas.width = window.innerWidth;
-        canvas.canvas.height = window.innerHeight;
-        canvas.font = '30px Arial';
-    });
+//캔버스 방식 렌더링으로 복구한 것. p5 렌더링은 모바일에서 너무 느림이 관찰되었다.
+let canvas = document.getElementById('myCanvas').getContext("2d"); 
+//게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
+canvas.canvas.width = window.innerWidth;
+canvas.canvas.height = window.innerHeight;
+canvas.font = '30px Arial';
+//게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
+//브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
+window.addEventListener("resize",()=>{
+  canvas.canvas.width = window.innerWidth;
+  canvas.canvas.height = window.innerHeight;
+  canvas.font = '30px Arial';
+  });
     
-    //
-    //플레이 버튼 눌렀을때
-    document.getElementById("play_button").onclick = function(){
-        //console.log("pushed!");
-        //alert("access!");
-        //socket.emit('access');
-        ui_login.style.display='none';
-        gameDiv.style.display='inline-block';
-        socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
-    };
+//
+//플레이 버튼 눌렀을때
+document.getElementById("play_button").onclick = function(){
+//console.log("pushed!");
+//alert("access!");
+//socket.emit('access');
+ui_login.style.display='none';
+gameDiv.style.display='inline-block';
+socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
+};
 
-
-    socket.on('renderInfo', function (playerPack,bulletPack) {
-
-        
-    canvas.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
-
-      document.getElementById('player_list').innerHTML = '';
-
-      for (var player of playerPack) {
-          canvas.fillText(player.username + ": " + player.points, player.x, player.y);
-          document.getElementById('player_list').innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
-
+socket.on('renderInfo', function (playerPack,bulletPack) {
+  canvas.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
+  document.getElementById('player_list').innerHTML = '';
+  for(var player of playerPack) {
+    canvas.fillText(player.username + ": " + player.points, player.x, player.y);
+    document.getElementById('player_list').innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
           drawChar(player);
         }
-
-    for (var bullet of bulletPack){
+    for(var bullet of bulletPack){
         drawBullet(bullet);
       }
-        
     }
   );    
     
-    Keyboard.mySocket = socket;
-    document.onkeyup = function(event){
-      Keyboard.getKeyUp(event);
-    }
-    document.onkeydown = function(event){
-      Keyboard.getKeyDown(event);
-    }
+Keyboard.mySocket = socket;
+document.onkeyup = function(event){
+  Keyboard.getKeyUp(event);
+  }
+document.onkeydown = function(event){
+  Keyboard.getKeyDown(event);
+  }
+function drawChar(player) {
+  var playersImg = new Image();
+  //playersImg.src ='/client/sprites/' + player.char + '.png';
+  playersImg.src='client/sprites/knight.png';
   
-    function drawChar(player) {
-
-      var playersImg = new Image();
-      //playersImg.src ='/client/sprites/' + player.char + '.png';
-      playersImg.src='client/sprites/knight.png';
-  
-      switch (player.direction) {
-          case 'down':
-              canvas.drawImage(playersImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-              break;
-          case 'up':
-              canvas.drawImage(playersImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-              break;
-          case 'left':
-              canvas.drawImage(playersImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-              break;
-          case 'right':
-              canvas.drawImage(playersImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-              break;
+  switch (player.direction) {
+    case 'down':
+      canvas.drawImage(playersImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+      break;
+    case 'up':
+      canvas.drawImage(playersImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+      break;
+    case 'left':
+      canvas.drawImage(playersImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+      break;
+    case 'right':
+      canvas.drawImage(playersImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+      break;
       }
   }
   
   function drawBullet(bullet){
-      var bulletImg = new Image();
-      //bulletImg.src = 'client/sprites/bullet.png';
-      bulletImg.src = 'client/sprites/bullet_knight.png';
+    var bulletImg = new Image();
+    //bulletImg.src = 'client/sprites/bullet.png';
+    bulletImg.src = 'client/sprites/bullet_knight.png';
   
-      //canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight); //원본코드(bullet방향고려x)
-      //player의 발사방향에 따라 bullet 이미지 다르게 표시
+    //canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight); //원본코드(bullet방향고려x)
+    //player의 발사방향에 따라 bullet 이미지 다르게 표시
       
-      switch(bullet.direction){
-          case 'down':
-              canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-              break;
-          case 'up':
-              canvas.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-              break;
-          case 'left':
-              canvas.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-              break;
-          case 'right':
-              canvas.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-              break;
-  
+    switch(bullet.direction){
+      case 'down':
+        canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+        break;
+      case 'up':
+        canvas.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+        break;
+      case 'left':
+        canvas.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+        break;
+      case 'right':
+        canvas.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+        break;
       }
   }
   
 
 
-    let char_select_button_list = document.querySelectorAll('.char-select-button');
+let char_select_button_list = document.querySelectorAll('.char-select-button');
 
-    function updateCharModel(name) {
-        console.log('change charactor to : '+name);
-        //charImg.src = 'client/sprites/' + name + '.png';
-        //socket.emit('charUpdate', { charName: name });
+  function updateCharModel(name) {
+  console.log('change charactor to : '+name);
+    //charImg.src = 'client/sprites/' + name + '.png';
+    //socket.emit('charUpdate', { charName: name });
+  }
+
+
+  for(item of char_select_button_list){
+      console.log(item.getAttribute('char'));
+      item.onclick=()=>{
+        updateCharModel(item.getAttribute('char'));
+        };
     }
 
-
-    for(item of char_select_button_list){
-        console.log(item.getAttribute('char'));
-        item.onclick=()=>{
-            updateCharModel(item.getAttribute('char'));
-            };
-        }
-
-},1000);
 
 //
 // Keyboard.js
@@ -195,9 +175,6 @@ Keyboard={
             else if (e.keyCode === this.attackkey)
               this.mySocket.emit('keyPress', { inputId: 'shoot', state: false});
             }
-            
-            
-    
 }
 //
 // Ui.js
@@ -271,6 +248,5 @@ Ui={
 
         const gameDiv = document.createElement('div');//gameScreen의 div. 이 안에 렌더링된 게임화면이 렌더링 엔진에 의해 동적으로 생성된다.
         ui_game.appendChild(gameDiv);
-
     }
 }
