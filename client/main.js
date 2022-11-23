@@ -32,65 +32,6 @@ setTimeout(function(){
     var imgWidth = 100;
     var imgHeight = 100;
 
-
-    /*
-    kmsButton.onclick = function () {
-        socket.emit('kms');
-    };
-    */
-    /*
-    reviveButton.onclick = function () {
-        socket.emit('revive');
-    };
-    */
-
-    /* 채팅방 기능
-    var chatText = document.getElementById('chat-text');
-    var chatForm = document.getElementById('chat-form');
-    var chatInput = document.getElementById('chat-input');
-    */
-
-    var canvas = document.getElementById('myCanvas').getContext("2d"); 
-    //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
-    canvas.canvas.width = window.innerWidth;
-    canvas.canvas.height = window.innerHeight;
-    //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
-    //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
-    window.addEventListener("resize",()=>{
-        canvas.canvas.width = window.innerWidth;
-        canvas.canvas.height = window.innerHeight;
-        canvas.font = '30px Arial';
-    });
-    //canvas로 렌더링작업(이미지 불러오기 등)을 하려면 getContext를 2d로 지정해야한다.
-    //p5.js 로 교체하고나면 필요없는 코드.
-    canvas.font = '30px Arial';
-
-    /*
-    socket.on('addToChat', function (data) {
-        chatText.innerHTML += '<div>' + data + '</div>';
-        chatText.scrollTop = chatText.scrollHeight;
-    });
-
-    function inTextField(event) {
-        var elem = event.target || event.srcElement;
-        if (elem.nodeType == 3)
-            elem = elem.parentNode;
-
-        return (elem.tagName == "TEXTAREA" ||
-            (elem.tagName == "INPUT" && (elem.getAttribute("type") == "text")));
-    }
-    /*
-    chatForm.onsubmit = function (event) {
-        event.preventDefault();
-        if (chatInput.value.substring(0, 1) === "/")
-            socket.emit('sendCommandToServer', chatInput.value.substring(1, chatInput.value.length));
-
-        socket.emit('sendMsgToServer', chatInput.value);
-
-        chatInput.value = '';
-    };
-    */
-
     //플레이 버튼 눌렀을때
     document.getElementById("play_button").onclick = function(){
         //console.log("pushed!");
@@ -101,107 +42,43 @@ setTimeout(function(){
         socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
     };
 
-    socket.on('renderInfo', function (playerData,bulletData) {
 
-        canvas.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
+    socket.on('renderInfo', function (playerPack,bulletPack) {
 
-        document.getElementById("player_list").innerHTML = '';
-
-        for (var player of playerData) {
-            canvas.fillText(player.username + ": " + player.points, player.x, player.y);
-            document.getElementById("player_list").innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
-
-            drawChar(player);
+       //document.getElementById("player_list").innerHTML = ''; //잔상제거(없으면 도배됨)       
+          
+          playerDataList=[...playerPack];
+          bulletDataList=[...bulletPack]; //얕은복사(shallow copy 로 참조)
+          
         }
-
-        for (var bullet of bulletData){
-            drawBullet(bullet);
+        
+        /*
+        for(player of playerPack){
+          renderPlayerList.push(player);
         }
-    });
-
-
-    /*
-    socket.on('Time', function () {
-        var date = Date().slice(4, 24);
-        timeStamp.innerHTML = date;
-    });
-    */
-
-    document.onkeydown = function (event) {
-        //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
-            if (event.keyCode === 68) //d
-                socket.emit('keyPress', { inputId: 'right', state: true});
-            else if (event.keyCode === 83)  //s
-                socket.emit('keyPress', { inputId: 'down', state: true});
-            else if (event.keyCode === 65) //a
-                socket.emit('keyPress', { inputId: 'left', state: true});
-            else if (event.keyCode === 87) //w
-                socket.emit('keyPress', { inputId: 'up', state: true});
-            else if (event.keyCode === 75) //k
-                socket.emit('keyPress', { inputId: 'shoot', state: true});
+        for(bullet of bulletPack){
+          renderBulletList.push(bullet);
         }
-    //};
-    document.onkeyup = function (event) {
-        //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
-            if (event.keyCode === 68) //d
-                socket.emit('keyPress', { inputId: 'right', state: false });
-            else if (event.keyCode === 83)  //s
-                socket.emit('keyPress', { inputId: 'down', state: false });
-            else if (event.keyCode === 65) //a
-                socket.emit('keyPress', { inputId: 'left', state: false });
-            else if (event.keyCode === 87) //w
-                socket.emit('keyPress', { inputId: 'up', state: false });
-            else if (event.keyCode === 75) //k
-                socket.emit('keyPress', { inputId: 'shoot', state: false });
-        }
-    //};
+        */
+      
+    );    
+    
+    Keyboard.mySocket = socket;
+    document.onkeyup = function(event){
+      Keyboard.getKeyUp(event);
+    }
+    document.onkeydown = function(event){
+      Keyboard.getKeyDown(event);
+    }
+  
 
-    function drawChar(player) {
+    function playerUpdate(player) {
 
-        var playersImg = new Image();
-        //playersImg.src ='/client/sprites/' + player.char + '.png';
-        playersImg.src='/client/sprites/knight.png';
-        //playersImg.src='/client/sprites/amongus.png';
 
-        switch (player.lastPosition) {
-            case 'down':
-                canvas.drawImage(playersImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-            case 'up':
-                canvas.drawImage(playersImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-            case 'left':
-                canvas.drawImage(playersImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-            case 'right':
-                canvas.drawImage(playersImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-        }
     }
 
-    function drawBullet(bullet){
-        var bulletImg = new Image();
-        //bulletImg.src = 'client/sprites/bullet.png';
-        bulletImg.src = 'client/sprites/bullet_knight.png';
-
-        //canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight); //원본코드(bullet방향고려x)
-        //player의 발사방향에 따라 bullet 이미지 다르게 표시
-        
-        switch(bullet.direction){
-            case 'down':
-                canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-            case 'up':
-                canvas.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-            case 'left':
-                canvas.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-            case 'right':
-                canvas.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-
-        }
+    function bulletUpdate(bullet){
+       
     }
 
 
@@ -223,6 +100,111 @@ setTimeout(function(){
 
 },1000);
 
+//
+// Keyboard.js
+//
+Keyboard={
+    mySocket:null,
+    upkey:87,//w
+    downkey:83,//s
+    leftkey:65,//a
+    rightkey:68,//r
+    attackkey:75,//k
+    show:function(){
+      console.log(this.upkey);
+    },
+    getKeyDown:function(e){
+      //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
+          if (e.keyCode === this.rightkey)
+              this.mySocket.emit('keyPress', { inputId: 'right', state: true});
+          else if (e.keyCode === this.downkey)
+              this.mySocket.emit('keyPress', { inputId: 'down', state: true});
+          else if (e.keyCode === this.leftkey)
+            this.mySocket.emit('keyPress', { inputId: 'left', state: true});
+          else if (e.keyCode === this.upkey)
+            this.mySocket.emit('keyPress', { inputId: 'up', state: true});
+          else if (e.keyCode === this.attackkey)
+            this.mySocket.emit('keyPress', { inputId: 'shoot', state: true});
+      },
+    getKeyUp:function(e){
+      
+    //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
+            if (e.keyCode === this.rightkey)
+              this.mySocket.emit('keyPress', { inputId: 'right', state: false});
+            else if (e.keyCode === this.downkey) 
+              this.mySocket.emit('keyPress', { inputId: 'down', state: false});
+            else if (e.keyCode === this.leftkey)
+              this.mySocket.emit('keyPress', { inputId: 'left', state: false});
+            else if (e.keyCode === this.upkey)
+              this.mySocket.emit('keyPress', { inputId: 'up', state: false});
+            else if (e.keyCode === this.attackkey)
+              this.mySocket.emit('keyPress', { inputId: 'shoot', state: false});
+            }
+            
+    
+}
+//
+// Render_p5.js
+//
+    //렌더링 전역변수
+    renderPlayerList = [];
+    renderBulletList = []; 
+    renderList=[];
+    let ro;
+    let rq;
+
+    function preload(){
+        playerImg = loadImage("client/sprites/knight.png");
+        bulletImg = loadImage("client/sprites/bullet_knight.png");
+    }
+    function setup(){
+        p5canvas = createCanvas();
+    }
+    function windowResized() {
+      resizeCanvas(window.innerWidth, window.innerHeight);
+    }
+    
+    function draw_sprite(img,direction,x,y){ //스프라이트 방식으로 이미지를 잘라서 그림
+        let imgWidth=100;
+        if(direction==='down'){
+            image(img,x,y,imgWidth,imgWidth,0,0,imgWidth,imgWidth); //1번째 앞쪽;
+        }else if(direction==='up'){
+            image(img,x,y,imgWidth,imgWidth,imgWidth*1,0,imgWidth,imgWidth); //2번째 뒷쪽
+        }else if(direction==='left'){
+            image(img,x,y,imgWidth,imgWidth,imgWidth*2,0,imgWidth,imgWidth); //3번째 왼쪽
+        }else if(direction==='right'){
+            image(img,x,y,imgWidth,imgWidth,imgWidth*3,0,imgWidth,imgWidth); //4번째 오른쪽
+        }
+    }
+
+    
+    function playerData(x,y,direction){
+      this.x=x;
+      this.y=y;
+      this.direction=direction;
+    }
+    function bulletData(x,y,direction){
+      this.x=x;
+      this.y=y;
+      this.direction=direction;
+    }
+    playerDataList = [];
+    bulletDataList = [];
+
+    function draw(){
+        windowResized();
+        background("#34965f");
+        console.log(bulletDataList);
+        //console.log(bulletDataList);
+        for(player of playerDataList){
+          draw_sprite(playerImg,player.direction,player.x,player.y);
+        }
+        for(bullet of bulletDataList){
+          draw_sprite(bulletImg,bullet.direction,bullet.x,bullet.y);
+        }
+        
+      
+    }
 //
 // Ui.js
 //
@@ -267,6 +249,15 @@ Ui={
 
         ui_login.appendChild(ui_how_to_play_button);
 
+        ui_how_to_play_button.onclick = function(){ // How to Play? 클릭 시 도움말 뜨도록
+            if(document.getElementById("guideID")==null){
+                ui_login.appendChild(ui_guide_page);
+            }else{
+                ui_guide_page.remove();
+            }
+            
+        }
+
         const ui_guide_page = document.createElement('div');
         ui_guide_page.classList.add('ui');
         ui_guide_page.classList.add('guide');
@@ -284,16 +275,8 @@ Ui={
 
         ui_player_list_box.appendChild(player_list);
 
-        
-
-        ui_how_to_play_button.onclick = function(){ // How to Play? 클릭 시 도움말 뜨도록
-            if(document.getElementById("guideID")==null){
-                ui_login.appendChild(ui_guide_page);
-            }else{
-                ui_guide_page.remove();
-            }
-            
-        }
+        const gameDiv = document.createElement('div');//gameScreen의 div. 이 안에 렌더링된 게임화면이 렌더링 엔진에 의해 동적으로 생성된다.
+        ui_game.appendChild(gameDiv);
 
     }
 }

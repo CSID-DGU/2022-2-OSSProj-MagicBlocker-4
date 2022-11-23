@@ -42,6 +42,15 @@ Ui={
 
         ui_login.appendChild(ui_how_to_play_button);
 
+        ui_how_to_play_button.onclick = function(){ // How to Play? 클릭 시 도움말 뜨도록
+            if(document.getElementById("guideID")==null){
+                ui_login.appendChild(ui_guide_page);
+            }else{
+                ui_guide_page.remove();
+            }
+            
+        }
+
         const ui_guide_page = document.createElement('div');
         ui_guide_page.classList.add('ui');
         ui_guide_page.classList.add('guide');
@@ -59,18 +68,8 @@ Ui={
 
         ui_player_list_box.appendChild(player_list);
 
-        
-
-        ui_how_to_play_button.onclick = function(){ // How to Play? 클릭 시 도움말 뜨도록
-            if(document.getElementById("guideID")==null){
-                ui_login.appendChild(ui_guide_page);
-            }else{
-                ui_guide_page.remove();
-            }
-            
-        }
+        const gameDiv = document.createElement('div');//gameScreen의 div. 이 안에 렌더링된 게임화면이 렌더링 엔진에 의해 동적으로 생성된다.
+        ui_game.appendChild(gameDiv);
 
     }
 }
-
-
