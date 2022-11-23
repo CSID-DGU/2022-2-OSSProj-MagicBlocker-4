@@ -5,7 +5,10 @@
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" type="text/css" href="/client/game.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--favicon.ico 404오류 해결(icon이 없어서 임시로 땜빵한거임.)-->
+    
+    <script src="client/scripts/reference/joystick.js"></script> <!--조이스틱 라이브러리-->
     <script src="/client/main.js"></script>
+    
 
 </head>
 <body>
@@ -19,9 +22,11 @@
             <div id="gameDiv" style="display: inline-block;">    
                     
             </div>
+            
             <canvas id="myCanvas"></canvas>
             <h3>캔버스로 렌더링 되었습니다. 모바일에서 빠르게 작동하지만, 부드럽지않고 끊김현상 있음</h3>     
     </div>
+    <div id="joyDiv"></div>
       
 
 </body>
