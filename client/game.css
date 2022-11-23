@@ -15,17 +15,14 @@
 주의 : css에서 크기를 확대/축소 하면, 그냥 비율이 확대된다.
 */
 
-#myCanvas{ 
+
+/*p5가 생성한 캔버스*/
+#defaultCanvas0{
     width:100%;
     height:100%;
     border:1px solid black;
     float:left;
-    background-color: #2e8b57;
-}
-
-/*p5가 생성한 캔버스*/
-#defaultCanvas0{
-    background-color: darkslateblue;
+    background-color: #34965f;
 }
 
 

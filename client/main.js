@@ -32,21 +32,6 @@ setTimeout(function(){
     var imgWidth = 100;
     var imgHeight = 100;
 
-    var ctx = document.getElementById('myCanvas').getContext("2d"); 
-    //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
-      ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight;
-    //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
-    //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
-    window.addEventListener("resize",()=>{
-      ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight;
-      ctx.font = '30px Arial';
-    });
-    //canvas로 렌더링작업(이미지 불러오기 등)을 하려면 getContext를 2d로 지정해야한다.
-    //p5.js 로 교체하고나면 필요없는 코드.
-    ctx.font = '30px Arial';
-
     //플레이 버튼 눌렀을때
     document.getElementById("play_button").onclick = function(){
         //console.log("pushed!");
@@ -173,10 +158,13 @@ Keyboard={
         bulletImg = loadImage("client/sprites/bullet_knight.png");
     }
     function setup(){
-        p5canvas = createCanvas(800,450);
+        p5canvas = createCanvas();
+    }
+    function windowResized() {
+      resizeCanvas(window.innerWidth, window.innerHeight);
     }
     
-    function draw_sprite(img,direction,x,y){
+    function draw_sprite(img,direction,x,y){ //스프라이트 방식으로 이미지를 잘라서 그림
         let imgWidth=100;
         if(direction==='down'){
             image(img,x,y,imgWidth,imgWidth,0,0,imgWidth,imgWidth); //1번째 앞쪽;
@@ -204,7 +192,8 @@ Keyboard={
     bulletDataList = [];
 
     function draw(){
-        background(220);
+        windowResized();
+        background("#34965f");
         console.log(bulletDataList);
         //console.log(bulletDataList);
         for(player of playerDataList){
