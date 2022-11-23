@@ -2,7 +2,11 @@
 // Connect.js
 //
 
-//io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.   
+//io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.
+const waitTime = 3000;   
+console.log('로딩중...'); //바로 script를 불러오면, html보다 빨리 로드되서 오류 발생. setTimeout으로 방지.
+setTimeout(()=>{
+console.log('로딩완료!');
 var socket = io(); 
 //socket에 저장된 소켓의 메서드 사용가능
 socket.on('connect',()=>{ 
@@ -134,6 +138,7 @@ let char_select_button_list = document.querySelectorAll('.char-select-button');
         };
     }
 
+},waitTime); //setTimeout
 
 //
 // Keyboard.js
@@ -179,7 +184,7 @@ Keyboard={
 //
 // Ui.js
 //
-Ui={
+const Ui={
 
     create_login_ui:function(){
         const ui_login = document.getElementById("ui_login");
