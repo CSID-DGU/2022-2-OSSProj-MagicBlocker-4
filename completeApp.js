@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
 <<<<<<< HEAD
  * 서버에서 사용되는 상수 모음
@@ -156,7 +157,31 @@ var Player = function (id, name, points) {
 >>>>>>> c1d7b4d ([22.11.17,백성욱(feat) 윈도우 크기 조절 시 캐릭터 위 글씨 작아지는 문제 해결])
 =======
 >>>>>>> b472a18 ([22.11.20,백성욱](feat)분리형 로그인 UI)
+=======
+/**
+ * 서버에서 사용되는 상수 모음
+ */
+>>>>>>> a880002 ([22.11.23,전재호] completeApp gulp에 Constants가 포함되지않는 이슈있음)
 
+const SERVER_PORT = 8000;
+const REFRESH_RATE = 25;
+
+const X_STARTING_POS = 500;
+const Y_STARTING_POS = 200;
+const PLAYER_SPEED = 10;
+const STARTING_DIR = 'down';
+const STARTING_CHAR = 'warrior';
+const MONGO_REPO = "Account";
+const PROJECTILE_SPEED = 10;
+const COOL_TIME = 60;
+
+/*
+const RPS = {
+    PAPER: "Paper",
+    SCISSOR: "Scissors",
+    ROCK: "Rock"
+};
+*/
 /**
  * Player 클래스
  */
@@ -222,7 +247,6 @@ var Player = function (id, name, points) {
         }
     }
 };
-
 /**
  * 투사체 클래스
  */
@@ -255,30 +279,6 @@ var Player = function (id, name, points) {
         this.y += this.speed;
     };
 }
-/**
- * 서버에서 사용되는 상수 모음
- */
-
-const SERVER_PORT = 8000;
-const REFRESH_RATE = 25;
-
-const X_STARTING_POS = 500;
-const Y_STARTING_POS = 200;
-const PLAYER_SPEED = 10;
-const STARTING_DIR = 'down';
-const STARTING_CHAR ='warrior';
-const COOL_TIME = 30;
-
-const PROJECTILE_SPEED = 10;
-
-/*
-const RPS = {
-    PAPER: "Paper",
-    SCISSOR: "Scissors",
-    ROCK: "Rock"
-};
-*/
-
 /**
  * 게임 서버 메인앱
  */
