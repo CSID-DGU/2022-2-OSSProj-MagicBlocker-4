@@ -32,6 +32,22 @@ setTimeout(function(){
     var imgWidth = 100;
     var imgHeight = 100;
 
+    
+    //캔버스 방식 렌더링으로 복구한 것. p5 렌더링은 모바일에서 너무 느림이 관찰되었다.
+    let canvas = document.getElementById('myCanvas').getContext("2d"); 
+    //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
+    canvas.canvas.width = window.innerWidth;
+    canvas.canvas.height = window.innerHeight;
+    canvas.font = '30px Arial';
+    //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
+    //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
+    window.addEventListener("resize",()=>{
+        canvas.canvas.width = window.innerWidth;
+        canvas.canvas.height = window.innerHeight;
+        canvas.font = '30px Arial';
+    });
+    
+    //
     //플레이 버튼 눌렀을때
     document.getElementById("play_button").onclick = function(){
         //console.log("pushed!");
@@ -48,6 +64,7 @@ setTimeout(function(){
        //document.getElementById("player_list").innerHTML = ''; //잔상제거(없으면 도배됨)       
           
           playerDataList=[...playerPack];
+
           bulletDataList=[...bulletPack]; //얕은복사(shallow copy 로 참조)
           
         }
