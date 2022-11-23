@@ -61,24 +61,24 @@ setTimeout(function(){
 
     socket.on('renderInfo', function (playerPack,bulletPack) {
 
-       //document.getElementById("player_list").innerHTML = ''; //잔상제거(없으면 도배됨)       
-          
-          playerDataList=[...playerPack];
-
-          bulletDataList=[...bulletPack]; //얕은복사(shallow copy 로 참조)
-          
-        }
         
-        /*
-        for(player of playerPack){
-          renderPlayerList.push(player);
+    canvas.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
+
+      document.getElementById('player_list').innerHTML = '';
+
+      for (var player of playerPack) {
+          canvas.fillText(player.username + ": " + player.points, player.x, player.y);
+          document.getElementById('player_list').innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
+
+          drawChar(player);
         }
-        for(bullet of bulletPack){
-          renderBulletList.push(bullet);
-        }
-        */
-      
-    );    
+
+    for (var bullet of bulletPack){
+        drawBullet(bullet);
+      }
+        
+    }
+  );    
     
     Keyboard.mySocket = socket;
     document.onkeyup = function(event){
@@ -88,15 +88,53 @@ setTimeout(function(){
       Keyboard.getKeyDown(event);
     }
   
+    function drawChar(player) {
 
-    function playerUpdate(player) {
-
-
-    }
-
-    function bulletUpdate(bullet){
-       
-    }
+      var playersImg = new Image();
+      //playersImg.src ='/client/sprites/' + player.char + '.png';
+      playersImg.src='client/sprites/knight.png';
+  
+      switch (player.direction) {
+          case 'down':
+              canvas.drawImage(playersImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+              break;
+          case 'up':
+              canvas.drawImage(playersImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+              break;
+          case 'left':
+              canvas.drawImage(playersImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+              break;
+          case 'right':
+              canvas.drawImage(playersImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
+              break;
+      }
+  }
+  
+  function drawBullet(bullet){
+      var bulletImg = new Image();
+      //bulletImg.src = 'client/sprites/bullet.png';
+      bulletImg.src = 'client/sprites/bullet_knight.png';
+  
+      //canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight); //원본코드(bullet방향고려x)
+      //player의 발사방향에 따라 bullet 이미지 다르게 표시
+      
+      switch(bullet.direction){
+          case 'down':
+              canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+              break;
+          case 'up':
+              canvas.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+              break;
+          case 'left':
+              canvas.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+              break;
+          case 'right':
+              canvas.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
+              break;
+  
+      }
+  }
+  
 
 
     let char_select_button_list = document.querySelectorAll('.char-select-button');
@@ -157,6 +195,7 @@ Keyboard={
             else if (e.keyCode === this.attackkey)
               this.mySocket.emit('keyPress', { inputId: 'shoot', state: false});
             }
+            
             
     
 }
