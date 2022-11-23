@@ -3,7 +3,7 @@
 //
 
 //io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.
-const waitTime = 3000;   
+const waitTime = 1000;   
 console.log('로딩중...'); //바로 script를 불러오면, html보다 빨리 로드되서 오류 발생. setTimeout으로 방지.
 setTimeout(()=>{
 console.log('로딩완료!');
@@ -67,7 +67,8 @@ socket.on('renderInfo', function (playerPack,bulletPack) {
       }
     }
   );    
-    
+  
+//키보드 조작
 Keyboard.mySocket = socket;
 document.onkeyup = function(event){
   Keyboard.getKeyUp(event);
@@ -75,6 +76,68 @@ document.onkeyup = function(event){
 document.onkeydown = function(event){
   Keyboard.getKeyDown(event);
   }
+
+//조이스틱 조작
+let Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
+
+  //console.log(stickData.xPosition);
+  //console.log(stickData.yPosition);
+  //console.log(stickData.cardinalDirection);
+  //console.log(stickData.x);
+  //console.log(stickData.y);
+
+  let stick = stickData.cardinalDirection;
+      //console.log(stick);
+      //정지시 C
+      if(stick=='E'){
+        console.log('e...');
+        socket.emit('keyPress',{inputId:'joy_right',state:true});
+      }else if(stick=='W'){
+        console.log('w...');
+        socket.emit('keyPress',{inputId:'joy_left',state:true});
+      }else if(stick=='N'){
+        console.log('n...');
+        socket.emit('keyPress',{inputId:'joy_up',state:true});
+      }else if(stick=='S'){
+        console.log('s...');
+        socket.emit('keyPress',{inputId:'joy_down',state:true});
+      }else if(stick=='C'){
+        console.log("c...");
+        socket.emit('keyPress',{inputId:'joy_stop'});
+      }
+    });
+    //공격버튼 동적생성
+    const mobile_attack_button=document.createElement("button");
+    mobile_attack_button.id='mobile_attack_button';
+    document.body.appendChild(mobile_attack_button);
+    mobile_attack_button.onclick=function(){
+      socket.emit("keyPress",{inputId:'shoot',state:true});
+    }
+
+/*
+let stick;
+let joy1 = new JoyStick('joyDiv')
+setInterval(()=>{
+  stick = joy1.GetDir();
+  console.log(stick);
+  socket.emit('keyPress',{intputId:'right',state:true});
+  }
+,50);
+*/
+
+/*
+if (stick=='E'
+  this.mySocket.emit('keyPress', { inputId: 'right', state: false});
+else if (stick=='S') 
+  this.mySocket.emit('keyPress', { inputId: 'down', state: false});
+else if (stick=='W')
+  this.mySocket.emit('keyPress', { inputId: 'left', state: false});
+else if (stick=='N')
+  this.mySocket.emit('keyPress', { inputId: 'up', state: false});
+})
+*/
+
+
 function drawChar(player) {
   var playersImg = new Image();
   //playersImg.src ='/client/sprites/' + player.char + '.png';
@@ -138,12 +201,13 @@ let char_select_button_list = document.querySelectorAll('.char-select-button');
         };
     }
 
+
 },waitTime); //setTimeout
 
 //
 // Keyboard.js
 //
-Keyboard={
+Keyboard={//컴퓨터 키보드로 조작
     mySocket:null,
     upkey:87,//w
     downkey:83,//s
@@ -255,3 +319,4 @@ const Ui={
         ui_game.appendChild(gameDiv);
     }
 }
+
