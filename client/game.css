@@ -25,7 +25,31 @@
     background-color: #ffbf80;
 }
 
+/*조이스틱*/
+/*(이슈) 조이스틱의 width와 height를 너무 작게 설정하면 렌더링 오류 발생 */
+#joyDiv{
+    z-index: 1000;
+    left:3%;
+    top:65%;
+    position:absolute;
+    width:200px;
+    height:200px
+    
+}
 
+#mobile_attack_button{
+    z-index: 1000;
+    left:80%;
+    top: 63%;
+    position:absolute;
+    width:200px;
+    height:200px;
+    background-color: rgba(0,0,0,0.4);
+    border-radius:60px;
+}
+#mobile_attack_button:active{
+    background-color: rgba(0,0,0,0.8);
+}
 /*자동 확장기능 overflow-y: auto; */
 
 #ui_player_list_box{
