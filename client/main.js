@@ -193,7 +193,7 @@ Keyboard={
 
     function draw(){
         windowResized();
-        background("#34965f");
+        background("#349f");
 
         for(player of playerDataList){
           draw_sprite(playerImg,player.direction,player.x,player.y);
@@ -202,13 +202,14 @@ Keyboard={
           draw_sprite(bulletImg,bullet.direction,bullet.x,bullet.y);
         }
 
-        //셀 렌더링
+        //셀 렌더링 https://raster.ly/tutorials/pixel-grid-in-p5js
         const PADDING = 0;
         const ROWS = 20;
         const COLUMNS = 20;
         const CELL_SIZE = window.innerWidth/ROWS;
         const CELL_COLOR = color('#34965f');
-        CELL_COLOR.setAlpha(10); //낮을수록 투명, 200이면 약간 보이는 정도
+        CELL_COLOR.setAlpha(10); //낮을수록 투명, 200이면 약간 보이는 정도 10이면 거의 투명
+
 
         fill(CELL_COLOR);
         for (let col=0;col<COLUMNS;col++) {
