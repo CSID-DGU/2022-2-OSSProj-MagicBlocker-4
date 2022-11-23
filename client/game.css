@@ -25,6 +25,17 @@
     background-color: #ffbf80;
 }
 
+/*조이스틱*/
+/*(이슈) 조이스틱의 width와 height를 너무 작게 설정하면 렌더링 오류 발생 */
+#joyDiv{
+    z-index: 1000;
+    left:3%;
+    top:65%;
+    position:absolute;
+    width:200px;
+    height:200px
+}
+
 
 /*자동 확장기능 overflow-y: auto; */
 

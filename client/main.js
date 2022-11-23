@@ -3,7 +3,7 @@
 //
 
 //io()를 실행하는 순간, 서버로 연결을 시도하고, 소켓객체를 생성한다. 이걸 socket이라는 변수에 저장하였음.
-const waitTime = 3000;   
+const waitTime = 1000;   
 console.log('로딩중...'); //바로 script를 불러오면, html보다 빨리 로드되서 오류 발생. setTimeout으로 방지.
 setTimeout(()=>{
 console.log('로딩완료!');
@@ -138,6 +138,8 @@ let char_select_button_list = document.querySelectorAll('.char-select-button');
         };
     }
 
+    mobile_controller.create_joystick();
+
 },waitTime); //setTimeout
 
 //
@@ -254,4 +256,15 @@ const Ui={
         const gameDiv = document.createElement('div');//gameScreen의 div. 이 안에 렌더링된 게임화면이 렌더링 엔진에 의해 동적으로 생성된다.
         ui_game.appendChild(gameDiv);
     }
+}
+
+//
+//mobile-controller.js
+//
+let mobile_controller ={
+  create_joystick:function(){
+    let Joy1 = new JoyStick('joyDiv',{},function(stickData){
+      let stick = stickData.cardinalDirection
+    });
+  }
 }
