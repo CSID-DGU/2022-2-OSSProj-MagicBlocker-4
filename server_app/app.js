@@ -1,9 +1,9 @@
-
 /**
  * 게임 서버 메인앱
  */
 
  let express = require('express');
+const ThenPromise = require('promise');
  let app = express();
  let server = require('http').Server(app);
  let io = require('socket.io')(server, {});
@@ -55,19 +55,36 @@
  });
  
  setInterval(function () {
-     let pack = [];
+
+    let renderPack = [];
+
+    let playerPack = [];
  
      for (let i in playerList) {
          let player = playerList[i];
+
          player.updatePosition();
-         pack.push({
+         player.shootBullet();
+         player.updateCooldown();
+
+         renderPack.push({
+            type:'player',
+            x: player.x,
+            y:player.y,
+            direction:player.direction,
+         })
+         
+         playerPack.push({
              x: player.x,
              y: player.y,
              username: player.username,
              points: player.points,
-             lastPosition: player.lastPosition,
+             cooldown:player.cooldown,
+             direction: player.direction,
              char: player.char
          });
+         
+         
      }
  
      let bulletPack = [];
@@ -88,45 +105,38 @@
                      playerList[bullet.playerId].addPoint();
                  }
              }
- 
- 
+             /*
+             renderPack.push({
+                type:'bullet',
+                x: bullet.x,
+                y:bullet.y,
+                direction:bullet.direction,
+             })
+             */
+            
              bulletPack.push({
                  x: bullet.x,
                  y: bullet.y,
                  playerId: bullet.playerId,
                  direction:bullet.direction
              });
+             
+             
          }
      }
+     
+     
  
-     for (let i in socketList) {
+     for (let i in socketList) { //모든 플레이어에게 socket 전송
          let socket = socketList[i];
-         socket.emit('renderInfo', pack, bulletPack);
-         socket.emit('Time');
+         //socket.emit('renderInfo', playerPack, bulletPack);
+         socket.emit('renderInfo', playerPack,bulletPack);
          
      }
+     
+
  }, REFRESH_RATE);
  
- /*
- function isValidNewCredential(userData) {
-     return new Promise(function (callback) {
-         let query = {
-             username: userData.username
-         };
-         dbo.collection(MONGO_REPO).find(query).toArray(function (err, result) {
-             if (err) throw err;
-             if (result.length == 0) {
-                 console.log("user credential not taken yet: " + JSON.stringify(userData));
-                 callback(true);
-             }
-             else {
-                 callback(false);
-                 console.log("User credential already exist: " + JSON.stringify(result));
-             }
-         });
-     });
- }
- */
  
  function toAllChat(line) { //채팅시스템
      for (let i in socketList)
@@ -154,10 +164,9 @@
              //player.direction='down';
          }
              
-         if (data.inputId === 'shoot' && playerList[socket.id] != null)
-             player.shootBullet(player.direction);
-         else
-             player.lastPosition = data.inputId;
+         if (data.inputId === 'shoot'&& playerList[socket.id] != null)
+             player.isShoot=data.state;
+
      });
  
      socket.on('sendMsgToServer', function (data) {
