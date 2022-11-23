@@ -144,87 +144,6 @@ Keyboard={
     
 }
 //
-// Render_p5.js
-//
-    //렌더링 전역변수
-    renderPlayerList = [];
-    renderBulletList = []; 
-    renderList=[];
-    let ro;
-    let rq;
-
-    function preload(){
-        playerImg = loadImage("client/sprites/knight.png");
-        bulletImg = loadImage("client/sprites/bullet_knight.png");
-    }
-    function setup(){
-        p5canvas = createCanvas(window.innerWidth,window.innerHeight);
-    }
-    function windowResized() {
-      resizeCanvas(window.innerWidth, window.innerHeight);
-    }
-    
-    function draw_sprite(img,direction,x,y){ //스프라이트 방식으로 이미지를 잘라서 그림
-        let imgWidth=100;
-        if(direction==='down'){
-            image(img,x,y,imgWidth,imgWidth,0,0,imgWidth,imgWidth); //1번째 앞쪽;
-        }else if(direction==='up'){
-            image(img,x,y,imgWidth,imgWidth,imgWidth*1,0,imgWidth,imgWidth); //2번째 뒷쪽
-        }else if(direction==='left'){
-            image(img,x,y,imgWidth,imgWidth,imgWidth*2,0,imgWidth,imgWidth); //3번째 왼쪽
-        }else if(direction==='right'){
-            image(img,x,y,imgWidth,imgWidth,imgWidth*3,0,imgWidth,imgWidth); //4번째 오른쪽
-        }
-    }
-
-    
-    function playerData(x,y,direction){
-      this.x=x;
-      this.y=y;
-      this.direction=direction;
-    }
-    function bulletData(x,y,direction){
-      this.x=x;
-      this.y=y;
-      this.direction=direction;
-    }
-    playerDataList = [];
-    bulletDataList = [];
-
-    function draw(){
-        windowResized();
-        background("#349f");
-
-        for(player of playerDataList){
-          draw_sprite(playerImg,player.direction,player.x,player.y);
-        }
-        for(bullet of bulletDataList){
-          draw_sprite(bulletImg,bullet.direction,bullet.x,bullet.y);
-        }
-
-        //셀 렌더링 https://raster.ly/tutorials/pixel-grid-in-p5js
-        const PADDING = 0;
-        const ROWS = 20;
-        const COLUMNS = 20;
-        const CELL_SIZE = window.innerWidth/ROWS;
-        const CELL_COLOR = color('#34965f');
-        CELL_COLOR.setAlpha(10); //낮을수록 투명, 200이면 약간 보이는 정도 10이면 거의 투명
-
-
-        fill(CELL_COLOR);
-        for (let col=0;col<COLUMNS;col++) {
-          for (let row=0;row<ROWS;row++) {
-            let left = PADDING+(col*CELL_SIZE);
-            let top = PADDING+(row*CELL_SIZE);
-            let size = CELL_SIZE - 2;
-            rect(left,top,size,size);
-          }
-      }
-      //
-        
-      
-    }
-//
 // Ui.js
 //
 Ui={
@@ -299,5 +218,3 @@ Ui={
 
     }
 }
-
-
