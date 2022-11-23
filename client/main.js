@@ -158,7 +158,7 @@ Keyboard={
         bulletImg = loadImage("client/sprites/bullet_knight.png");
     }
     function setup(){
-        p5canvas = createCanvas();
+        p5canvas = createCanvas(window.innerWidth,window.innerHeight);
     }
     function windowResized() {
       resizeCanvas(window.innerWidth, window.innerHeight);
@@ -194,14 +194,14 @@ Keyboard={
     function draw(){
         windowResized();
         background("#34965f");
-        console.log(bulletDataList);
-        //console.log(bulletDataList);
+
         for(player of playerDataList){
           draw_sprite(playerImg,player.direction,player.x,player.y);
         }
         for(bullet of bulletDataList){
           draw_sprite(bulletImg,bullet.direction,bullet.x,bullet.y);
         }
+        
         
       
     }
