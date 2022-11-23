@@ -34,9 +34,22 @@
     position:absolute;
     width:200px;
     height:200px
+    
 }
 
-
+#mobile_attack_button{
+    z-index: 1000;
+    left:80%;
+    top: 63%;
+    position:absolute;
+    width:200px;
+    height:200px;
+    background-color: rgba(0,0,0,0.4);
+    border-radius:60px;
+}
+#mobile_attack_button:active{
+    background-color: rgba(0,0,0,0.8);
+}
 /*자동 확장기능 overflow-y: auto; */
 
 #ui_player_list_box{
