@@ -3,6 +3,7 @@
  * Player 클래스
  */
  function Player(id, name, points) {
+    this.type = 'player';
     this.x = X_STARTING_POS;
     this.y = Y_STARTING_POS;
     this.id = id;
@@ -68,6 +69,7 @@
  * 투사체 클래스
  */
  function Projectile(playerId,posX,posY,direction) {
+    this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
@@ -176,7 +178,10 @@ const ThenPromise = require('promise');
  });
  
  setInterval(function () {
-     let pack = [];
+
+    let renderPack = [];
+
+    let playerPack = [];
  
      for (let i in playerList) {
          let player = playerList[i];
@@ -185,7 +190,14 @@ const ThenPromise = require('promise');
          player.shootBullet();
          player.updateCooldown();
 
-         pack.push({
+         renderPack.push({
+            type:'player',
+            x: player.x,
+            y:player.y,
+            direction:player.direction,
+         })
+         
+         playerPack.push({
              x: player.x,
              y: player.y,
              username: player.username,
@@ -194,6 +206,8 @@ const ThenPromise = require('promise');
              direction: player.direction,
              char: player.char
          });
+         
+         
      }
  
      let bulletPack = [];
@@ -214,23 +228,36 @@ const ThenPromise = require('promise');
                      playerList[bullet.playerId].addPoint();
                  }
              }
- 
- 
+             /*
+             renderPack.push({
+                type:'bullet',
+                x: bullet.x,
+                y:bullet.y,
+                direction:bullet.direction,
+             })
+             */
+            
              bulletPack.push({
                  x: bullet.x,
                  y: bullet.y,
                  playerId: bullet.playerId,
                  direction:bullet.direction
              });
+             
+             
          }
      }
+     
+     
  
-     for (let i in socketList) {
+     for (let i in socketList) { //모든 플레이어에게 socket 전송
          let socket = socketList[i];
-         socket.emit('renderInfo', pack, bulletPack);
-         socket.emit('Time');
+         //socket.emit('renderInfo', playerPack, bulletPack);
+         socket.emit('renderInfo', playerPack,bulletPack);
          
      }
+     
+
  }, REFRESH_RATE);
  
  

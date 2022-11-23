@@ -23,6 +23,10 @@
     background-color: #2e8b57;
 }
 
+/*p5가 생성한 캔버스*/
+#defaultCanvas0{
+    background-color: darkslateblue;
+}
 
 
 /*자동 확장기능 overflow-y: auto; */

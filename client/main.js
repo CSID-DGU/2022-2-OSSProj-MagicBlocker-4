@@ -32,24 +32,6 @@ setTimeout(function(){
     var imgWidth = 100;
     var imgHeight = 100;
 
-
-    /*
-    kmsButton.onclick = function () {
-        socket.emit('kms');
-    };
-    */
-    /*
-    reviveButton.onclick = function () {
-        socket.emit('revive');
-    };
-    */
-
-    /* 채팅방 기능
-    var chatText = document.getElementById('chat-text');
-    var chatForm = document.getElementById('chat-form');
-    var chatInput = document.getElementById('chat-input');
-    */
-
     var ctx = document.getElementById('myCanvas').getContext("2d"); 
     //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
       ctx.canvas.width = window.innerWidth;
@@ -65,32 +47,6 @@ setTimeout(function(){
     //p5.js 로 교체하고나면 필요없는 코드.
     ctx.font = '30px Arial';
 
-    /*
-    socket.on('addToChat', function (data) {
-        chatText.innerHTML += '<div>' + data + '</div>';
-        chatText.scrollTop = chatText.scrollHeight;
-    });
-
-    function inTextField(event) {
-        var elem = event.target || event.srcElement;
-        if (elem.nodeType == 3)
-            elem = elem.parentNode;
-
-        return (elem.tagName == "TEXTAREA" ||
-            (elem.tagName == "INPUT" && (elem.getAttribute("type") == "text")));
-    }
-    /*
-    chatForm.onsubmit = function (event) {
-        event.preventDefault();
-        if (chatInput.value.substring(0, 1) === "/")
-            socket.emit('sendCommandToServer', chatInput.value.substring(1, chatInput.value.length));
-
-        socket.emit('sendMsgToServer', chatInput.value);
-
-        chatInput.value = '';
-    };
-    */
-
     //플레이 버튼 눌렀을때
     document.getElementById("play_button").onclick = function(){
         //console.log("pushed!");
@@ -101,33 +57,26 @@ setTimeout(function(){
         socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
     };
 
-    socket.on('renderInfo', function (playerData,bulletData) {
 
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); //이전표시 애니메이션의 자취가 남지않게 캔버스를 초기화
+    socket.on('renderInfo', function (playerPack,bulletPack) {
 
-        document.getElementById("player_list").innerHTML = '';
-
-        for (var player of playerData) {
-            ctx.fillText(player.username + ": cool " + player.cooldown, player.x, player.y);
-            document.getElementById("player_list").innerHTML += '<div>' + player.username + ': ' + player.points + '</div>';
-
-            drawChar(player);
+       //document.getElementById("player_list").innerHTML = ''; //잔상제거(없으면 도배됨)       
+          
+          playerDataList=[...playerPack];
+          bulletDataList=[...bulletPack]; //얕은복사(shallow copy 로 참조)
+          
         }
-
-        for (var bullet of bulletData){
-            drawBullet(bullet);
+        
+        /*
+        for(player of playerPack){
+          renderPlayerList.push(player);
         }
-    });
-
-
-    /*
-    socket.on('Time', function () {
-        var date = Date().slice(4, 24);
-        timeStamp.innerHTML = date;
-    });
-    */
-
-    
+        for(bullet of bulletPack){
+          renderBulletList.push(bullet);
+        }
+        */
+      
+    );    
     
     Keyboard.mySocket = socket;
     document.onkeyup = function(event){
@@ -138,52 +87,13 @@ setTimeout(function(){
     }
   
 
-    function drawChar(player) {
+    function playerUpdate(player) {
 
-        var playersImg = new Image();
-        //playersImg.src ='/client/sprites/' + player.char + '.png';
-        playersImg.src='/client/sprites/knight.png';
-        //playersImg.src='/client/sprites/amongus.png';
 
-        switch (player.direction) {
-            case 'down':
-                ctx.drawImage(playersImg, 0, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-            case 'up':
-                ctx.drawImage(playersImg, imgFrameIndex, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-            case 'left':
-                ctx.drawImage(playersImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-            case 'right':
-                ctx.drawImage(playersImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, player.x, player.y, imgWidth, imgHeight);
-                break;
-        }
     }
 
-    function drawBullet(bullet){
-        var bulletImg = new Image();
-        //bulletImg.src = 'client/sprites/bullet.png';
-        bulletImg.src = 'client/sprites/bullet_knight.png';
-
-        //canvas.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight); //원본코드(bullet방향고려x)
-        //player의 발사방향에 따라 bullet 이미지 다르게 표시
-        
-        switch(bullet.direction){
-            case 'down':
-                ctx.drawImage(bulletImg, 0, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-            case 'up':
-                ctx.drawImage(bulletImg, imgFrameIndex, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-            case 'left':
-                ctx.drawImage(bulletImg, imgFrameIndex * 2, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-            case 'right':
-                ctx.drawImage(bulletImg, imgFrameIndex * 3, 0, imgWidth, imgHeight, bullet.x, bullet.y, imgWidth, imgHeight);
-                break;
-
-        }
+    function bulletUpdate(bullet){
+       
     }
 
 
@@ -249,17 +159,63 @@ Keyboard={
     
 }
 //
-// Render.js
+// Render_p5.js
 //
+    //렌더링 전역변수
+    renderPlayerList = [];
+    renderBulletList = []; 
+    renderList=[];
+    let ro;
+    let rq;
 
-Render = {
-
-    createScreen : function (){
-        
-
+    function preload(){
+        playerImg = loadImage("client/sprites/knight.png");
+        bulletImg = loadImage("client/sprites/bullet_knight.png");
+    }
+    function setup(){
+        p5canvas = createCanvas(800,450);
+    }
+    
+    function draw_sprite(img,direction,x,y){
+        let imgWidth=100;
+        if(direction==='down'){
+            image(img,x,y,imgWidth,imgWidth,0,0,imgWidth,imgWidth); //1번째 앞쪽;
+        }else if(direction==='up'){
+            image(img,x,y,imgWidth,imgWidth,imgWidth*1,0,imgWidth,imgWidth); //2번째 뒷쪽
+        }else if(direction==='left'){
+            image(img,x,y,imgWidth,imgWidth,imgWidth*2,0,imgWidth,imgWidth); //3번째 왼쪽
+        }else if(direction==='right'){
+            image(img,x,y,imgWidth,imgWidth,imgWidth*3,0,imgWidth,imgWidth); //4번째 오른쪽
+        }
     }
 
-}
+    
+    function playerData(x,y,direction){
+      this.x=x;
+      this.y=y;
+      this.direction=direction;
+    }
+    function bulletData(x,y,direction){
+      this.x=x;
+      this.y=y;
+      this.direction=direction;
+    }
+    playerDataList = [];
+    bulletDataList = [];
+
+    function draw(){
+        background(220);
+        console.log(bulletDataList);
+        //console.log(bulletDataList);
+        for(player of playerDataList){
+          draw_sprite(playerImg,player.direction,player.x,player.y);
+        }
+        for(bullet of bulletDataList){
+          draw_sprite(bulletImg,bullet.direction,bullet.x,bullet.y);
+        }
+        
+      
+    }
 //
 // Ui.js
 //
