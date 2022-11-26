@@ -1,17 +1,26 @@
 //
-// Keyboard.js
+//KeyboardController.js
 //
-Keyboard={
-    mySocket:null,
-    upkey:87,//w
-    downkey:83,//s
-    leftkey:65,//a
-    rightkey:68,//r
-    attackkey:75,//k
-    show:function(){
+const KEYCODE_UP=87; //W
+const KEYCODE_DOWN=83; //S
+const KEYCODE_LEFT=65; //A
+const KEYCODE_RIGHT=68; //D
+const KEYCODE_ATTACK=75; //L
+
+function Keyboard(){
+    this.mySocket=null;
+
+    this.upkey=KEYCODE_UP;
+    this.downkey=KEYCODE_DOWN;
+    this.leftkey=KEYCODE_LEFT;
+    this.rightkey=KEYCODE_RIGHT;
+    this.attackkey=KEYCODE_ATTACK;
+
+    this.show=function(){
       console.log(this.upkey);
-    },
-    getKeyDown:function(e){
+    };
+
+    this.getKeyDown = function(e){
       //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
           if (e.keyCode === this.rightkey)
               this.mySocket.emit('keyPress', { inputId: 'right', state: true});
@@ -23,9 +32,9 @@ Keyboard={
             this.mySocket.emit('keyPress', { inputId: 'up', state: true});
           else if (e.keyCode === this.attackkey)
             this.mySocket.emit('keyPress', { inputId: 'shoot', state: true});
-      },
-    getKeyUp:function(e){
-      
+      };
+
+    this.getKeyUp=function(e){
     //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
             if (e.keyCode === this.rightkey)
               this.mySocket.emit('keyPress', { inputId: 'right', state: false});
@@ -38,6 +47,4 @@ Keyboard={
             else if (e.keyCode === this.attackkey)
               this.mySocket.emit('keyPress', { inputId: 'shoot', state: false});
             }
-            
-    
-}
+   }

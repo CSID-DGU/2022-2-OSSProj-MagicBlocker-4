@@ -1,3 +1,4 @@
+<<<<<<< HEAD:completeApp.js
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -162,29 +163,30 @@ var Player = function (id, name, points) {
  * 서버에서 사용되는 상수 모음
  */
 >>>>>>> a880002 ([22.11.23,전재호] completeApp gulp에 Constants가 포함되지않는 이슈있음)
+=======
+//
+// 서버에서 사용되는 상수
+//
+>>>>>>> 07bc5e4 ([22.11.26,전재호](refector) completeApp에서, 직관적으로 gameserver로 서버메인앱 이름 변경):gameserver.js
 
-const SERVER_PORT = 8000;
-const REFRESH_RATE = 25;
+ const SERVER_PORT = 8000;
+ const REFRESH_RATE = 25;
+ 
+ const X_STARTING_POS = 500;
+ const Y_STARTING_POS = 200;
+ const PLAYER_SPEED = 10;
+ const STARTING_DIR = 'down';
+ const STARTING_CHAR = 'warrior';
+ const MONGO_REPO = "Account";
+ const PROJECTILE_SPEED = 10;
+ const COOL_TIME = 60;
 
-const X_STARTING_POS = 500;
-const Y_STARTING_POS = 200;
-const PLAYER_SPEED = 10;
-const STARTING_DIR = 'down';
-const STARTING_CHAR = 'warrior';
-const MONGO_REPO = "Account";
-const PROJECTILE_SPEED = 10;
-const COOL_TIME = 60;
-
-/*
-const RPS = {
-    PAPER: "Paper",
-    SCISSOR: "Scissors",
-    ROCK: "Rock"
-};
-*/
-/**
- * Player 클래스
- */
+//
+//
+//
+//
+// Player 클래스
+//
  function Player(id, name, points) {
     this.type = 'player';
     this.x = X_STARTING_POS;
@@ -247,6 +249,9 @@ const RPS = {
         }
     }
 };
+//
+//
+//
 /**
  * 투사체 클래스
  */
@@ -279,12 +284,10 @@ const RPS = {
         this.y += this.speed;
     };
 }
-const e = require('express');
-/**
- * 게임 서버 메인앱
- */
-
- let express = require('express');
+//
+// 게임 서버 메인 앱
+//
+let express = require('express');
 const ThenPromise = require('promise');
  let app = express();
  let server = require('http').Server(app);
@@ -510,3 +513,6 @@ const ThenPromise = require('promise');
          player.char = data.charName;
      });
  }
+ //
+ //
+ //
