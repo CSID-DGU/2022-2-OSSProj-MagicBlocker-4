@@ -32,8 +32,8 @@
     left:3%;
     top:65%;
     position:absolute;
-    width:200px;
-    height:200px
+    width: 200px;
+    height:200px;
     
 }
 
@@ -46,6 +46,7 @@
     height:200px;
     background-color: rgba(0,0,0,0.4);
     border-radius:60px;
+    visibility: hidden;
 }
 #mobile_attack_button:active{
     background-color: rgba(0,0,0,0.8);
@@ -194,4 +195,9 @@ input::placeholder {
     font-size: 0.4vmax;
     opacity: 0.3;
     font-style: italic;
+}
+
+.mobile{
+    top: 66%;
+    left: 27%;
 }

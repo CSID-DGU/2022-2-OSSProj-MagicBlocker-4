@@ -107,12 +107,12 @@ let Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
       }
     });
     //공격버튼 동적생성
-    const mobile_attack_button=document.createElement("button");
-    mobile_attack_button.id='mobile_attack_button';
-    document.body.appendChild(mobile_attack_button);
-    mobile_attack_button.onclick=function(){
-      socket.emit("keyPress",{inputId:'shoot',state:true});
-    }
+  const mobile_attack_button=document.createElement("button");
+  mobile_attack_button.id='mobile_attack_button';
+  document.body.appendChild(mobile_attack_button);
+  mobile_attack_button.onclick=function(){
+    socket.emit("keyPress",{inputId:'shoot',state:true});
+  }
 
 /*
 let stick;
@@ -259,14 +259,12 @@ const Ui={
         ui_title.classList.add('ui');
         ui_title.classList.add('title');
         ui_title.innerHTML='Magic Blocker';
-
         ui_login.appendChild(ui_title);
 
         const ui_name_input = document.createElement('input');
         ui_name_input.classList.add('ui');
         ui_name_input.id='username_input';
         ui_name_input.setAttribute('placeholder','Please Enter Nickname');
-
         ui_login.appendChild(ui_name_input);
 
         const ui_play_button = document.createElement('button');
@@ -279,14 +277,12 @@ const Ui={
         ui_charactor_select.classList.add('ui');
         ui_charactor_select.classList.add('charactor-select');
         ui_charactor_select.innerHTML="여기에 캐릭터 선택창 떠야됨"
-
         ui_login.appendChild(ui_charactor_select);
 
         const ui_how_to_play_button = document.createElement('button');
         ui_how_to_play_button.classList.add('ui');
         ui_how_to_play_button.classList.add('how-to-play');
         ui_how_to_play_button.innerHTML='How to Play?';
-
         ui_login.appendChild(ui_how_to_play_button);
 
         ui_how_to_play_button.onclick = function(){ // How to Play? 클릭 시 도움말 뜨도록
@@ -295,8 +291,19 @@ const Ui={
             }else{
                 ui_guide_page.remove();
             }
-            
         }
+
+        const ui_mobile = document.createElement('button');
+        ui_mobile.classList.add('ui');
+        ui_mobile.classList.add('mobile');
+        ui_mobile.innerHTML="I'm Mobile!!";
+        ui_login.appendChild(ui_mobile);
+
+        ui_mobile.onclick = function(){
+          joyDiv.style.visibility='visible';
+          mobile_attack_button.style.visibility='visible';
+          ui_mobile.style.display='none';
+        };
 
         const ui_guide_page = document.createElement('div');
         ui_guide_page.classList.add('ui');
