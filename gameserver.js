@@ -1,29 +1,25 @@
-/**
- * 서버에서 사용되는 상수 모음
- */
+//
+// 서버에서 사용되는 상수
+//
 
-const SERVER_PORT = 8000;
-const REFRESH_RATE = 25;
+ const SERVER_PORT = 8000;
+ const REFRESH_RATE = 25;
+ 
+ const X_STARTING_POS = 500;
+ const Y_STARTING_POS = 200;
+ const PLAYER_SPEED = 10;
+ const STARTING_DIR = 'down';
+ const STARTING_CHAR = 'warrior';
+ const MONGO_REPO = "Account";
+ const PROJECTILE_SPEED = 10;
+ const COOL_TIME = 60;
 
-const X_STARTING_POS = 500;
-const Y_STARTING_POS = 200;
-const PLAYER_SPEED = 10;
-const STARTING_DIR = 'down';
-const STARTING_CHAR = 'warrior';
-const MONGO_REPO = "Account";
-const PROJECTILE_SPEED = 10;
-const COOL_TIME = 60;
-
-/*
-const RPS = {
-    PAPER: "Paper",
-    SCISSOR: "Scissors",
-    ROCK: "Rock"
-};
-*/
-/**
- * Player 클래스
- */
+//
+//
+//
+//
+// Player 클래스
+//
  function Player(id, name, points) {
     this.type = 'player';
     this.x = X_STARTING_POS;
@@ -86,6 +82,9 @@ const RPS = {
         }
     }
 };
+//
+//
+//
 /**
  * 투사체 클래스
  */
@@ -118,12 +117,10 @@ const RPS = {
         this.y += this.speed;
     };
 }
-const e = require('express');
-/**
- * 게임 서버 메인앱
- */
-
- let express = require('express');
+//
+// 게임 서버 메인 앱
+//
+let express = require('express');
 const ThenPromise = require('promise');
  let app = express();
  let server = require('http').Server(app);
@@ -349,3 +346,6 @@ const ThenPromise = require('promise');
          player.char = data.charName;
      });
  }
+ //
+ //
+ //
