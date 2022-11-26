@@ -1,6 +1,6 @@
-/**
- * Player 클래스
- */
+//
+// Player 클래스
+//
  function Player(id, name, points) {
     this.type = 'player';
     this.x = X_STARTING_POS;
@@ -63,3 +63,6 @@
         }
     }
 };
+//
+//
+//

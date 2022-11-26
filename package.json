@@ -4,8 +4,7 @@
   "description": "Created using NodeJS",
   "main": "index.js",
   "scripts": {
-    "compile": "cd client && gulp && cd .. && gulp && nodemon completeApp.js",
-    "start": " nodemon completeApp.js"
+    "start": "cd client && gulp && cd .. && gulp && node gameserver.js"
   },
   "repository": {
     "type": "git",
