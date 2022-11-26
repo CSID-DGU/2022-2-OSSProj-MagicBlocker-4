@@ -1,10 +1,11 @@
 //
 // Ui.js
 //
-Ui={
+function Ui(){
 
-    create_login_ui:function(){
+    this.create_login_ui=function(){
         const ui_login = document.getElementById("ui_login");
+        console.log(ui_login);
         const ui_game = document.getElementById("ui_game");
 
         //동적 ui 생성
@@ -71,5 +72,10 @@ Ui={
         const gameDiv = document.createElement('div');//gameScreen의 div. 이 안에 렌더링된 게임화면이 렌더링 엔진에 의해 동적으로 생성된다.
         ui_game.appendChild(gameDiv);
 
+        this.popUp = function(){
+            const popUpBox = document.createElement("div");
+            popUpBox.innerHTML="pop up!!!";
+            document.body.appendChild(popUpBox);
+        }
     }
 }
