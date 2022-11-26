@@ -1,9 +1,8 @@
 //
-//mobile_controller.js
+//MobileController.js
 //
-
+/*
 let Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
-
     //console.log(stickData.xPosition);
     //console.log(stickData.yPosition);
     //console.log(stickData.cardinalDirection);
@@ -44,3 +43,4 @@ let Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
             move_right();
         }
 });
+*/
