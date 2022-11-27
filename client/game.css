@@ -28,8 +28,14 @@
     top:65%;
     position:absolute;
     width:200px;
-    height:200px
+    height:200px;
+    visibility: hidden;
     
+}
+
+#ui_mobile_toggle_button{
+    top: 66%;
+    left: 27%;
 }
 
 #mobile_attack_button{
