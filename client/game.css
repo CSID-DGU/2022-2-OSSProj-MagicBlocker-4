@@ -11,8 +11,14 @@
 }
 
 
+<<<<<<< HEAD
 /*게임이 렌더링되는 캔버스*/
 #gameCanvas{
+=======
+
+/*p5가 생성한 캔버스*/
+#myCanvas{
+>>>>>>> 1a7276c ([22.11.23,전재호](fix) 하얀화면 오류 해결 완료)
     width:100%;
     height:100%;
     border:1px solid black;
@@ -27,11 +33,32 @@
     left:3%;
     top:65%;
     position:absolute;
+<<<<<<< HEAD
     width:200px;
+<<<<<<< HEAD
+    height:200px;
+    visibility: hidden;
+    
+}
+=======
     height:200px
+=======
+    width: 200px;
+    height:200px;
+>>>>>>> 0b288ea ([22.11.27,백성욱](feat)모바일일때만 조이스틱 볼 수 있게)
     
 }
 
+<<<<<<< HEAD
+>>>>>>> f0080e9 ([22.11.23,전재호](feat) 조이스틱 렌더링 성공)
+
+#ui_mobile_toggle_button{
+    top: 66%;
+    left: 27%;
+}
+
+=======
+>>>>>>> e8e6020 ([22.11.23,전재호] 동작하는 모바일 조이스틱, 공격버튼 구현 완료)
 #mobile_attack_button{
     z-index: 1000;
     left:80%;
@@ -41,6 +68,7 @@
     height:200px;
     background-color: rgba(0,0,0,0.4);
     border-radius:60px;
+    visibility: hidden;
 }
 #mobile_attack_button:active{
     background-color: rgba(0,0,0,0.8);
@@ -190,4 +218,9 @@ input::placeholder {
     font-size: 0.4vmax;
     opacity: 0.3;
     font-style: italic;
+}
+
+.mobile{
+    top: 66%;
+    left: 27%;
 }
