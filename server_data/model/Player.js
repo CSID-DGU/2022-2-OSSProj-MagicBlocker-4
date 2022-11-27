@@ -1,6 +1,6 @@
-/**
- * Player 클래스
- */
+//
+//Player.js
+//플레이어 클래스
  function Player(id, name, points) {
     this.type = 'player';
     this.x = X_STARTING_POS;
@@ -51,7 +51,7 @@
 
     this.shootBullet = function (){
         if(this.isShoot&&this.cooldown===0){
-            let bullet = new Projectile(this.id,this.x,this.y,this.direction);
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
         }

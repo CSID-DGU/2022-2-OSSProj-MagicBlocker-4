@@ -1,36 +1,18 @@
 <html>
 
 <head>
-    <!--script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js></script-->
-    <script src="/socket.io/socket.io.js"></script>
-    <link rel="stylesheet" type="text/css" href="/client/game.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--favicon.ico 404오류 해결(icon이 없어서 임시로 땜빵한거임.)-->
-    
-    <script src="client/scripts/reference/joystick.js"></script> <!--조이스틱 라이브러리-->
-    <script src="/client/main.js"></script>
-    
 
+    <link rel="stylesheet" type="text/css" href="/client/game.css">
+    <!-- webPack을 도입해서 "반드시 위에 있어야함" 같은 스크립트 로드 순서 없앨것-->
+
+    <script src="client/scripts/reference/joystick.js"></script> <!--조이스틱 라이브러리. main.js보다 반드시 위에 있어야함-->
+    <script src="/socket.io/socket.io.js"></script> <!--서버로부터 전송받은 socket 라이브러리 파일. main.js보다 반드시 위에 있어야함-->
+    <script src="/client/gameclient.js"></script> <!--scripts 폴더의 모든 js파일이 gulp된 gameclient.js-->
+
+    
 </head>
 <body>
-
-    <div id="ui_game">
-        <!--로그인 프롬프트창-->
-            <!--script.js에서, socket 로딩이 끝난 후, ui 요소를 동적으로 생성-->
-            <div id="ui_login"><!--동적생성위치--></div>
-
-        
-            <div id="gameDiv" style="display: inline-block;">    
-                    
-            </div>
-            
-            <canvas id="myCanvas"></canvas>
-            <h3>캔버스로 렌더링 되었습니다. 모바일에서 빠르게 작동하지만, 부드럽지않고 끊김현상 있음</h3>     
-    </div>
-    <!-- <div id="joyDiv" style="display: none;"></div> -->
-    <div id="joyDiv" style="visibility: hidden;"></div>
-    <!-- <div id='mobile_attack_button' style="visibility: hidden;"></div>> -->
-      
-
 </body>
 
 
