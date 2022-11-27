@@ -197,3 +197,8 @@ input::placeholder {
     opacity: 0.3;
     font-style: italic;
 }
+
+.mobile{
+    top: 66%;
+    left: 27%;
+}
