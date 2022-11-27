@@ -2,7 +2,7 @@
 //SocketConnection.js
 //require socket.io.js
 
-function Socket(){
+function SocketConnection(){
     this.mySocket = io();//서버와 연결하는 함수. 소켓을 반환
 
     this.mySocket.on('connect',()=>{ //소켓이 연결되었을때 callback

@@ -1,21 +1,29 @@
 //
 //Main.js
 //
-const waitTime=1000;
+const SCRIPT_LOAD_DELAY=1000;
+const CLIENT_FRAME_RATE=100;
 setTimeout(() => {
     console.log("script start...");
 
-    const ui = new Ui();
-    ui.create_login_ui();
+    const ui_manager = new Ui();
+    ui_manager.create_login_ui();
+    ui_manager.popup();
+
+    const socket_manager = new SocketConnection();
     
-    ui.popUp();
+    const client_data = new ClientData(socket_manager.mySocket);
+    client_data.set_socket_render_info();
 
+    const render_manager = new Render(ui_manager.GAME_CANVAS_ID,client_data);
 
-    const socketManager = new Socket();
+    render_manager.draw_client_data();
+    //setInterval(render_manager.draw_client_data,CLIENT_FRAME_RATE);
+
 
     
 
-}, waitTime);
+}, SCRIPT_LOAD_DELAY);
 //
 //
 //
