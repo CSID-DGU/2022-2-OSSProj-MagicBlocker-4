@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<<<<<<< HEAD
     <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--favicon.ico 404오류 해결(icon이 없어서 임시로 땜빵한거임.)-->
 
     <link rel="stylesheet" type="text/css" href="/client/game.css">
@@ -13,6 +14,38 @@
     
 </head>
 <body>
+=======
+    <!--script src=https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js></script-->
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="/client/game.css">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--favicon.ico 404오류 해결(icon이 없어서 임시로 땜빵한거임.)-->
+    
+    <script src="client/scripts/reference/joystick.js"></script> <!--조이스틱 라이브러리-->
+    <script src="/client/main.js"></script>
+    
+
+</head>
+<body>
+
+    <div id="ui_game">
+        <!--로그인 프롬프트창-->
+            <!--script.js에서, socket 로딩이 끝난 후, ui 요소를 동적으로 생성-->
+            <div id="ui_login"><!--동적생성위치--></div>
+
+        
+            <div id="gameDiv" style="display: inline-block;">    
+                    
+            </div>
+            
+            <canvas id="myCanvas"></canvas>
+            <h3>캔버스로 렌더링 되었습니다. 모바일에서 빠르게 작동하지만, 부드럽지않고 끊김현상 있음</h3>     
+    </div>
+    <!-- <div id="joyDiv" style="display: none;"></div> -->
+    <div id="joyDiv" style="visibility: hidden;"></div>
+    <!-- <div id='mobile_attack_button' style="visibility: hidden;"></div>> -->
+      
+
+>>>>>>> 1e6a78a ([22.11.23,전재호](fix) 하얀 화면이 뜨는 오류 발생)
 </body>
 
 

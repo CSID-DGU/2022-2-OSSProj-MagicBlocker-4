@@ -165,6 +165,7 @@ var Player = function (id, name, points) {
 >>>>>>> a880002 ([22.11.23,전재호] completeApp gulp에 Constants가 포함되지않는 이슈있음)
 =======
 //
+<<<<<<< HEAD
 // 서버에서 사용되는 상수
 //
 <<<<<<< HEAD
@@ -184,6 +185,8 @@ var Player = function (id, name, points) {
  const PROJECTILE_SPEED = 10;
  const COOL_TIME = 60;
 //
+=======
+>>>>>>> 4c8b77a ([22.11.28,전재호](remove) 레거시 코드 제거)
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction) {
@@ -280,6 +283,20 @@ var Player = function (id, name, points) {
         }
     }
 };
+//
+// 서버에서 사용되는 상수
+//
+ const SERVER_PORT = 8000;
+ const REFRESH_RATE = 25;
+ 
+ const X_STARTING_POS = 30;
+ const Y_STARTING_POS = 30;
+ const PLAYER_SPEED = 10;
+ const STARTING_DIR = 'down';
+ const STARTING_CHAR = 'warrior';
+ const MONGO_REPO = "Account";
+ const PROJECTILE_SPEED = 10;
+ const COOL_TIME = 60;
 //
 //onConnect.js
 //
