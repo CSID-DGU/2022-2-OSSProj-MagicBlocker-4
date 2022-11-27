@@ -167,26 +167,57 @@ var Player = function (id, name, points) {
 //
 // 서버에서 사용되는 상수
 //
+<<<<<<< HEAD
 >>>>>>> 07bc5e4 ([22.11.26,전재호](refector) completeApp에서, 직관적으로 gameserver로 서버메인앱 이름 변경):gameserver.js
 
+=======
+>>>>>>> 164a3cf ([22.11.28,전재호](refector 전체 코드 클래스 화 완료)
  const SERVER_PORT = 8000;
  const REFRESH_RATE = 25;
  
- const X_STARTING_POS = 500;
- const Y_STARTING_POS = 200;
+ const X_STARTING_POS = 30;
+ const Y_STARTING_POS = 30;
  const PLAYER_SPEED = 10;
  const STARTING_DIR = 'down';
  const STARTING_CHAR = 'warrior';
  const MONGO_REPO = "Account";
  const PROJECTILE_SPEED = 10;
  const COOL_TIME = 60;
+//
+//Bullet.js
+//투사체 클래스
+ function Bullet(playerId,posX,posY,direction) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=PROJECTILE_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    
 
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 100) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
 //
-//
-//
-//
-// Player 클래스
-//
+//Player.js
+//플레이어 클래스
  function Player(id, name, points) {
     this.type = 'player';
     this.x = X_STARTING_POS;
@@ -237,7 +268,7 @@ var Player = function (id, name, points) {
 
     this.shootBullet = function (){
         if(this.isShoot&&this.cooldown===0){
-            let bullet = new Projectile(this.id,this.x,this.y,this.direction);
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
         }
@@ -250,39 +281,100 @@ var Player = function (id, name, points) {
     }
 };
 //
+//onConnect.js
 //
+function onConnect(socket, name, points) {
+ 
+    let player = new Player(socket.id, name, points);
+    playerList[socket.id] = player; //playerList는 id 여러개를 가지는 객체. player객체를 저장함
+
+    socket.on('keyPress', function (data) {   //glitchy character movement
+
+        //player.direction = data.direction;
+        //키보드 조작
+        if (data.inputId === 'right'){
+           player.rightPress = data.state;
+            //player.direction = 'right';
+        }else if (data.inputId === 'left'){
+           player.leftPress = data.state;
+            //player.direction='left';
+        }else if (data.inputId === 'up'){
+           player.upPress = data.state;
+            //player.direction='up';
+        }else if (data.inputId === 'down'){
+           player.downPress = data.state;
+            //player.direction='down';
+        }
+        
+        //모바일 조이스틱은 취소버튼이 없기때문에, 키보드와 다른 event로 움직임 고정현상을 방지하였다.
+        if (data.inputId === 'joy_right'){
+           player.leftPress=false;
+           player.upPress=false;
+           player.downPress=false;
+           player.rightPress = data.state;
+            //player.direction = 'right';
+        }else if (data.inputId === 'joy_left'){
+           player.rightPress=false;
+           player.upPress=false;
+           player.downPress=false;
+           player.leftPress = data.state;
+            //player.direction='left';
+        }else if (data.inputId === 'joy_up'){
+           player.leftPress=false;
+           player.rightPress=false;
+           player.downPress=false; 
+           player.upPress = data.state;
+            //player.direction='up';
+        }else if (data.inputId === 'joy_down'){
+           player.leftPress=false;
+           player.upPress=false;
+           player.rightPress=false; 
+           player.downPress = data.state;
+            //player.direction='down';
+        }else if (data.inputId==='joy_stop'){
+           player.leftPress=false;
+           player.upPress=false;
+           player.rightPress=false; 
+           player.downPress =false;
+        }
+
+        if (data.inputId === 'shoot'&& playerList[socket.id] != null){
+           player.isShoot=data.state;
+           if(player.isShoot){
+               setTimeout(()=>{player.isShoot=false},50);//모바일은 버튼업이 없기때문에, 공격을 토글하는 코드
+           }
+        }
+   
+            
+       });
+
+    socket.on('sendMsgToServer', function (data) {
+        let playerName = ("" + player.username);
+        toAllChat(playerName + ': ' + data);
+    });
+
+    socket.on('kms', function () {
+        if (playerList[socket.id] != null) {
+            delete playerList[socket.id];
+        }
+    });
+
+    socket.on('revive', function () {
+        if (playerList[socket.id] == null) {
+            playerList[socket.id] = player;
+        }
+    });
+
+    socket.on('charUpdate', function (data) {
+        player.char = data.charName;
+    });
+}
 //
-/**
- * 투사체 클래스
- */
- function Projectile(playerId,posX,posY,direction) {
-    this.type = 'bullet';
-    this.id=Math.random();
-    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
-    this.y=posY+25;
-    this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=PROJECTILE_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
-    this.toRemove=false;//투사체 소멸트리거
-    this.direction = direction;
-    
-
-    this.update = function(){
-        this.updatePosition();
-        if (this.timer++ > 100) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
-        this.toRemove = true;
-    };
-
-    this.updatePosition = function(){
-    if (this.direction === 'right')
-        this.x += this.speed;
-    else if (this.direction === 'left')
-        this.x -= this.speed;
-    else if (this.direction === 'up')
-        this.y -= this.speed;
-    else if (this.direction === 'down')
-        this.y += this.speed;
-    };
+//toAllChat.js
+//
+function toAllChat(line) { //채팅시스템
+    for (let i in socketList)
+        socketList[i].emit('addToChat', line);
 }
 //
 // 게임 서버 메인 앱
@@ -422,97 +514,6 @@ const ThenPromise = require('promise');
  }, REFRESH_RATE);
  
  
- function toAllChat(line) { //채팅시스템
-     for (let i in socketList)
-         socketList[i].emit('addToChat', line);
- }
  
- function onConnect(socket, name, points) {
  
-     let player = new Player(socket.id, name, points);
-     playerList[socket.id] = player; //playerList는 id 여러개를 가지는 객체. player객체를 저장함
  
-     socket.on('keyPress', function (data) {   //glitchy character movement
-
-         //player.direction = data.direction;
-         //키보드 조작
-         if (data.inputId === 'right'){
-            player.rightPress = data.state;
-             //player.direction = 'right';
-         }else if (data.inputId === 'left'){
-            player.leftPress = data.state;
-             //player.direction='left';
-         }else if (data.inputId === 'up'){
-            player.upPress = data.state;
-             //player.direction='up';
-         }else if (data.inputId === 'down'){
-            player.downPress = data.state;
-             //player.direction='down';
-         }
-         
-         //모바일 조이스틱은 취소버튼이 없기때문에, 키보드와 다른 event로 움직임 고정현상을 방지하였다.
-         if (data.inputId === 'joy_right'){
-            player.leftPress=false;
-            player.upPress=false;
-            player.downPress=false;
-            player.rightPress = data.state;
-             //player.direction = 'right';
-         }else if (data.inputId === 'joy_left'){
-            player.rightPress=false;
-            player.upPress=false;
-            player.downPress=false;
-            player.leftPress = data.state;
-             //player.direction='left';
-         }else if (data.inputId === 'joy_up'){
-            player.leftPress=false;
-            player.rightPress=false;
-            player.downPress=false; 
-            player.upPress = data.state;
-             //player.direction='up';
-         }else if (data.inputId === 'joy_down'){
-            player.leftPress=false;
-            player.upPress=false;
-            player.rightPress=false; 
-            player.downPress = data.state;
-             //player.direction='down';
-         }else if (data.inputId==='joy_stop'){
-            player.leftPress=false;
-            player.upPress=false;
-            player.rightPress=false; 
-            player.downPress =false;
-         }
-
-         if (data.inputId === 'shoot'&& playerList[socket.id] != null){
-            player.isShoot=data.state;
-            if(player.isShoot){
-                setTimeout(()=>{player.isShoot=false},50);//모바일은 버튼업이 없기때문에, 공격을 토글하는 코드
-            }
-         }
-    
-             
-        });
- 
-     socket.on('sendMsgToServer', function (data) {
-         let playerName = ("" + player.username);
-         toAllChat(playerName + ': ' + data);
-     });
- 
-     socket.on('kms', function () {
-         if (playerList[socket.id] != null) {
-             delete playerList[socket.id];
-         }
-     });
- 
-     socket.on('revive', function () {
-         if (playerList[socket.id] == null) {
-             playerList[socket.id] = player;
-         }
-     });
- 
-     socket.on('charUpdate', function (data) {
-         player.char = data.charName;
-     });
- }
- //
- //
- //

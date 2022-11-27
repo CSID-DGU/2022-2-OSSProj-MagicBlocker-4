@@ -1,7 +1,7 @@
-/**
- * 투사체 클래스
- */
- function Projectile(playerId,posX,posY,direction) {
+//
+//Bullet.js
+//투사체 클래스
+ function Bullet(playerId,posX,posY,direction) {
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
