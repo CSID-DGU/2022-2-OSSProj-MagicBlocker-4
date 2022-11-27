@@ -76,11 +76,27 @@
      var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title),
          width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
          height = (typeof parameters.height === "undefined" ? 0 : parameters.height),
+<<<<<<< HEAD
+<<<<<<< HEAD
          internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "#66000000" : parameters.internalFillColor),
          internalLineWidth = (typeof parameters.internalLineWidth === "undefined" ? 2 : parameters.internalLineWidth),
          internalStrokeColor = (typeof parameters.internalStrokeColor === "undefined" ? "#000000" : parameters.internalStrokeColor),
          externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 2 : parameters.externalLineWidth),
          externalStrokeColor = (typeof parameters.externalStrokeColor ===  "undefined" ? "#000000" : parameters.externalStrokeColor),
+=======
+         internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "#00AA00" : parameters.internalFillColor),
+=======
+         internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "#66000000" : parameters.internalFillColor),
+>>>>>>> 0b288ea ([22.11.27,백성욱](feat)모바일일때만 조이스틱 볼 수 있게)
+         internalLineWidth = (typeof parameters.internalLineWidth === "undefined" ? 2 : parameters.internalLineWidth),
+         internalStrokeColor = (typeof parameters.internalStrokeColor === "undefined" ? "#000000" : parameters.internalStrokeColor),
+         externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 2 : parameters.externalLineWidth),
+<<<<<<< HEAD
+         externalStrokeColor = (typeof parameters.externalStrokeColor ===  "undefined" ? "#008000" : parameters.externalStrokeColor),
+>>>>>>> f0080e9 ([22.11.23,전재호](feat) 조이스틱 렌더링 성공)
+=======
+         externalStrokeColor = (typeof parameters.externalStrokeColor ===  "undefined" ? "#000000" : parameters.externalStrokeColor),
+>>>>>>> 0b288ea ([22.11.27,백성욱](feat)모바일일때만 조이스틱 볼 수 있게)
          autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
  
      callback = callback || function(StickStatus) {};
