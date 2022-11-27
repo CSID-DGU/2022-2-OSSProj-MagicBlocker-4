@@ -21,7 +21,7 @@ setTimeout(() => {
     setInterval(render_manager.draw_client_data,CLIENT_FRAME_RATE);
     
     const keyboard_controller = new KeyboardController(socket_manager.mySocket);
-    //const mobile_controller = new MobileController(socket_manager.mySocket);
+    const mobile_controller = new MobileController(socket_manager.mySocket);
 
 
 }, SCRIPT_LOAD_DELAY);
