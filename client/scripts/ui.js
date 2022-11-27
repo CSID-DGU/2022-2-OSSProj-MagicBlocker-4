@@ -1,19 +1,23 @@
 //
 // Ui.js
 //
-function Ui(){
+function Ui(my_socket){
+    this.my_socket = my_socket;
+    this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스    
+    this.JOYSTICK_ID = "joyDiv"; //조이스틱과 연결하기 위한 인터페이스
 
-    this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스
+    GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
+    JOYSTICK_ID=this.JOYSTICK_ID;
+
 
     this.create_login_ui=function(){
 
         //게임 화면 생성
         const game_div = document.createElement('div');//game 플레이화면의 모든 요소들을 포함하는 부모div 
-        game_div.id='game_div';
         document.body.appendChild(game_div);
 
         const game_canvas = document.createElement('canvas');//게임 렌더링 캔버스
-        game_canvas.id = "gameCanvas";
+        game_canvas.id =GAME_CANVAS_ID;
         console.log("game canvas 생성...");
         game_div.appendChild(game_canvas);
 
@@ -43,15 +47,16 @@ function Ui(){
 
         ui_play_button.onclick = function(){
             ui_div.style.display = 'none';
+            my_socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
         }
-
+    
         ui_div.appendChild(ui_play_button);
 
         const ui_charactor_select = document.createElement('div');//캐릭터 선택창
         ui_charactor_select.classList.add('ui');
         ui_charactor_select.classList.add('charactor-select');
         ui_charactor_select.innerHTML="여기에 캐릭터 선택창 떠야됨";
-
+    
         ui_div.appendChild(ui_charactor_select);
 
         const ui_how_to_play_button = document.createElement('button');//조작법 안내 버튼
@@ -69,7 +74,12 @@ function Ui(){
             }
             
         }
-
+        //모바일 컨트롤러
+        mobile_controller_div=document.createElement('div');
+        mobile_controller_div.id=JOYSTICK_ID;
+        document.body.appendChild(mobile_controller_div);
+        //
+        
         const ui_guide_page = document.createElement('div'); //조작법 안내 세부 페이지
         ui_guide_page.classList.add('ui');
         ui_guide_page.classList.add('guide');

@@ -7,44 +7,37 @@ const KEYCODE_LEFT=65; //A
 const KEYCODE_RIGHT=68; //D
 const KEYCODE_ATTACK=75; //L
 
-function Keyboard(){
-    this.mySocket=null;
+function KeyboardController(mySocket){
+    upkey=KEYCODE_UP;
+    downkey=KEYCODE_DOWN;
+    leftkey=KEYCODE_LEFT;
+    rightkey=KEYCODE_RIGHT;
+    attackkey=KEYCODE_ATTACK;
 
-    this.upkey=KEYCODE_UP;
-    this.downkey=KEYCODE_DOWN;
-    this.leftkey=KEYCODE_LEFT;
-    this.rightkey=KEYCODE_RIGHT;
-    this.attackkey=KEYCODE_ATTACK;
-
-    this.show=function(){
-      console.log(this.upkey);
-    };
-
-    this.getKeyDown = function(e){
+    document.onkeyup=function(event){
       //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
-          if (e.keyCode === this.rightkey)
-              this.mySocket.emit('keyPress', { inputId: 'right', state: true});
-          else if (e.keyCode === this.downkey)
-              this.mySocket.emit('keyPress', { inputId: 'down', state: true});
-          else if (e.keyCode === this.leftkey)
-            this.mySocket.emit('keyPress', { inputId: 'left', state: true});
-          else if (e.keyCode === this.upkey)
-            this.mySocket.emit('keyPress', { inputId: 'up', state: true});
-          else if (e.keyCode === this.attackkey)
-            this.mySocket.emit('keyPress', { inputId: 'shoot', state: true});
+      if (event.keyCode === rightkey)
+        mySocket.emit('keyPress', { inputId: 'right', state: false});
+      else if (event.keyCode === downkey)
+        mySocket.emit('keyPress', { inputId: 'down', state: false});
+      else if (event.keyCode === leftkey)
+        mySocket.emit('keyPress', { inputId: 'left', state: false});
+      else if (event.keyCode === upkey)
+          mySocket.emit('keyPress', { inputId: 'up', state: false});
+      else if (event.keyCode === attackkey)
+          mySocket.emit('keyPress', { inputId: 'shoot', state: false});
       };
-
-    this.getKeyUp=function(e){
-    //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
-            if (e.keyCode === this.rightkey)
-              this.mySocket.emit('keyPress', { inputId: 'right', state: false});
-            else if (e.keyCode === this.downkey) 
-              this.mySocket.emit('keyPress', { inputId: 'down', state: false});
-            else if (e.keyCode === this.leftkey)
-              this.mySocket.emit('keyPress', { inputId: 'left', state: false});
-            else if (e.keyCode === this.upkey)
-              this.mySocket.emit('keyPress', { inputId: 'up', state: false});
-            else if (e.keyCode === this.attackkey)
-              this.mySocket.emit('keyPress', { inputId: 'shoot', state: false});
-            }
-   }
+    document.onkeydown=function(event){
+      //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
+        if (event.keyCode === rightkey)
+        mySocket.emit('keyPress', { inputId: 'right', state: true});
+        else if (event.keyCode === downkey) 
+          mySocket.emit('keyPress', { inputId: 'down', state: true});
+        else if (event.keyCode === leftkey)
+          mySocket.emit('keyPress', { inputId: 'left', state: true});
+        else if (event.keyCode === upkey)
+          mySocket.emit('keyPress', { inputId: 'up', state: true});
+        else if (event.keyCode === attackkey)
+          mySocket.emit('keyPress', { inputId: 'shoot', state: true});
+      }
+  }
