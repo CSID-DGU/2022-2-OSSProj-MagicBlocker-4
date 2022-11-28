@@ -32,7 +32,7 @@ const ThenPromise = require('promise');
      console.log("Socket " + socket.id + " has connected");
  
      socket.on('signIn',function (userData){
-         onConnect(socket,userData.username,0);
+         onConnect(socket,userData);
      });
  
      socket.on('disconnect', function () {
@@ -77,7 +77,6 @@ const ThenPromise = require('promise');
              x: player.x,
              y: player.y,
              username: player.username,
-             points: player.points,
              cooldown:player.cooldown,
              direction: player.direction,
              char: player.char
@@ -117,7 +116,8 @@ const ThenPromise = require('promise');
                  x: bullet.x,
                  y: bullet.y,
                  playerId: bullet.playerId,
-                 direction:bullet.direction
+                 direction:bullet.direction,
+                 char:bullet.char
              });
              
              

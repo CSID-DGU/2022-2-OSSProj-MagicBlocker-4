@@ -8,13 +8,15 @@ setTimeout(() => {
 
 
     const socket_manager = new SocketConnection();
-    
-    const ui_manager = new Ui(socket_manager.mySocket);
-    ui_manager.create_login_ui();
-    ui_manager.popup();
 
     const client_data = new ClientData(socket_manager.mySocket);
     client_data.set_socket_render_info();
+
+    const ui_manager = new Ui(socket_manager.mySocket,client_data);
+    ui_manager.create_login_ui();
+    ui_manager.popup();
+
+
 
     const render_manager = new Render(ui_manager.GAME_CANVAS_ID,client_data);
 
