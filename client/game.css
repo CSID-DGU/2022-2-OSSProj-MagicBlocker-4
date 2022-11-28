@@ -14,6 +14,7 @@
 <<<<<<< HEAD
 /*게임이 렌더링되는 캔버스*/
 #gameCanvas{
+<<<<<<< HEAD
 =======
 
 /*p5가 생성한 캔버스*/
@@ -21,6 +22,10 @@
 >>>>>>> 1a7276c ([22.11.23,전재호](fix) 하얀화면 오류 해결 완료)
     width:100%;
     height:100%;
+=======
+    width:100vw;
+    height:100vh;
+>>>>>>> c39ff9d ([22.11.28,백성욱](feat) 창 크기에 따라 캐릭터, 불렛 사이즈 변경)
     border:1px solid black;
     float:left;
     background-color: #ffbf80;
