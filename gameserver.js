@@ -166,6 +166,7 @@ var Player = function (id, name, points) {
 =======
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
 // 서버에서 사용되는 상수
 //
 <<<<<<< HEAD
@@ -173,6 +174,10 @@ var Player = function (id, name, points) {
 
 =======
 >>>>>>> 164a3cf ([22.11.28,전재호](refector 전체 코드 클래스 화 완료)
+=======
+// 서버에서 사용되는 상수
+//
+>>>>>>> c39ff9d ([22.11.28,백성욱](feat) 창 크기에 따라 캐릭터, 불렛 사이즈 변경)
  const SERVER_PORT = 8000;
  const REFRESH_RATE = 25;
  
@@ -185,8 +190,11 @@ var Player = function (id, name, points) {
  const PROJECTILE_SPEED = 10;
  const COOL_TIME = 60;
 //
+<<<<<<< HEAD
 =======
 >>>>>>> 4c8b77a ([22.11.28,전재호](remove) 레거시 코드 제거)
+=======
+>>>>>>> c39ff9d ([22.11.28,백성욱](feat) 창 크기에 따라 캐릭터, 불렛 사이즈 변경)
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction) {
@@ -283,20 +291,6 @@ var Player = function (id, name, points) {
         }
     }
 };
-//
-// 서버에서 사용되는 상수
-//
- const SERVER_PORT = 8000;
- const REFRESH_RATE = 25;
- 
- const X_STARTING_POS = 30;
- const Y_STARTING_POS = 30;
- const PLAYER_SPEED = 10;
- const STARTING_DIR = 'down';
- const STARTING_CHAR = 'warrior';
- const MONGO_REPO = "Account";
- const PROJECTILE_SPEED = 10;
- const COOL_TIME = 60;
 //
 //onConnect.js
 //
