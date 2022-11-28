@@ -10,5 +10,5 @@
  const STARTING_DIR = 'down';
  const STARTING_CHAR = 'warrior';
  const MONGO_REPO = "Account";
- const PROJECTILE_SPEED = 10;
+ const BULLET_SPEED = 20;
  const COOL_TIME = 60;

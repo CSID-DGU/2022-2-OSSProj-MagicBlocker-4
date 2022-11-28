@@ -5,6 +5,18 @@
 function ClientData(mySocket){
     this.player_pack_client = [];
     this.bullet_pack_client = [];
+
+    //스프라이트 상수
+    this.img_frame_index = 100;
+    this.img_width = 100;
+    this.img_height = 100;
+
+    //캐릭터 리스트
+    this.char_list = ['soldier','ezreal','ako','ashe','zed','buzzi','dad','kitty','pepe','santa','monk']
+
+    //플레이어가 선택한 캐릭터
+    this.selected_char = 'none';
+
     player_pack_client=this.player_pack_client;
     bullet_pack_client=this.bullet_pack_client;
 
