@@ -1,9 +1,9 @@
 //
 //onConnect.js
 //
-function onConnect(socket, name, points) {
+function onConnect(socket, userData) {
  
-    let player = new Player(socket.id, name, points);
+    let player = new Player(socket.id,userData.username,userData.char);
     playerList[socket.id] = player; //playerList는 id 여러개를 가지는 객체. player객체를 저장함
 
     socket.on('keyPress', function (data) {   //glitchy character movement

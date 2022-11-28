@@ -1,15 +1,19 @@
 //
 //Player.js
 //플레이어 클래스
- function Player(id, name, points) {
+ function Player(id, name, char) {
     this.type = 'player';
-    this.x = X_STARTING_POS;
-    this.y = Y_STARTING_POS;
+    //게임 시작 시 고정된 위치에서 플레이어가 소환
+    //this.x = X_STARTING_POS;
+    //this.y = Y_STARTING_POS;
+    this.x = Math.random()*1000;
+    this.y = Math.random()*500;
     this.id = id;
     this.username = name;
-    this.points = points;
-    this.char = STARTING_CHAR;
+    this.char = char;
     this.direction = STARTING_DIR;
+
+    host_char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
 
     this.cooldown = 0;
 
@@ -45,15 +49,13 @@
             
     };
 
-    this.addPoint = function () {
-        this.points++;
-    };
 
     this.shootBullet = function (){
         if(this.isShoot&&this.cooldown===0){
-            let bullet = new Bullet(this.id,this.x,this.y,this.direction);
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
+            console.log(bullet.char);
         }
         
     };
