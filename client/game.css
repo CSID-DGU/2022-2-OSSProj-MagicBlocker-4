@@ -12,6 +12,10 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 589cd40 ([22.12.05,전재호] 캐릭터 선택을 클라이언트의 client_data와 서버의 pack에 전달하고, 캐릭터와 총알을 client_data의 char에 맞게 렌더링. char은 직업명)
 /*게임이 렌더링되는 캔버스*/
 #gameCanvas{
 <<<<<<< HEAD
@@ -33,9 +37,14 @@
 >>>>>>> f333505 ([22.12.04,백성욱](feat) 캐릭터 선택창 추가, 핀치줌 방지)
     border:1px solid black;
     float:left;
+<<<<<<< HEAD
     background-color: #ffbf80;
     /* 더블탭으로 인한 확대 비허용 */
     touch-action: manipulation;
+=======
+    background-color: #809fff;
+    /*object-fit: cover;*/
+>>>>>>> c06a646 ([22.11.28,전재호](feat) 새로운 스프라이트 추가(스킬 및 직업 설계 위해 두개 이상 추가함))
 }
 
 /*조이스틱*/
@@ -67,8 +76,8 @@
 >>>>>>> f0080e9 ([22.11.23,전재호](feat) 조이스틱 렌더링 성공)
 
 #ui_mobile_toggle_button{
-    top: 66%;
-    left: 27%;
+    top: 60%;
+    left: 16%;
 }
 
 =======
@@ -149,7 +158,7 @@
     width: 15vw;
     height:7vh;
     top: 35%;
-    left: 22%;
+    left: 16%;
     padding: 28px;
     background-color: rgba(0, 0, 0, 0.4);
     transition:0.5s;
@@ -167,7 +176,7 @@
     width: 10vw;
     height: 8vh;
     top: 45%;
-    left: 25%;
+    left: 16%;
     font-size: 2vmin;
     padding: 15px 30px;
     border: 3px solid #fffff0;
@@ -203,18 +212,24 @@
     transform:translateY(-100%);
 }
 
-
+/*캐릭터 선택창*/
 .charactor-select{
-    width: 25%;
-    height:30%;
+    width: 40%;
     top: 30%;
-    left: 45%;  
+    left: 35%;  
     background-color: rgba(239, 235, 235, 0.5);
 }
 
+/*캐릭터 선택창 버튼 이미지 크기 설정*/
+.charactor-select-button{
+    width:60px;
+    height:60px;
+}
+
+
 .how-to-play{
     top: 55%;
-    left: 27%;
+    left: 16%;
     padding: 3px;
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
