@@ -17,7 +17,8 @@
     height:100%;
     border:1px solid black;
     float:left;
-    background-color: #ffbf80;
+    background-color: #809fff;
+    /*object-fit: cover;*/
 }
 
 /*조이스틱*/

@@ -1,4 +1,18 @@
 //
+// 서버에서 사용되는 상수
+//
+ const SERVER_PORT = 8000;
+ const REFRESH_RATE = 25;
+ 
+ const X_STARTING_POS = 30;
+ const Y_STARTING_POS = 30;
+ const PLAYER_SPEED = 10;
+ const STARTING_DIR = 'down';
+ const STARTING_CHAR = 'warrior';
+ const MONGO_REPO = "Account";
+ const BULLET_SPEED = 20;
+ const COOL_TIME = 60;
+//
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction) {
@@ -7,7 +21,7 @@
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=PROJECTILE_SPEED;
+    this.speed=BULLET_SPEED;
     this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
@@ -15,7 +29,7 @@
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 100) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -95,20 +109,6 @@
         }
     }
 };
-//
-// 서버에서 사용되는 상수
-//
- const SERVER_PORT = 8000;
- const REFRESH_RATE = 25;
- 
- const X_STARTING_POS = 30;
- const Y_STARTING_POS = 30;
- const PLAYER_SPEED = 10;
- const STARTING_DIR = 'down';
- const STARTING_CHAR = 'warrior';
- const MONGO_REPO = "Account";
- const PROJECTILE_SPEED = 10;
- const COOL_TIME = 60;
 //
 //onConnect.js
 //
