@@ -207,7 +207,7 @@ var Player = function (id, name, points) {
 >>>>>>> c39ff9d ([22.11.28,백성욱](feat) 창 크기에 따라 캐릭터, 불렛 사이즈 변경)
 =======
  const BULLET_SPEED = 20;
- const COOL_TIME = 60;
+ const COOL_TIME = 30;
 //
 >>>>>>> c06a646 ([22.11.28,전재호](feat) 새로운 스프라이트 추가(스킬 및 직업 설계 위해 두개 이상 추가함))
 //Bullet.js
@@ -295,20 +295,403 @@ var Player = function (id, name, points) {
 
 
     this.shootBullet = function (){
-        if(this.isShoot&&this.cooldown===0){
+        if(this.isShoot&&this.cooldown===0&&char!="ako"){
             let bullet = new Bullet(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="ako"){
+            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME+100000;
+            console.log(bullet.char);
         }
         
+        
     };
+
     this.updateCooldown = function(){
         if(this.cooldown>0){
             this.cooldown-=1;
         }
     }
+
+
 };
+//
+//Ako.js
+//직업 클래스
+
+function Ako(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Ashe.js
+//직업 클래스
+
+function Ashe(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Buzzi.js
+//직업 클래스
+
+function Buzzi(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Dad.js
+//직업 클래스
+
+function Dad(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Ezreal.js
+//직업 클래스
+
+function Ezreal(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Kitty.js
+//직업 클래스
+
+function Kitty(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Monk.js
+//직업 클래스
+
+function Monk(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Pepe.js
+//직업 클래스
+
+function Pepe(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Santa.js
+//직업 클래스
+
+function Santa(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Soldier.js
+//직업 클래스
+
+function Soldier(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Zed.js
+//직업 클래스
+
+function Zed(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
 //
 //onConnect.js
 //
