@@ -44,7 +44,7 @@
 
 #ui_mobile_toggle_button{
     top: 60%;
-    left: 16%;
+    left: 60%;
 }
 
 #mobile_attack_button{
@@ -119,11 +119,14 @@
     width: 15vw;
     height:7vh;
     top: 35%;
-    left: 16%;
+    left: 60%;
     padding: 28px;
     background-color: rgba(0, 0, 0, 0.4);
     transition:0.5s;
     font-size: 3vmax;
+}
+#username_input::placeholder{
+    font-size: 1vmax;
 }
 
 #username_input:focus{
@@ -137,7 +140,7 @@
     width: 10vw;
     height: 8vh;
     top: 45%;
-    left: 16%;
+    left: 60%;
     font-size: 2vmin;
     padding: 15px 30px;
     border: 3px solid #fffff0;
@@ -174,23 +177,33 @@
 }
 
 /*캐릭터 선택창*/
-.charactor-select{
+.char-select{
     width: 40%;
     top: 30%;
-    left: 35%;  
+    left: 10%;  
     background-color: rgba(239, 235, 235, 0.5);
 }
 
 /*캐릭터 선택창 버튼 이미지 크기 설정*/
-.charactor-select-button{
+.char-select-button{
     width:60px;
     height:60px;
 }
 
+#char_select_prompt{
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 2vmax;
+    color: #3c3e70;
+}
+#char_selected_prompt_picked{
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 2vmax;
+    color: #b92929;
+}
 
 .how-to-play{
     top: 55%;
-    left: 16%;
+    left: 60%;
     padding: 3px;
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
@@ -198,11 +211,6 @@
     font-size: 1.5vmin;
     transition:0.3s;
 }
-.how-to-play:hover{
-    font-size: 2vmin;
-    transition:0.3s;
-}
-
 .guide{
     top: 58%;
     left: 27%;
@@ -215,7 +223,7 @@
 
 input::placeholder {
     color: #fffff0;
-    font-size: 0.4vmin;
+    font-size: 0.6vmin;
     opacity: 0.3;
     font-style: italic;
 }
@@ -226,4 +234,10 @@ input::placeholder {
     width: 10vw;
     height: 9vh;
     font-size: 1.5vmin;
+}
+.mobile:hover{
+    width:11vw;
+    height:10vh;
+    font-size: 2vmin;
+    transition:0.3s;
 }

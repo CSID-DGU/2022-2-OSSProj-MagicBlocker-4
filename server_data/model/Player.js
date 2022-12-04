@@ -55,7 +55,6 @@
             let bullet = new Bullet(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
-            console.log(bullet.char);
         }
         
     };
