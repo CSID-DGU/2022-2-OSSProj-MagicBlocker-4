@@ -10,10 +10,12 @@
     this.y = Math.random()*500;
     this.id = id;
     this.username = name;
-    this.char = char;
+    this.char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
     this.direction = STARTING_DIR;
+    this.hp=100;
+    this.isalive=true;
+    isalive = this.isalive;
 
-    host_char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
 
     this.cooldown = 0;
 
@@ -51,6 +53,13 @@
 
 
     this.shootBullet = function (){
+        if(this.isShoot&&this.cooldown===0&&this.isalive===true){
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }
+
+        /*류강현 클래스 투사체 코드 
         if(this.isShoot&&this.cooldown===0&&char=="ako"){
             let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
@@ -103,10 +112,17 @@
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
             let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
+
+        if(this.isShoot&&this.cooldown===0){
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
+<<<<<<< HEAD
+>>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
+=======
+>>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
-            console.log(bullet.char);
         }
+        */
         
         
         
@@ -118,5 +134,13 @@
         }
     }
 
+    this.die = function(){
+        this.isalive=false;
+        this.char='ghost';
+    }
+<<<<<<< HEAD
+>>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
+=======
 
+>>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
 };

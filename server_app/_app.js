@@ -66,12 +66,14 @@ const ThenPromise = require('promise');
          player.shootBullet();
          player.updateCooldown();
 
+         /*
          renderPack.push({
             type:'player',
             x: player.x,
             y:player.y,
             direction:player.direction,
          })
+         */
          
          playerPack.push({
              x: player.x,
@@ -79,7 +81,8 @@ const ThenPromise = require('promise');
              username: player.username,
              cooldown:player.cooldown,
              direction: player.direction,
-             char: player.char
+             char: player.char,
+             hp:player.hp,
          });
          
          
@@ -98,9 +101,16 @@ const ThenPromise = require('promise');
              
              for (let i in playerList) {
                  let player = playerList[i];
+                 
                  if (bullet.x > player.x && bullet.x < player.x + 50 && bullet.y > player.y && bullet.y < player.y + 60){
-                     if (player.id != bullet.playerId)
-                     playerList[bullet.playerId].addPoint();
+                     if (player.id != bullet.playerId){
+                        //playerList[bullet.playerId].addPoint();   
+                        bullet.hit(player);
+                     }
+                     
+                 }
+                 if(player.hp<0){
+                    player.die();
                  }
              }
              /*
