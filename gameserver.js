@@ -11,12 +11,11 @@
  const STARTING_CHAR = 'warrior';
  const MONGO_REPO = "Account";
  const BULLET_SPEED = 20;
-
  const COOL_TIME = 60;
 //
 //Bullet.js
 //투사체 클래스
- function Bullet(playerId,posX,posY,direction) {
+ function Bullet(playerId,posX,posY,direction,char) {
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
@@ -26,6 +25,7 @@
     this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
+    this.char=char;
     
 
     this.update = function(){
@@ -48,15 +48,19 @@
 //
 //Player.js
 //플레이어 클래스
- function Player(id, name, points) {
+ function Player(id, name, char) {
     this.type = 'player';
-    this.x = X_STARTING_POS;
-    this.y = Y_STARTING_POS;
+    //게임 시작 시 고정된 위치에서 플레이어가 소환
+    //this.x = X_STARTING_POS;
+    //this.y = Y_STARTING_POS;
+    this.x = Math.random()*1000;
+    this.y = Math.random()*500;
     this.id = id;
     this.username = name;
-    this.points = points;
-    this.char = STARTING_CHAR;
+    this.char = char;
     this.direction = STARTING_DIR;
+
+    host_char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
 
     this.cooldown = 0;
 
@@ -92,15 +96,13 @@
             
     };
 
-    this.addPoint = function () {
-        this.points++;
-    };
 
     this.shootBullet = function (){
         if(this.isShoot&&this.cooldown===0){
-            let bullet = new Bullet(this.id,this.x,this.y,this.direction);
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
+            console.log(bullet.char);
         }
         
     };
@@ -113,9 +115,9 @@
 //
 //onConnect.js
 //
-function onConnect(socket, name, points) {
+function onConnect(socket, userData) {
  
-    let player = new Player(socket.id, name, points);
+    let player = new Player(socket.id,userData.username,userData.char);
     playerList[socket.id] = player; //playerList는 id 여러개를 가지는 객체. player객체를 저장함
 
     socket.on('keyPress', function (data) {   //glitchy character movement
@@ -240,7 +242,7 @@ const ThenPromise = require('promise');
      console.log("Socket " + socket.id + " has connected");
  
      socket.on('signIn',function (userData){
-         onConnect(socket,userData.username,0);
+         onConnect(socket,userData);
      });
  
      socket.on('disconnect', function () {
@@ -285,7 +287,6 @@ const ThenPromise = require('promise');
              x: player.x,
              y: player.y,
              username: player.username,
-             points: player.points,
              cooldown:player.cooldown,
              direction: player.direction,
              char: player.char
@@ -325,7 +326,8 @@ const ThenPromise = require('promise');
                  x: bullet.x,
                  y: bullet.y,
                  playerId: bullet.playerId,
-                 direction:bullet.direction
+                 direction:bullet.direction,
+                 char:bullet.char
              });
              
              

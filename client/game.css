@@ -11,6 +11,7 @@
 }
 
 
+
 /*게임이 렌더링되는 캔버스*/
 #gameCanvas{
     width:100%;
@@ -42,8 +43,8 @@
 }
 
 #ui_mobile_toggle_button{
-    top: 66%;
-    left: 27%;
+    top: 60%;
+    left: 16%;
 }
 
 #mobile_attack_button{
@@ -118,7 +119,7 @@
     width: 15vw;
     height:7vh;
     top: 35%;
-    left: 22%;
+    left: 16%;
     padding: 28px;
     background-color: rgba(0, 0, 0, 0.4);
     transition:0.5s;
@@ -136,7 +137,7 @@
     width: 10vw;
     height: 8vh;
     top: 45%;
-    left: 25%;
+    left: 16%;
     font-size: 2vmin;
     padding: 15px 30px;
     border: 3px solid #fffff0;
@@ -172,18 +173,24 @@
     transform:translateY(-100%);
 }
 
-
+/*캐릭터 선택창*/
 .charactor-select{
-    width: 25%;
-    height:30%;
+    width: 40%;
     top: 30%;
-    left: 45%;  
+    left: 35%;  
     background-color: rgba(239, 235, 235, 0.5);
 }
 
+/*캐릭터 선택창 버튼 이미지 크기 설정*/
+.charactor-select-button{
+    width:60px;
+    height:60px;
+}
+
+
 .how-to-play{
     top: 55%;
-    left: 27%;
+    left: 16%;
     padding: 3px;
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);

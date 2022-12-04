@@ -1,13 +1,16 @@
 //
 // Ui.js
+
 //
-function Ui(my_socket){
+function Ui(my_socket,client_data){
     this.my_socket = my_socket;
     this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스    
     this.JOYSTICK_ID = "joyDiv"; //조이스틱과 연결하기 위한 인터페이스
+    this.selected_charactor = 'none';
 
     GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
     JOYSTICK_ID=this.JOYSTICK_ID;
+    selected_charactor = 'none';
 
 
     this.create_login_ui=function(){
@@ -29,7 +32,7 @@ function Ui(my_socket){
         const ui_title = document.createElement('div');//게임 제목을 표시
         ui_title.classList.add('ui');
         ui_title.classList.add('title');
-        ui_title.innerHTML='Magic Blocker';
+        ui_title.innerHTML='Magic Blocker.io';
 
         ui_div.appendChild(ui_title);
 
@@ -48,28 +51,9 @@ function Ui(my_socket){
         ui_play_button.onclick = function(){
             ui_div.style.display = 'none';
             my_socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
-            document.getElementById("qwerty").style.display = "none";
         }
     
         ui_div.appendChild(ui_play_button);
-
-        // const ui_charactor_select = document.createElement('div');//캐릭터 선택창
-        // ui_charactor_select.classList.add('ui');
-        // ui_charactor_select.classList.add('charactor-select');
-        // ui_charactor_select.innerHTML="Select Character";
-        // ui_div.appendChild(ui_charactor_select);
-
-        // const princess_select_button = document.createElement('button');//공주 선택 버튼
-        // ui_charactor_select.classList.add('ui-char');
-        // ui_charactor_select.classList.add('princess');
-        // ui_charactor_select.innerHTML='공주';
-        // ui_charactor_select.append(princess_select_button);
-
-        // const knight_select_button = document.createElement('button');//기사 선택 버튼
-        // ui_charactor_select.classList.add('ui-char');
-        // ui_charactor_select.classList.add('knight');
-        // ui_charactor_select.innerHTML='기사';
-        // ui_charactor_select.append(knight_select_button);
 
         const ui_how_to_play_button = document.createElement('button');//조작법 안내 버튼
         ui_how_to_play_button.classList.add('ui');
@@ -84,6 +68,46 @@ function Ui(my_socket){
                 ui_guide_page.remove();
             }            
         }
+
+        //캐릭터 선택창
+        const ui_charactor_select=document.createElement('div');
+        const ui_charactor_select_text=document.createElement('p');
+
+        ui_charactor_select_text.innerText='당신의 캐릭터를 선택하세요';
+        ui_charactor_select.classList.add('ui');
+        ui_charactor_select.classList.add('charactor-select');
+
+
+        ui_charactor_select.id='charactor-select';
+        ui_div.appendChild(ui_charactor_select);
+        ui_charactor_select.appendChild(ui_charactor_select_text);
+
+        //캐릭터 선택창 세부 캐릭터 선택 버튼 블록
+        for(item of client_data.char_list){
+            //console.log(item);
+            let temp_char_button = document.createElement('button');
+            temp_char_button.id = item+'-id';
+
+            const char_button_image = new Image();
+            char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';
+            ui_charactor_select.appendChild(temp_char_button);
+            temp_char_button.appendChild(char_button_image);
+        }
+        
+        //onclick 함수는 for문으로 순회가 불가능하다. (왠진모름) 클로저를 사용해야함. (*stackoverflow 참고)
+        for(item of client_data.char_list){
+            (function(closure){
+                document.getElementById(item+'-id').onclick=function(){
+                    ui_div.style.display = 'none';
+                    my_socket.emit('signIn', { 
+                        username: document.getElementById("username_input").value.trim(),
+                        char:closure,
+                    });
+                };
+            })(item);
+        }
+        
+
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');
         mobile_controller_div.id=JOYSTICK_ID;
