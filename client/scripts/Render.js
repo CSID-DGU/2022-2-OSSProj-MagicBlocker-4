@@ -17,10 +17,10 @@ function Render(canvas_id,client_data){
 
     //Render 생성자 호출시 미리 이미지 객체를 생성 (이미지를 불러와서 Render 객체에 저장). (렌더링 성능 최적화)
     const player_img = new Image();
-    player_img.src = 'client/sprites/knight.png';
+    player_img.src = 'client/sprites/soldier.png';
 
     const bullet_img = new Image();
-    bullet_img.src = 'client/sprites/bullet_knight.png';
+    bullet_img.src = 'client/sprites/soldier_bullet.png';
     //
     this.client_data = client_data;//클라이언트 데이터(player와 bullet의 좌표,방향)를 참조하여 렌더링
 
@@ -65,7 +65,7 @@ function Render(canvas_id,client_data){
             case 'up':
                 ctx.drawImage(player_img, img_frame_index, 0, img_width, img_height, player.x, player.y, img_width, img_height);
                 break;
-            case 'left':
+            case 'left':8
                 ctx.drawImage(player_img, img_frame_index * 2, 0, img_width, img_height, player.x, player.y, img_width, img_height);
                 break;
             case 'right':
@@ -77,7 +77,7 @@ function Render(canvas_id,client_data){
     }
 
     function draw_bullet(bullet){
-
+;
         switch(bullet.direction){
             case 'down':
                 ctx.drawImage(bullet_img, 0, 0, img_width, img_height, bullet.x, bullet.y, img_width, img_height);

@@ -17,9 +17,13 @@
     height:100%;
     border:1px solid black;
     float:left;
-    background-color: #ffbf80;
+
+    background-color: #809fff;
     /* 더블탭으로 인한 확대 비허용 */
     touch-action: manipulation;
+
+    /*object-fit: cover;*/
+
 }
 
 /*조이스틱*/
