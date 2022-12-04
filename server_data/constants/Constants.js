@@ -11,4 +11,4 @@
  const STARTING_CHAR = 'warrior';
  const MONGO_REPO = "Account";
  const BULLET_SPEED = 20;
- const COOL_TIME = 60;
+ const COOL_TIME = 30;
