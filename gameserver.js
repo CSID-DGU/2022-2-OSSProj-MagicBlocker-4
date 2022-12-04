@@ -173,6 +173,9 @@ var Player = function (id, name, points) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 // 서버에서 사용되는 상수
 //
 <<<<<<< HEAD
@@ -196,6 +199,14 @@ var Player = function (id, name, points) {
 // 서버에서 사용되는 상수
 //
 >>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
+=======
+// 서버에서 사용되는 상수
+//
+>>>>>>> 40bd454 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
+=======
+// 서버에서 사용되는 상수
+//
+>>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
  const SERVER_PORT = 8000;
  const REFRESH_RATE = 25;
  
@@ -210,16 +221,24 @@ var Player = function (id, name, points) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
  const PROJECTILE_SPEED = 10;
 =======
  const BULLET_SPEED = 20;
 >>>>>>> 589cd40 ([22.12.05,전재호] 캐릭터 선택을 클라이언트의 client_data와 서버의 pack에 전달하고, 캐릭터와 총알을 client_data의 char에 맞게 렌더링. char은 직업명)
  const COOL_TIME = 60;
 =======
+=======
+>>>>>>> 40bd454 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
+=======
+>>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
  const BULLET_SPEED = 20;
 
  const COOL_TIME = 20;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
 =======
@@ -254,6 +273,14 @@ const MAP_PAD = 100;
 >>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
 =======
 >>>>>>> ff4ac33 ([22.12.05,전재호](feat) 접속자 표시 기능 추가)
+=======
+//
+>>>>>>> 40bd454 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
+=======
+>>>>>>> 502e498 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
+=======
+//
+>>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction,char) {
@@ -462,8 +489,13 @@ const MAP_PAD = 100;
 };
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
 =======
+=======
+>>>>>>> 502e498 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
 // 서버에서 사용되는 상수
 //
  const SERVER_PORT = 8000;
@@ -480,7 +512,14 @@ const MAP_PAD = 100;
  const COOL_TIME = 20;
 
 //
+<<<<<<< HEAD
 >>>>>>> ff4ac33 ([22.12.05,전재호](feat) 접속자 표시 기능 추가)
+=======
+>>>>>>> 40bd454 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
+=======
+>>>>>>> 502e498 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
+=======
+>>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
 //Ako.js
 //직업 클래스
 
@@ -1404,6 +1443,7 @@ const ThenPromise = require('promise');
              direction: player.direction,
              char: player.char,
              hp:player.hp,
+             isalive:player.isalive,
          });
          
          
