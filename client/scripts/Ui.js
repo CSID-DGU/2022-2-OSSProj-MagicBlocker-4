@@ -48,31 +48,41 @@ function Ui(my_socket){
         ui_play_button.onclick = function(){
             ui_div.style.display = 'none';
             my_socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
+            document.getElementById("qwerty").style.display = "none";
         }
     
         ui_div.appendChild(ui_play_button);
 
-        const ui_charactor_select = document.createElement('div');//캐릭터 선택창
-        ui_charactor_select.classList.add('ui');
-        ui_charactor_select.classList.add('charactor-select');
-        ui_charactor_select.innerHTML="여기에 캐릭터 선택창 떠야됨";
-    
-        ui_div.appendChild(ui_charactor_select);
+        // const ui_charactor_select = document.createElement('div');//캐릭터 선택창
+        // ui_charactor_select.classList.add('ui');
+        // ui_charactor_select.classList.add('charactor-select');
+        // ui_charactor_select.innerHTML="Select Character";
+        // ui_div.appendChild(ui_charactor_select);
+
+        // const princess_select_button = document.createElement('button');//공주 선택 버튼
+        // ui_charactor_select.classList.add('ui-char');
+        // ui_charactor_select.classList.add('princess');
+        // ui_charactor_select.innerHTML='공주';
+        // ui_charactor_select.append(princess_select_button);
+
+        // const knight_select_button = document.createElement('button');//기사 선택 버튼
+        // ui_charactor_select.classList.add('ui-char');
+        // ui_charactor_select.classList.add('knight');
+        // ui_charactor_select.innerHTML='기사';
+        // ui_charactor_select.append(knight_select_button);
 
         const ui_how_to_play_button = document.createElement('button');//조작법 안내 버튼
         ui_how_to_play_button.classList.add('ui');
         ui_how_to_play_button.classList.add('how-to-play');
         ui_how_to_play_button.innerHTML='How to Play?';
-
         ui_div.appendChild(ui_how_to_play_button);
 
         ui_how_to_play_button.onclick = function(){ // 조작법 안내 버튼 클릭시 콜백
             if(document.getElementById("guideID")==null){
-                ui_login.appendChild(ui_guide_page);
+                ui_div.appendChild(ui_guide_page);
             }else{
                 ui_guide_page.remove();
-            }
-            
+            }            
         }
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');
@@ -108,13 +118,13 @@ function Ui(my_socket){
         ui_mobile_toggle.onclick = function(){
           const joystick = document.getElementById(JOYSTICK_ID);  
           joystick.style.visibility='visible';
-          //mobile_attack_button.style.visibility='visible';
+          mobile_attack_button.style.visibility='visible';
         };
 
 
         this.popup = function(){ //팝업 UI
             const popUpBox = document.createElement("div");
-            popUpBox.innerHTML="pop up!!!";
+            // popUpBox.innerHTML="pop up!!!";
             document.body.appendChild(popUpBox);
         }
     }
