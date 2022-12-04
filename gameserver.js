@@ -168,6 +168,7 @@ var Player = function (id, name, points) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // 서버에서 사용되는 상수
 //
 <<<<<<< HEAD
@@ -210,6 +211,8 @@ var Player = function (id, name, points) {
  const COOL_TIME = 30;
 //
 >>>>>>> c06a646 ([22.11.28,전재호](feat) 새로운 스프라이트 추가(스킬 및 직업 설계 위해 두개 이상 추가함))
+=======
+>>>>>>> 93beecf ([22.12.05,전재호](feat) ui선택창에 저작권을 회피하는 이름 추가)
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction,char) {
@@ -295,17 +298,63 @@ var Player = function (id, name, points) {
 
 
     this.shootBullet = function (){
-        if(this.isShoot&&this.cooldown===0&&char!="ako"){
-            let bullet = new Bullet(this.id,this.x,this.y,this.direction,host_char);
+        if(this.isShoot&&this.cooldown===0&&char=="ako"){
+            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="ako"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="ashe"){
+            let bullet = new Ashe(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME+100000;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="buzzi"){
+            let bullet = new Buzzi(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="dad"){
+            let bullet = new Dad(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="ezreal"){
+            let bullet = new Ezreal(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="kitty"){
+            let bullet = new Kitty(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="monk"){
+            let bullet = new Monk(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="pepe"){
+            let bullet = new Pepe(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="santa"){
+            let bullet = new Santa(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="soldier"){
+            let bullet = new Soldier(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
+            let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }
+        
         
         
     };
@@ -319,6 +368,7 @@ var Player = function (id, name, points) {
 
 };
 //
+<<<<<<< HEAD
 //Ako.js
 //직업 클래스
 
@@ -668,7 +718,7 @@ function Zed(playerId,posX,posY,direction,char) {
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=BULLET_SPEED;
+    this.speed=BULLET_SPEED+150;
     this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
@@ -677,7 +727,7 @@ function Zed(playerId,posX,posY,direction,char) {
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer++ > 1) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -692,6 +742,21 @@ function Zed(playerId,posX,posY,direction,char) {
         this.y += this.speed;
     };
 }
+=======
+// 서버에서 사용되는 상수
+//
+ const SERVER_PORT = 8000;
+ const REFRESH_RATE = 25;
+ 
+ const X_STARTING_POS = 30;
+ const Y_STARTING_POS = 30;
+ const PLAYER_SPEED = 10;
+ const STARTING_DIR = 'down';
+ const STARTING_CHAR = 'warrior';
+ const MONGO_REPO = "Account";
+ const BULLET_SPEED = 20;
+ const COOL_TIME = 60;
+>>>>>>> 93beecf ([22.12.05,전재호](feat) ui선택창에 저작권을 회피하는 이름 추가)
 //
 //onConnect.js
 //

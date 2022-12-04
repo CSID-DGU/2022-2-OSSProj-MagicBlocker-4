@@ -52,57 +52,57 @@
 
     this.shootBullet = function (){
         if(this.isShoot&&this.cooldown===0&&char=="ako"){
-            let bullet = new Bullet(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="ashe"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Ashe(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="buzzi"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Buzzi(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="dad"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Dad(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="ezreal"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Ezreal(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="kitty"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Kitty(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="monk"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Monk(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="pepe"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Pepe(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="santa"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Santa(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="soldier"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Soldier(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+            let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
