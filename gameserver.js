@@ -11,7 +11,11 @@
  const STARTING_CHAR = 'warrior';
  const MONGO_REPO = "Account";
  const BULLET_SPEED = 20;
+<<<<<<< HEAD
  const COOL_TIME = 30;
+=======
+ const COOL_TIME = 20;
+>>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
 //
 //Bullet.js
 //투사체 클래스
@@ -26,6 +30,8 @@
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
+    this.damage=20;
+    damage=this.damage;
     
 
     this.update = function(){
@@ -44,6 +50,10 @@
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        player.hp -= damage;
+    }
 }
 //
 //Player.js
@@ -57,10 +67,12 @@
     this.y = Math.random()*500;
     this.id = id;
     this.username = name;
-    this.char = char;
+    this.char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
     this.direction = STARTING_DIR;
+    this.hp=100;
+    this.isalive=true;
+    isalive = this.isalive;
 
-    host_char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
 
     this.cooldown = 0;
 
@@ -98,6 +110,7 @@
 
 
     this.shootBullet = function (){
+<<<<<<< HEAD
         if(this.isShoot&&this.cooldown===0&&char=="ako"){
             let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
@@ -150,9 +163,12 @@
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
             let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
+=======
+        if(this.isShoot&&this.cooldown===0){
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
+>>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
-            console.log(bullet.char);
         }
         
         
@@ -165,7 +181,14 @@
         }
     }
 
+<<<<<<< HEAD
 
+=======
+    this.die = function(){
+        this.isalive=false;
+        console.log(this);
+    }
+>>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
 };
 //
 //Ako.js
@@ -517,7 +540,11 @@ function Zed(playerId,posX,posY,direction,char) {
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
+<<<<<<< HEAD
     this.speed=BULLET_SPEED+150;
+=======
+    this.speed=BULLET_SPEED;
+>>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
     this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
@@ -526,7 +553,11 @@ function Zed(playerId,posX,posY,direction,char) {
 
     this.update = function(){
         this.updatePosition();
+<<<<<<< HEAD
         if (this.timer++ > 1) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+=======
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+>>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
         this.toRemove = true;
     };
 
@@ -705,12 +736,14 @@ const ThenPromise = require('promise');
          player.shootBullet();
          player.updateCooldown();
 
+         /*
          renderPack.push({
             type:'player',
             x: player.x,
             y:player.y,
             direction:player.direction,
          })
+         */
          
          playerPack.push({
              x: player.x,
@@ -718,7 +751,8 @@ const ThenPromise = require('promise');
              username: player.username,
              cooldown:player.cooldown,
              direction: player.direction,
-             char: player.char
+             char: player.char,
+             hp:player.hp,
          });
          
          
@@ -737,9 +771,13 @@ const ThenPromise = require('promise');
              
              for (let i in playerList) {
                  let player = playerList[i];
+                 
                  if (bullet.x > player.x && bullet.x < player.x + 50 && bullet.y > player.y && bullet.y < player.y + 60){
-                     if (player.id != bullet.playerId)
-                     playerList[bullet.playerId].addPoint();
+                     if (player.id != bullet.playerId){
+                        //playerList[bullet.playerId].addPoint();   
+                        bullet.hit(player);
+                     }
+                     
                  }
              }
              /*

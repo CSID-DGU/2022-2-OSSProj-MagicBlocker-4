@@ -13,6 +13,19 @@ function ClientData(mySocket){
 
     //캐릭터 리스트
     this.char_list = ['soldier','ezreal','ako','ashe','zed','buzzi','dad','kitty','pepe','santa','monk']
+    this.charname_list = {
+        soldier:"군인",
+        ezreal:"마법탐험가",
+        ako:"아코",
+        ashe:"얼음궁수",
+        zed:"그림자암살자",
+        buzzi:"물풍선곰돌이",
+        dad:"아빠아들",
+        kitty:"리본고양이",
+        pepe:"개붕이",
+        santa:"산타클로스",
+        monk:"스님",
+    }
 
     //플레이어가 선택한 캐릭터
     this.selected_char = 'none';
@@ -142,14 +155,14 @@ function Render(canvas_id,client_data){
     function auto_scaile(){
         my_canvas.width = window.innerWidth;
         my_canvas.height = window.innerHeight;
-        ctx.font = '30px Arial';
+        ctx.font = '20px Arial';
 
         //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
         //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
         window.addEventListener("resize",()=>{
             my_canvas.width = window.innerWidth;
             my_canvas.height = window.innerHeight;
-            ctx.font = '30px Arial';
+            ctx.font = '20px Arial';
 
         });
     }
@@ -161,11 +174,12 @@ function Render(canvas_id,client_data){
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
-            ctx.fillText(player.username + ": " ,player.x,player.y); //닉네임 표시
+            ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }
         for(let bullet of bullet_pack){    
             draw_bullet(bullet);
+            console.log(bullet_pack);
         }
     }
 
@@ -235,11 +249,11 @@ function Ui(my_socket,client_data){
     this.my_socket = my_socket;
     this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스    
     this.JOYSTICK_ID = "joyDiv"; //조이스틱과 연결하기 위한 인터페이스
-    this.selected_charactor = 'none';
+    this.selected_char = 'none';
 
     GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
     JOYSTICK_ID=this.JOYSTICK_ID;
-    selected_charactor = 'none';
+    selected_char = 'none';
 
 
     this.create_login_ui=function(){
@@ -269,6 +283,7 @@ function Ui(my_socket,client_data){
         ui_name_input.classList.add('ui');
         ui_name_input.id='username_input';
         ui_name_input.setAttribute('placeholder','Please Enter Nickname');
+        ui_name_input.setAttribute('maxlength','8');
 
         ui_div.appendChild(ui_name_input);
 
@@ -278,48 +293,60 @@ function Ui(my_socket,client_data){
         ui_play_button.innerHTML='Play';
 
         ui_play_button.onclick = function(){
-            ui_div.style.display = 'none';
-            my_socket.emit('signIn', { username: document.getElementById("username_input").value.trim()});
+            let userid = document.getElementById("username_input").value.trim()
+                    if(userid===""){ //이름을 입력하지않으면 기본이름으로 접속
+                        userid="이름없는유저"+Math.floor(Math.random()*10000);
+                    }
+                    if(selected_char==="none"){//캐릭터를 선택하지않으면 랜덤으로 선택
+                        selected_char=client_data.char_list[Math.floor(Math.random()*client_data.char_list.length)];
+                    }
+                    ui_div.style.display = 'none';
+                    my_socket.emit('signIn', {
+                        username: userid,
+                        char:selected_char,
+                    });
         }
     
         ui_div.appendChild(ui_play_button);
 
-        const ui_how_to_play_button = document.createElement('button');//조작법 안내 버튼
-        ui_how_to_play_button.classList.add('ui');
-        ui_how_to_play_button.classList.add('how-to-play');
-        ui_how_to_play_button.innerHTML='How to Play?';
-        ui_div.appendChild(ui_how_to_play_button);
+        const ui_how_to_play = document.createElement('button');//조작법 안내 버튼
+        ui_how_to_play.classList.add('ui');
+        ui_how_to_play.classList.add('how-to-play');
+        ui_how_to_play.innerHTML='이동:WASD 발사:K';
+        ui_div.appendChild(ui_how_to_play);
 
-        ui_how_to_play_button.onclick = function(){ // 조작법 안내 버튼 클릭시 콜백
-            if(document.getElementById("guideID")==null){
-                ui_div.appendChild(ui_guide_page);
-            }else{
-                ui_guide_page.remove();
-            }            
-        }
 
         //캐릭터 선택창
-        const ui_charactor_select=document.createElement('div');
-        const ui_charactor_select_text=document.createElement('p');
+        const ui_char_select=document.createElement('div');
+        ui_char_select.classList.add('ui');
+        ui_char_select.classList.add('char-select');
 
-        ui_charactor_select_text.innerText='당신의 캐릭터를 선택하세요';
-        ui_charactor_select.classList.add('ui');
-        ui_charactor_select.classList.add('charactor-select');
+        const ui_char_select_prompt=document.createElement('p');
+        ui_char_select_prompt.id="char_select_prompt"
 
+        function update_char_selected(){
+            ui_char_select_prompt.id="char_selected_prompt_picked";
+            ui_char_select_prompt.innerText="캐릭터"
+            ui_char_select_prompt.innerText=client_data.charname_list[selected_char];
+        }
+        
 
-        ui_charactor_select.id='charactor-select';
-        ui_div.appendChild(ui_charactor_select);
-        ui_charactor_select.appendChild(ui_charactor_select_text);
+        ui_char_select_prompt.innerText='캐릭터를 선택하세요';
+    
+        ui_char_select.id='char-select';
+        ui_div.appendChild(ui_char_select);
+        ui_char_select.appendChild(ui_char_select_prompt);
 
         //캐릭터 선택창 세부 캐릭터 선택 버튼 블록
         for(item of client_data.char_list){
             //console.log(item);
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
+            temp_char_button.innerText=client_data.charname_list[item];
 
             const char_button_image = new Image();
             char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';
-            ui_charactor_select.appendChild(temp_char_button);
+            ui_char_select.appendChild(temp_char_button);
             temp_char_button.appendChild(char_button_image);
         }
         
@@ -327,15 +354,11 @@ function Ui(my_socket,client_data){
         for(item of client_data.char_list){
             (function(closure){
                 document.getElementById(item+'-id').onclick=function(){
-                    ui_div.style.display = 'none';
-                    my_socket.emit('signIn', { 
-                        username: document.getElementById("username_input").value.trim(),
-                        char:closure,
-                    });
-                };
+                    selected_char=closure;
+                    update_char_selected();
+                }  
             })(item);
         }
-        
 
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');

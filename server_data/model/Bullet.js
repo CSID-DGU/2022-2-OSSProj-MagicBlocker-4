@@ -12,6 +12,8 @@
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
+    this.damage=20;
+    damage=this.damage;
     
 
     this.update = function(){
@@ -30,4 +32,8 @@
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        player.hp -= damage;
+    }
 }

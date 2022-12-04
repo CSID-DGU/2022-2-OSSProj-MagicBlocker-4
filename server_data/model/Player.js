@@ -10,10 +10,12 @@
     this.y = Math.random()*500;
     this.id = id;
     this.username = name;
-    this.char = char;
+    this.char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
     this.direction = STARTING_DIR;
+    this.hp=100;
+    this.isalive=true;
+    isalive = this.isalive;
 
-    host_char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
 
     this.cooldown = 0;
 
@@ -51,6 +53,7 @@
 
 
     this.shootBullet = function (){
+<<<<<<< HEAD
         if(this.isShoot&&this.cooldown===0&&char=="ako"){
             let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
@@ -103,9 +106,12 @@
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
             let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
+=======
+        if(this.isShoot&&this.cooldown===0){
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
+>>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
-            console.log(bullet.char);
         }
         
         
@@ -118,5 +124,12 @@
         }
     }
 
+<<<<<<< HEAD
 
+=======
+    this.die = function(){
+        this.isalive=false;
+        console.log(this);
+    }
+>>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
 };
