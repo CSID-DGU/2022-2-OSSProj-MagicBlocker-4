@@ -57,18 +57,19 @@ function Render(canvas_id,client_data){
 
     function draw_player(player){
         //ctx.drawImage(player_img, 0, 0, img_width, img_height, 500, 200, img_width, img_height); 
+        // window.innerWidth/21, window.innerHeight/10
         switch(player.direction){
             case 'down':
-                ctx.drawImage(player_img, 0, 0, img_width, img_height, player.x, player.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(player_img, 0, 0, img_width, img_height, player.x, player.y,img_width, img_height);
                 break;
             case 'up':
-                ctx.drawImage(player_img, img_frame_index, 0, img_width, img_height, player.x, player.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(player_img, img_frame_index, 0, img_width, img_height, player.x, player.y, img_width, img_height);
                 break;
             case 'left':
-                ctx.drawImage(player_img, img_frame_index * 2, 0, img_width, img_height, player.x, player.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(player_img, img_frame_index * 2, 0, img_width, img_height, player.x, player.y, img_width, img_height);
                 break;
             case 'right':
-                ctx.drawImage(player_img, img_frame_index * 3, 0, img_width, img_height, player.x, player.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(player_img, img_frame_index * 3, 0, img_width, img_height, player.x, player.y, img_width, img_height);
                 break;
        }
        
@@ -79,16 +80,16 @@ function Render(canvas_id,client_data){
 
         switch(bullet.direction){
             case 'down':
-                ctx.drawImage(bullet_img, 0, 0, img_width, img_height, bullet.x, bullet.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(bullet_img, 0, 0, img_width, img_height, bullet.x, bullet.y, img_width, img_height);
                 break;
             case 'up':
-                ctx.drawImage(bullet_img, img_frame_index, 0, img_width, img_height, bullet.x, bullet.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(bullet_img, img_frame_index, 0, img_width, img_height, bullet.x, bullet.y, img_width, img_height);
                 break;
             case 'left':
-                ctx.drawImage(bullet_img, img_frame_index * 2, 0, img_width, img_height, bullet.x, bullet.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(bullet_img, img_frame_index * 2, 0, img_width, img_height, bullet.x, bullet.y, img_width, img_height);
                 break;
             case 'right':
-                ctx.drawImage(bullet_img, img_frame_index * 3, 0, img_width, img_height, bullet.x, bullet.y, window.innerWidth/21, window.innerHeight/10);
+                ctx.drawImage(bullet_img, img_frame_index * 3, 0, img_width, img_height, bullet.x, bullet.y,img_width, img_height );
                 break;
         }
         
