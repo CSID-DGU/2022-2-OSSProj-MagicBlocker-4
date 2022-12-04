@@ -98,17 +98,63 @@
 
 
     this.shootBullet = function (){
-        if(this.isShoot&&this.cooldown===0&&char!="ako"){
-            let bullet = new Bullet(this.id,this.x,this.y,this.direction,host_char);
+        if(this.isShoot&&this.cooldown===0&&char=="ako"){
+            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
             console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="ako"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="ashe"){
+            let bullet = new Ashe(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME+100000;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="buzzi"){
+            let bullet = new Buzzi(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="dad"){
+            let bullet = new Dad(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="ezreal"){
+            let bullet = new Ezreal(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="kitty"){
+            let bullet = new Kitty(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="monk"){
+            let bullet = new Monk(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="pepe"){
+            let bullet = new Pepe(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="santa"){
+            let bullet = new Santa(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="soldier"){
+            let bullet = new Soldier(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+            console.log(bullet.char);
+        }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
+            let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
             console.log(bullet.char);
         }
+        
         
         
     };
@@ -471,7 +517,7 @@ function Zed(playerId,posX,posY,direction,char) {
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=BULLET_SPEED;
+    this.speed=BULLET_SPEED+150;
     this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
@@ -480,7 +526,7 @@ function Zed(playerId,posX,posY,direction,char) {
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer++ > 1) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
