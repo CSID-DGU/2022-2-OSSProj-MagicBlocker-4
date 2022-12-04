@@ -99,12 +99,16 @@ function Ui(my_socket,client_data){
         for(item of client_data.char_list){
             (function(closure){
                 document.getElementById(item+'-id').onclick=function(){
+                    let userid = document.getElementById("username_input").value.trim()
+                    if(userid===""){
+                        userid="이름없는유저"+Math.floor(Math.random()*10000);
+                    }
                     ui_div.style.display = 'none';
-                    my_socket.emit('signIn', { 
-                        username: document.getElementById("username_input").value.trim(),
+                    my_socket.emit('signIn', {
+                        username: userid,
                         char:closure,
                     });
-                };
+                }  
             })(item);
         }
         
