@@ -73,6 +73,9 @@
     z-index: 1000;
     top: 7%;
     left: 90%;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 3vmin;
+    color: #c5c5c5;
     background-color: rgba(0,0,0,0.4);
     border-radius: 30px;
     transform:translate(-50%);
