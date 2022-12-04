@@ -1,7 +1,7 @@
 //
 //Bullet.js
 //투사체 클래스
- function Bullet(playerId,posX,posY,direction) {
+ function Bullet(playerId,posX,posY,direction,char) {
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
@@ -11,6 +11,7 @@
     this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
+    this.char=char;
     
 
     this.update = function(){
