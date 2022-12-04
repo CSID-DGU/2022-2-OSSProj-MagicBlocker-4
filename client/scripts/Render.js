@@ -51,10 +51,12 @@ function Render(canvas_id,client_data){
     //클라이언트 데이터 객체에서 뽑아낸 좌표 데이터로 한 프레임을 화면에 그림. main함수에서 setInterval안에 넣어서 framarate와 함께 사용할 것.
     this.draw_client_data=function(){
         auto_scaile();
-        
+        document.getElementById(PLAYER_LIST_ID).innerHTML = ''; //접속자 잔상 제거
+
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
+            document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + player.username + '</div>'; //접속자 표시
             ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }
