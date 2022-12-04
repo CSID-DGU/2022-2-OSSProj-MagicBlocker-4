@@ -3,7 +3,9 @@
 //
 const SCRIPT_LOAD_DELAY=1000;
 const CLIENT_FRAME_RATE=5;
-const PLAYER_LIST_ID='player_list'
+const PLAYER_LIST_ID='player_list';
+const GAME_CANVAS_ID='gameCanvas';
+
 setTimeout(() => {
     console.log("script start...");
 
@@ -19,7 +21,7 @@ setTimeout(() => {
 
 
 
-    const render_manager = new Render(ui_manager.GAME_CANVAS_ID,client_data);
+    const render_manager = new Render(client_data);
 
     setInterval(render_manager.draw_client_data,CLIENT_FRAME_RATE);
     
