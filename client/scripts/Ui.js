@@ -87,6 +87,7 @@ function Ui(my_socket,client_data){
             //console.log(item);
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
+            temp_char_button.innerText=client_data.charname_list[item];
 
             const char_button_image = new Image();
             char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';
