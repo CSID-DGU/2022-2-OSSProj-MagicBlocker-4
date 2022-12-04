@@ -40,6 +40,7 @@ function Ui(my_socket,client_data){
         ui_name_input.classList.add('ui');
         ui_name_input.id='username_input';
         ui_name_input.setAttribute('placeholder','Please Enter Nickname');
+        ui_name_input.setAttribute('maxlength','8');
 
         ui_div.appendChild(ui_name_input);
 

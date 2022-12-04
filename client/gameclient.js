@@ -155,14 +155,14 @@ function Render(canvas_id,client_data){
     function auto_scaile(){
         my_canvas.width = window.innerWidth;
         my_canvas.height = window.innerHeight;
-        ctx.font = '30px Arial';
+        ctx.font = '20px Arial';
 
         //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
         //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
         window.addEventListener("resize",()=>{
             my_canvas.width = window.innerWidth;
             my_canvas.height = window.innerHeight;
-            ctx.font = '30px Arial';
+            ctx.font = '20px Arial';
 
         });
     }
@@ -174,7 +174,7 @@ function Render(canvas_id,client_data){
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
-            ctx.fillText(player.username + ": " ,player.x,player.y); //닉네임 표시
+            ctx.fillText(player.username,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }
         for(let bullet of bullet_pack){    
@@ -282,6 +282,7 @@ function Ui(my_socket,client_data){
         ui_name_input.classList.add('ui');
         ui_name_input.id='username_input';
         ui_name_input.setAttribute('placeholder','Please Enter Nickname');
+        ui_name_input.setAttribute('maxlength','8');
 
         ui_div.appendChild(ui_name_input);
 
