@@ -3,6 +3,7 @@
 //
 const SCRIPT_LOAD_DELAY=1000;
 const CLIENT_FRAME_RATE=5;
+const PLAYER_LIST_ID='player_list'
 setTimeout(() => {
     console.log("script start...");
 

@@ -184,10 +184,16 @@ function Render(canvas_id,client_data){
     my_canvas.height=1000;
     this.draw_client_data=function(){
         auto_scaile();
+<<<<<<< HEAD
         ctx.clearRect(0, 0, my_canvas.width, my_canvas.height);
+=======
+        document.getElementById(PLAYER_LIST_ID).innerHTML = ''; //접속자 잔상 제거
+
+>>>>>>> ff4ac33 ([22.12.05,전재호](feat) 접속자 표시 기능 추가)
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
+            document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + player.username + '</div>'; //접속자 표시
             ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }
@@ -266,6 +272,7 @@ function Ui(my_socket,client_data){
 
     GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
     JOYSTICK_ID=this.JOYSTICK_ID;
+    
     selected_char = 'none';
 
 
@@ -394,7 +401,7 @@ function Ui(my_socket,client_data){
         game_div.appendChild(ui_player_list_box);
 
         const player_list = document.createElement('div'); //접속중인 플레이어 리스트. 접속중인 플레이어 표시 박스 안에 자식요소로 삽입됨.
-        player_list.id = 'player_list';
+        player_list.id = PLAYER_LIST_ID;
 
         ui_player_list_box.appendChild(player_list);
 
@@ -426,6 +433,7 @@ function Ui(my_socket,client_data){
 //
 const SCRIPT_LOAD_DELAY=1000;
 const CLIENT_FRAME_RATE=5;
+const PLAYER_LIST_ID='player_list'
 setTimeout(() => {
     console.log("script start...");
 
