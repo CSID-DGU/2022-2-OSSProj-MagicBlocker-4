@@ -174,11 +174,12 @@ function Render(canvas_id,client_data){
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
-            ctx.fillText(player.username,player.x,player.y-10); //닉네임 표시
+            ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }
         for(let bullet of bullet_pack){    
             draw_bullet(bullet);
+            console.log(bullet_pack);
         }
     }
 
