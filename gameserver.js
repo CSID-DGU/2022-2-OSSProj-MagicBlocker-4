@@ -169,6 +169,9 @@ var Player = function (id, name, points) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 // 서버에서 사용되는 상수
 //
 <<<<<<< HEAD
@@ -184,6 +187,14 @@ var Player = function (id, name, points) {
 // 서버에서 사용되는 상수
 //
 >>>>>>> c06a646 ([22.11.28,전재호](feat) 새로운 스프라이트 추가(스킬 및 직업 설계 위해 두개 이상 추가함))
+=======
+// 서버에서 사용되는 상수
+//
+>>>>>>> 02279bb ([22.12.05,전재호](feat) 이름없이 접속했을때 사용자(id)가 뜨도록 수정)
+=======
+// 서버에서 사용되는 상수
+//
+>>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
  const SERVER_PORT = 8000;
  const REFRESH_RATE = 25;
  
@@ -195,11 +206,20 @@ var Player = function (id, name, points) {
  const MONGO_REPO = "Account";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
  const PROJECTILE_SPEED = 10;
 =======
  const BULLET_SPEED = 20;
 >>>>>>> 589cd40 ([22.12.05,전재호] 캐릭터 선택을 클라이언트의 client_data와 서버의 pack에 전달하고, 캐릭터와 총알을 client_data의 char에 맞게 렌더링. char은 직업명)
  const COOL_TIME = 60;
+=======
+ const BULLET_SPEED = 20;
+
+ const COOL_TIME = 20;
+
+>>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
 //
 <<<<<<< HEAD
 =======
@@ -213,6 +233,18 @@ var Player = function (id, name, points) {
 >>>>>>> c06a646 ([22.11.28,전재호](feat) 새로운 스프라이트 추가(스킬 및 직업 설계 위해 두개 이상 추가함))
 =======
 >>>>>>> 93beecf ([22.12.05,전재호](feat) ui선택창에 저작권을 회피하는 이름 추가)
+=======
+ const BULLET_SPEED = 20;
+ const COOL_TIME = 60;
+//
+>>>>>>> 02279bb ([22.12.05,전재호](feat) 이름없이 접속했을때 사용자(id)가 뜨도록 수정)
+=======
+>>>>>>> ccf679c ([22.12.05,전재호](feat) UI위치 수정, 조작법 삭제, placeholder 폰트 키움, 선택한 캐릭터 보여주는 기능 추가)
+=======
+ const BULLET_SPEED = 20;
+ const COOL_TIME = 20;
+//
+>>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction,char) {
@@ -226,6 +258,8 @@ var Player = function (id, name, points) {
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
+    this.damage=20;
+    damage=this.damage;
     
 
     this.update = function(){
@@ -244,6 +278,10 @@ var Player = function (id, name, points) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        player.hp -= damage;
+    }
 }
 //
 //Player.js
@@ -257,10 +295,12 @@ var Player = function (id, name, points) {
     this.y = Math.random()*500;
     this.id = id;
     this.username = name;
-    this.char = char;
+    this.char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
     this.direction = STARTING_DIR;
+    this.hp=100;
+    this.isalive=true;
+    isalive = this.isalive;
 
-    host_char = char;//bullet에게 전달. bullet을 쏜 주인이 누구인지 가리킴
 
     this.cooldown = 0;
 
@@ -298,6 +338,13 @@ var Player = function (id, name, points) {
 
 
     this.shootBullet = function (){
+        if(this.isShoot&&this.cooldown===0&&this.isalive===true){
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }
+
+        /*류강현 클래스 투사체 코드 
         if(this.isShoot&&this.cooldown===0&&char=="ako"){
             let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
@@ -350,10 +397,17 @@ var Player = function (id, name, points) {
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
             let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
+
+        if(this.isShoot&&this.cooldown===0){
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
+<<<<<<< HEAD
+>>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
+=======
+>>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
-            console.log(bullet.char);
         }
+        */
         
         
         
@@ -365,10 +419,28 @@ var Player = function (id, name, points) {
         }
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 };
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
+    this.die = function(){
+        this.isalive=false;
+        this.char='ghost';
+    }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
+};
+//
+>>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
 //Ako.js
 //직업 클래스
 
@@ -402,6 +474,7 @@ function Ako(playerId,posX,posY,direction,char) {
         this.y += this.speed;
     };
 }
+<<<<<<< HEAD
 //
 //Ashe.js
 //직업 클래스
@@ -728,6 +801,7 @@ function Zed(playerId,posX,posY,direction,char) {
     this.update = function(){
         this.updatePosition();
         if (this.timer++ > 1) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+<<<<<<< HEAD
         this.toRemove = true;
     };
 
@@ -743,6 +817,8 @@ function Zed(playerId,posX,posY,direction,char) {
     };
 }
 =======
+=======
+>>>>>>> ccf679c ([22.12.05,전재호](feat) UI위치 수정, 조작법 삭제, placeholder 폰트 키움, 선택한 캐릭터 보여주는 기능 추가)
 // 서버에서 사용되는 상수
 //
  const SERVER_PORT = 8000;
@@ -756,8 +832,358 @@ function Zed(playerId,posX,posY,direction,char) {
  const MONGO_REPO = "Account";
  const BULLET_SPEED = 20;
  const COOL_TIME = 60;
+<<<<<<< HEAD
 >>>>>>> 93beecf ([22.12.05,전재호](feat) ui선택창에 저작권을 회피하는 이름 추가)
+=======
 //
+//Ashe.js
+//직업 클래스
+
+function Ashe(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+=======
+>>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Buzzi.js
+//직업 클래스
+
+function Buzzi(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Dad.js
+//직업 클래스
+
+function Dad(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Ezreal.js
+//직업 클래스
+
+function Ezreal(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Kitty.js
+//직업 클래스
+
+function Kitty(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Monk.js
+//직업 클래스
+
+function Monk(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Pepe.js
+//직업 클래스
+
+function Pepe(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Santa.js
+//직업 클래스
+
+function Santa(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Soldier.js
+//직업 클래스
+
+function Soldier(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+//
+//Zed.js
+//직업 클래스
+
+function Zed(playerId,posX,posY,direction,char) {
+    this.type = 'bullet';
+    this.id=Math.random();
+    this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
+    this.y=posY+25;
+    this.playerId=playerId;//누가 발사한 투사체인지
+    this.speed=BULLET_SPEED;
+    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.toRemove=false;//투사체 소멸트리거
+    this.direction = direction;
+    this.char=char;
+    
+
+    this.update = function(){
+        this.updatePosition();
+        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        this.toRemove = true;
+    };
+
+    this.updatePosition = function(){
+    if (this.direction === 'right')
+        this.x += this.speed;
+    else if (this.direction === 'left')
+        this.x -= this.speed;
+    else if (this.direction === 'up')
+        this.y -= this.speed;
+    else if (this.direction === 'down')
+        this.y += this.speed;
+    };
+}
+>>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
+//
+=======
+>>>>>>> 02279bb ([22.12.05,전재호](feat) 이름없이 접속했을때 사용자(id)가 뜨도록 수정)
+=======
+//
+>>>>>>> ccf679c ([22.12.05,전재호](feat) UI위치 수정, 조작법 삭제, placeholder 폰트 키움, 선택한 캐릭터 보여주는 기능 추가)
 //onConnect.js
 //
 function onConnect(socket, userData) {
@@ -921,12 +1347,14 @@ const ThenPromise = require('promise');
          player.shootBullet();
          player.updateCooldown();
 
+         /*
          renderPack.push({
             type:'player',
             x: player.x,
             y:player.y,
             direction:player.direction,
          })
+         */
          
          playerPack.push({
              x: player.x,
@@ -934,7 +1362,8 @@ const ThenPromise = require('promise');
              username: player.username,
              cooldown:player.cooldown,
              direction: player.direction,
-             char: player.char
+             char: player.char,
+             hp:player.hp,
          });
          
          
@@ -953,9 +1382,16 @@ const ThenPromise = require('promise');
              
              for (let i in playerList) {
                  let player = playerList[i];
+                 
                  if (bullet.x > player.x && bullet.x < player.x + 50 && bullet.y > player.y && bullet.y < player.y + 60){
-                     if (player.id != bullet.playerId)
-                     playerList[bullet.playerId].addPoint();
+                     if (player.id != bullet.playerId){
+                        //playerList[bullet.playerId].addPoint();   
+                        bullet.hit(player);
+                     }
+                     
+                 }
+                 if(player.hp<0){
+                    player.die();
                  }
              }
              /*

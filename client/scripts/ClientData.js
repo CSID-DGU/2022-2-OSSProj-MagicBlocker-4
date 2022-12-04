@@ -12,7 +12,8 @@ function ClientData(mySocket){
     this.img_height = 100;
 
     //캐릭터 리스트
-    this.char_list = ['soldier','ezreal','ako','ashe','zed','buzzi','dad','kitty','pepe','santa','monk']
+    this.char_list_pick=['soldier','ezreal','ako','ashe','zed','buzzi','dad','kitty','pepe','santa','monk'] //플레이어가 선택할수있는 캐릭터 리스트
+    this.char_list = ['soldier','ezreal','ako','ashe','zed','buzzi','dad','kitty','pepe','santa','monk','ghost'] //모든 캐릭터 리스트. 이스터에그, 고스트 포함
     this.charname_list = {
         soldier:"군인",
         ezreal:"마법탐험가",
