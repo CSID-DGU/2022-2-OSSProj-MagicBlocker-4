@@ -53,7 +53,13 @@
 
 
     this.shootBullet = function (){
-<<<<<<< HEAD
+        if(this.isShoot&&this.cooldown===0&&this.isalive===true){
+            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }
+
+        /*류강현 클래스 투사체 코드 
         if(this.isShoot&&this.cooldown===0&&char=="ako"){
             let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
             bulletList[bullet.id] = bullet;
@@ -106,13 +112,13 @@
             console.log(bullet.char);
         }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
             let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
-=======
+
         if(this.isShoot&&this.cooldown===0){
             let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
->>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
         }
+        */
         
         
         
@@ -124,12 +130,9 @@
         }
     }
 
-<<<<<<< HEAD
-
-=======
     this.die = function(){
         this.isalive=false;
-        console.log(this);
+        this.char='ghost';
     }
->>>>>>> 9200ee8683b4738f5d36e0de4c0c36975bef34da
+
 };

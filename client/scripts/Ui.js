@@ -55,7 +55,7 @@ function Ui(my_socket,client_data){
                         userid="이름없는유저"+Math.floor(Math.random()*10000);
                     }
                     if(selected_char==="none"){//캐릭터를 선택하지않으면 랜덤으로 선택
-                        selected_char=client_data.char_list[Math.floor(Math.random()*client_data.char_list.length)];
+                        selected_char=client_data.char_list_pick[Math.floor(Math.random()*client_data.char_list_pick.length)];
                     }
                     ui_div.style.display = 'none';
                     my_socket.emit('signIn', {
@@ -95,7 +95,7 @@ function Ui(my_socket,client_data){
         ui_char_select.appendChild(ui_char_select_prompt);
 
         //캐릭터 선택창 세부 캐릭터 선택 버튼 블록
-        for(item of client_data.char_list){
+        for(item of client_data.char_list_pick){
             //console.log(item);
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
@@ -108,7 +108,7 @@ function Ui(my_socket,client_data){
         }
         
         //onclick 함수는 for문으로 순회가 불가능하다. (왠진모름) 클로저를 사용해야함. (*stackoverflow 참고)
-        for(item of client_data.char_list){
+        for(item of client_data.char_list_pick){
             (function(closure){
                 document.getElementById(item+'-id').onclick=function(){
                     selected_char=closure;

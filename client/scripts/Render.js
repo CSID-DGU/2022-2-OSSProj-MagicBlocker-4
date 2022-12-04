@@ -60,7 +60,6 @@ function Render(canvas_id,client_data){
         }
         for(let bullet of bullet_pack){    
             draw_bullet(bullet);
-            console.log(bullet_pack);
         }
     }
 

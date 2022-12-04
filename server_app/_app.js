@@ -109,6 +109,9 @@ const ThenPromise = require('promise');
                      }
                      
                  }
+                 if(player.hp<0){
+                    player.die();
+                 }
              }
              /*
              renderPack.push({
