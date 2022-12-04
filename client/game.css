@@ -80,6 +80,7 @@
     border-radius: 30px;
     transform:translate(-50%);
     animation:fadein 3s;
+    overflow: auto;
   }
 
   /*----로그인 UI창 -----*/
