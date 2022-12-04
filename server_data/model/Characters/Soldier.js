@@ -1,8 +1,8 @@
 //
-//Ezreal.js
+//Soldier.js
 //직업 클래스
 
-function Ezreal(playerId,posX,posY,direction,char) {
+function Soldier(playerId,posX,posY,direction,char) {
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
