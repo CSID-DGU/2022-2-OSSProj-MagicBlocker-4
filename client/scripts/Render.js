@@ -29,12 +29,14 @@ function Render(canvas_id,client_data){
         my_canvas.width = window.innerWidth;
         my_canvas.height = window.innerHeight;
         my_canvas.font = '30px Arial';
+
         //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
         //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
         window.addEventListener("resize",()=>{
             my_canvas.width = window.innerWidth;
             my_canvas.height = window.innerHeight;
             my_canvas.font = '30px Arial';
+
         });
     }
 
@@ -55,9 +57,10 @@ function Render(canvas_id,client_data){
 
     function draw_player(player){
         //ctx.drawImage(player_img, 0, 0, img_width, img_height, 500, 200, img_width, img_height); 
+        // window.innerWidth/21, window.innerHeight/10
         switch(player.direction){
             case 'down':
-                ctx.drawImage(player_img, 0, 0, img_width, img_height, player.x, player.y, img_width, img_height);
+                ctx.drawImage(player_img, 0, 0, img_width, img_height, player.x, player.y,img_width, img_height);
                 break;
             case 'up':
                 ctx.drawImage(player_img, img_frame_index, 0, img_width, img_height, player.x, player.y, img_width, img_height);
@@ -86,7 +89,7 @@ function Render(canvas_id,client_data){
                 ctx.drawImage(bullet_img, img_frame_index * 2, 0, img_width, img_height, bullet.x, bullet.y, img_width, img_height);
                 break;
             case 'right':
-                ctx.drawImage(bullet_img, img_frame_index * 3, 0, img_width, img_height, bullet.x, bullet.y, img_width, img_height);
+                ctx.drawImage(bullet_img, img_frame_index * 3, 0, img_width, img_height, bullet.x, bullet.y,img_width, img_height );
                 break;
         }
         
