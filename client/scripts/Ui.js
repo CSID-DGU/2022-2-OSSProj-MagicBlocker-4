@@ -4,11 +4,9 @@
 //
 function Ui(my_socket,client_data){
     this.my_socket = my_socket;
-    this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스    
     this.JOYSTICK_ID = "joyDiv"; //조이스틱과 연결하기 위한 인터페이스
     this.selected_char = 'none';
 
-    GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
     JOYSTICK_ID=this.JOYSTICK_ID;
     
     selected_char = 'none';

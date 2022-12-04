@@ -3,10 +3,9 @@
 //
 
 
-function Render(canvas_id,client_data){
+function Render(client_data){
 
-    this.canvas_id = canvas_id;//렌더링객체를 캔버스와 연결해야 사용가능    
-    this.my_canvas=document.getElementById(canvas_id);
+    this.my_canvas=document.getElementById(GAME_CANVAS_ID);
     const my_canvas = this.my_canvas;
     const ctx = my_canvas.getContext("2d"); //내부 함수가 사용하기 위한 참조
     
