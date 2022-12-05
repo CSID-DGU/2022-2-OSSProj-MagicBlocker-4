@@ -180,12 +180,9 @@
      function onTouchStart(event) 
      {
          pressed = 1;
-         //console.log(event.touches[0].clientX);
+         console.log(event.touches[0].clientX);
          if(event.touches[1]!==undefined){
-            if(event.touches[1].clientX>740){
-                extra_button_pressed=1;
-            }
-            
+            alert("multi touch!!");
          }
          
      }
@@ -226,8 +223,6 @@
      function onTouchEnd(event) 
      {
          pressed = 0;
-         //jeho
-         extra_button_pressed=0;
          // If required reset position store variable
          if(autoReturnToCenter)
          {
