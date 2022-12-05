@@ -133,7 +133,7 @@ body{
 
 #username_input{
     width:30%;
-    height:2vmin;
+    height:4vmax;
     top: 30%;
     left: 45%;
     transform:translateX(-50%);
@@ -153,8 +153,8 @@ body{
 }
 
 #play_button {
-    width: fit-content;
-    height: fit-content;
+    width: 8vmax;
+    height: 4vmax;
     top: 30%;
     left: 65%;
     transform:translateX(-50%);

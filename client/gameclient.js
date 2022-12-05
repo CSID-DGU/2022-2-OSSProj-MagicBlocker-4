@@ -386,6 +386,11 @@ function Ui(my_socket,client_data){
         document.body.appendChild(mobile_controller_div);
         //
         
+        const ui_guide_page = document.createElement('div'); //조작법 안내 세부 페이지
+        ui_guide_page.classList.add('ui');
+        ui_guide_page.classList.add('guide');
+        ui_guide_page.id = "guideID";
+        ui_guide_page.innerHTML='이동 : w a s d \n 발사 : k';
 
         const ui_player_list_box = document.createElement('div'); //접속중인 플레이어 표시 박스
         ui_player_list_box.id = 'ui_player_list_box';
