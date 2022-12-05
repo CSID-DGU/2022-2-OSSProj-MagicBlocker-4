@@ -134,6 +134,8 @@ function Render(client_data){
     img_width = client_data.img_width;
     img_height = client_data.img_height;
 
+    const MAP_WIDTH=1000;
+    const MAP_HEIGHT=1000;
     const PAD = 50;//게임화면 옆에 남는 공백공간 상수
 
     //Render 생성자 호출시 미리 이미지 객체를 생성 (이미지를 불러와서 Render 객체에 저장). (렌더링 성능 최적화)
@@ -178,8 +180,8 @@ function Render(client_data){
     }
 
     //클라이언트 데이터 객체에서 뽑아낸 좌표 데이터로 한 프레임을 화면에 그림. main함수에서 setInterval안에 넣어서 framarate와 함께 사용할 것.
-    my_canvas.width=1000;
-    my_canvas.height=1000;
+    my_canvas.width=MAP_WIDTH;
+    my_canvas.height=MAP_HEIGHT;
     this.draw_client_data=function(){
         auto_scaile();
 <<<<<<< HEAD
@@ -387,6 +389,14 @@ function Ui(my_socket,client_data){
         mobile_controller_div=document.createElement('div');
         mobile_controller_div.id=JOYSTICK_ID;
         document.body.appendChild(mobile_controller_div);
+
+        ui_mobile_attack_button = document.createElement('canvas');
+        ui_mobile_attack_button.id = "mobile_attack_button";
+        ui_mobile_attack_button.onclick=()=>{
+            my_socket.emit("keyPress",{inputId:'shoot',state:true});
+        }
+        document.body.appendChild(ui_mobile_attack_button);
+        ui_mobile_attack_button.style.visibility='hidden';
         //
         
         const ui_guide_page = document.createElement('div'); //조작법 안내 세부 페이지
@@ -423,16 +433,16 @@ function Ui(my_socket,client_data){
         ui_mobile_toggle_outline.onclick = ()=>{
             ui_mobile_toggle_outline.classList.toggle('active');
             if(ui_mobile_toggle_outline.classList.contains('active')){
-                console.log('active!');
                 joystick.style.visibility='visible';
+                ui_mobile_attack_button.style.visibility='visible';
             }else{
                 joystick.style.visibility='hidden';
-                console.log('disabled!');
+                ui_mobile_attack_button.style.visibility='hidden';
             }
             
         }
-        ui_div.appendChild(ui_mobile_toggle_prompt);
-        ui_div.appendChild(ui_mobile_toggle_outline);
+        document.body.appendChild(ui_mobile_toggle_prompt);
+        document.body.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
 
 
