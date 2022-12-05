@@ -102,12 +102,62 @@ function KeyboardController(mySocket){
 //MobileController.js
 //
 function SquareMobileController(my_socket){
+
+  const mobile_controller_div=document.createElement("div");
+  const up_button=document.createElement("button");
+  const down_button=document.createElement("button");
+  const left_button=document.createElement("button");
+  const right_button=document.createElement("button");
+  const stop_button=document.createElement("button");
+  const attack_button=document.createElement("button");
+
+  document.body.appendChild(mobile_controller_div);
+  mobile_controller_div.appendChild(up_button);
+  mobile_controller_div.appendChild(down_button);
+
+  mobile_controller_div.appendChild(left_button);
+  mobile_controller_div.appendChild(right_button);
+  mobile_controller_div.appendChild(stop_button);
+  mobile_controller_div.appendChild(attack_button);
+
+  up_button.style="width:100px;height:100px;position:fixed;top:60%;left:10%;border-radius: 10px;";
+  down_button.style="width:100px;height:100px;position:fixed;top:80%;left:10%;border-radius: 10px;";
+  left_button.style="width:100px;height:100px;position:fixed;top:70%;left:5%;border-radius: 10px;";
+  right_button.style="width:100px;height:100px;position:fixed;top:70%;left:15%;border-radius: 10px;";
+
+  stop_button.style="width:100px;height:100px;position:fixed;top:70%;left:10%";
+  attack_button.style="width:100px;height:100px;position:fixed;top:70%;left:80%";
+
+  up_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_up',state:true});
+  }
+  down_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_down',state:true});
+  }
+  left_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_left',state:true});
+  }
+  right_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_right',state:true});
+  }
+  stop_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_stop'});
+  }
+  attack_button.onclick=()=>{
+    my_socket.emit("keyPress",{inputId:'shoot',state:true})
+  }
+
+
+}
+
+/*
+function SquareMobileController(my_socket){
   const controller_canvas = document.createElement('canvas');
   const ctx = controller_canvas.getContext("2d");
   controller_canvas.id = "square_mobile_controller";
-  controller_canvas.width = 2000;
-  controller_canvas.height = 400;
-  controller_canvas.style="border:solid;position:absolute";
+  controller_canvas.width = window.innerWidth;
+  controller_canvas.height = 300;
+  controller_canvas.style="border:solid;position:absolute;top:70%;";
   controller_canvas.addEventListener("touchstart",touchstart_handler);
   controller_canvas.addEventListener("touchend",touchend_handler);
   const BUTTON_SIZE = 100;
@@ -522,8 +572,8 @@ function Ui(my_socket,client_data){
             }
             
         }
-        ui_div.appendChild(ui_mobile_toggle_prompt);
-        ui_div.appendChild(ui_mobile_toggle_outline);
+        document.body.appendChild(ui_mobile_toggle_prompt);
+        document.body.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
 
 

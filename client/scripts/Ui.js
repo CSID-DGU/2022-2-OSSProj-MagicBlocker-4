@@ -166,8 +166,8 @@ function Ui(my_socket,client_data){
             }
             
         }
-        ui_div.appendChild(ui_mobile_toggle_prompt);
-        ui_div.appendChild(ui_mobile_toggle_outline);
+        document.body.appendChild(ui_mobile_toggle_prompt);
+        document.body.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
 
 
