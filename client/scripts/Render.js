@@ -41,7 +41,6 @@ function Render(client_data){
         }else{
             max_side=window.innerWidth;
         }
-        console.log(max_side);
         my_canvas.style.width = max_side-PAD;
         my_canvas.style.height = max_side-PAD;
         ctx.font = '20px Arial';
