@@ -116,18 +116,12 @@
      var movedY=centerY;
  
      // Check if the device support the touch or not
-     if("ontouchstart" in document.documentElement)
-     {
-         canvas.addEventListener("touchstart", onTouchStart, false);
-         document.addEventListener("touchmove", onTouchMove, false);
-         document.addEventListener("touchend", onTouchEnd, false);
-     }
-     else
-     {
-         canvas.addEventListener("mousedown", onMouseDown, false);
-         document.addEventListener("mousemove", onMouseMove, false);
-         document.addEventListener("mouseup", onMouseUp, false);
-     }
+
+    canvas.addEventListener("touchstart", onTouchStart, false);
+    document.addEventListener("touchmove", onTouchMove, false);
+    document.addEventListener("touchend", onTouchEnd, false);
+
+
      // Draw the object
      drawExternal();
      drawInternal();
@@ -214,72 +208,6 @@
      } 
  
      function onTouchEnd(event) 
-     {
-         pressed = 0;
-         // If required reset position store variable
-         if(autoReturnToCenter)
-         {
-             movedX = centerX;
-             movedY = centerY;
-         }
-         // Delete canvas
-         context.clearRect(0, 0, canvas.width, canvas.height);
-         // Redraw object
-         drawExternal();
-         drawInternal();
- 
-         // Set attribute of callback
-         StickStatus.xPosition = movedX;
-         StickStatus.yPosition = movedY;
-         StickStatus.x = (100*((movedX - centerX)/maxMoveStick)).toFixed();
-         StickStatus.y = ((100*((movedY - centerY)/maxMoveStick))*-1).toFixed();
-         StickStatus.cardinalDirection = getCardinalDirection();
-         callback(StickStatus);
-     }
- 
-     /**
-      * @desc Events for manage mouse
-      */
-     function onMouseDown(event) 
-     {
-         pressed = 1;
-     }
- 
-     /* To simplify this code there was a new experimental feature here: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetX , but it present only in Mouse case not metod presents in Touch case :-( */
-     function onMouseMove(event) 
-     {
-         if(pressed === 1)
-         {
-             movedX = event.pageX;
-             movedY = event.pageY;
-             // Manage offset
-             if(canvas.offsetParent.tagName.toUpperCase() === "BODY")
-             {
-                 movedX -= canvas.offsetLeft;
-                 movedY -= canvas.offsetTop;
-             }
-             else
-             {
-                 movedX -= canvas.offsetParent.offsetLeft;
-                 movedY -= canvas.offsetParent.offsetTop;
-             }
-             // Delete canvas
-             context.clearRect(0, 0, canvas.width, canvas.height);
-             // Redraw object
-             drawExternal();
-             drawInternal();
- 
-             // Set attribute of callback
-             StickStatus.xPosition = movedX;
-             StickStatus.yPosition = movedY;
-             StickStatus.x = (100*((movedX - centerX)/maxMoveStick)).toFixed();
-             StickStatus.y = ((100*((movedY - centerY)/maxMoveStick))*-1).toFixed();
-             StickStatus.cardinalDirection = getCardinalDirection();
-             callback(StickStatus);
-         }
-     }
- 
-     function onMouseUp(event) 
      {
          pressed = 0;
          // If required reset position store variable
