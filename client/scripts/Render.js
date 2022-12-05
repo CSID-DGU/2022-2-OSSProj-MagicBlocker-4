@@ -3,10 +3,9 @@
 //
 
 
-function Render(canvas_id,client_data){
+function Render(client_data){
 
-    this.canvas_id = canvas_id;//렌더링객체를 캔버스와 연결해야 사용가능    
-    this.my_canvas=document.getElementById(canvas_id);
+    this.my_canvas=document.getElementById(GAME_CANVAS_ID);
     const my_canvas = this.my_canvas;
     const ctx = my_canvas.getContext("2d"); //내부 함수가 사용하기 위한 참조
     
@@ -64,10 +63,18 @@ function Render(canvas_id,client_data){
     my_canvas.height=1000;
     this.draw_client_data=function(){
         auto_scaile();
+        document.getElementById(PLAYER_LIST_ID).innerHTML = ''; //접속자 잔상 제거
+
         ctx.clearRect(0, 0, my_canvas.width, my_canvas.height);
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
+            if(player.isalive){
+                document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🟢"+player.username + '</div>'; //접속자 표시
+            }else{
+                document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🔴"+player.username + '</div>'; //접속자 표시
+            }
+            
             ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }

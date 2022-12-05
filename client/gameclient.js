@@ -123,10 +123,9 @@ function MobileController(mySocket){
 //
 
 
-function Render(canvas_id,client_data){
+function Render(client_data){
 
-    this.canvas_id = canvas_id;//렌더링객체를 캔버스와 연결해야 사용가능    
-    this.my_canvas=document.getElementById(canvas_id);
+    this.my_canvas=document.getElementById(GAME_CANVAS_ID);
     const my_canvas = this.my_canvas;
     const ctx = my_canvas.getContext("2d"); //내부 함수가 사용하기 위한 참조
     
@@ -184,10 +183,18 @@ function Render(canvas_id,client_data){
     my_canvas.height=1000;
     this.draw_client_data=function(){
         auto_scaile();
+        document.getElementById(PLAYER_LIST_ID).innerHTML = ''; //접속자 잔상 제거
+
         ctx.clearRect(0, 0, my_canvas.width, my_canvas.height);
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
+            if(player.isalive){
+                document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🟢"+player.username + '</div>'; //접속자 표시
+            }else{
+                document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🔴"+player.username + '</div>'; //접속자 표시
+            }
+            
             ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }
@@ -260,12 +267,11 @@ function SocketConnection(){
 //
 function Ui(my_socket,client_data){
     this.my_socket = my_socket;
-    this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스    
     this.JOYSTICK_ID = "joyDiv"; //조이스틱과 연결하기 위한 인터페이스
     this.selected_char = 'none';
 
-    GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
     JOYSTICK_ID=this.JOYSTICK_ID;
+    
     selected_char = 'none';
 
 
@@ -394,7 +400,7 @@ function Ui(my_socket,client_data){
         game_div.appendChild(ui_player_list_box);
 
         const player_list = document.createElement('div'); //접속중인 플레이어 리스트. 접속중인 플레이어 표시 박스 안에 자식요소로 삽입됨.
-        player_list.id = 'player_list';
+        player_list.id = PLAYER_LIST_ID;
 
         ui_player_list_box.appendChild(player_list);
 
@@ -426,6 +432,9 @@ function Ui(my_socket,client_data){
 //
 const SCRIPT_LOAD_DELAY=1000;
 const CLIENT_FRAME_RATE=5;
+const PLAYER_LIST_ID='player_list';
+const GAME_CANVAS_ID='gameCanvas';
+
 setTimeout(() => {
     console.log("script start...");
 
@@ -441,7 +450,7 @@ setTimeout(() => {
 
 
 
-    const render_manager = new Render(ui_manager.GAME_CANVAS_ID,client_data);
+    const render_manager = new Render(client_data);
 
     setInterval(render_manager.draw_client_data,CLIENT_FRAME_RATE);
     

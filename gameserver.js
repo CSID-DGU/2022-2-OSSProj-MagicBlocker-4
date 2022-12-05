@@ -761,6 +761,7 @@ const ThenPromise = require('promise');
              direction: player.direction,
              char: player.char,
              hp:player.hp,
+             isalive:player.isalive,
          });
          
          
