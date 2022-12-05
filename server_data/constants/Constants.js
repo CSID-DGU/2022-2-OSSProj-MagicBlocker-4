@@ -13,3 +13,7 @@
  const BULLET_SPEED = 20;
 
  const COOL_TIME = 20;
+
+const MAP_WIDTH = 1000;
+const MAP_HEIGHT = 1000;
+const MAP_PAD = 100;
