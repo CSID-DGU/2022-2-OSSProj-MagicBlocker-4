@@ -176,6 +176,8 @@ var Player = function (id, name, points) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 // 서버에서 사용되는 상수
 //
 <<<<<<< HEAD
@@ -207,6 +209,10 @@ var Player = function (id, name, points) {
 // 서버에서 사용되는 상수
 //
 >>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
+=======
+// 서버에서 사용되는 상수
+//
+>>>>>>> 956eb2b ([22.12.05,전재호](feat) 모바일토글 버튼 추가)
  const SERVER_PORT = 8000;
  const REFRESH_RATE = 25;
  
@@ -216,6 +222,7 @@ var Player = function (id, name, points) {
  const STARTING_DIR = 'down';
  const STARTING_CHAR = 'warrior';
  const MONGO_REPO = "Account";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -233,10 +240,13 @@ var Player = function (id, name, points) {
 >>>>>>> 40bd454 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
 =======
 >>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
+=======
+>>>>>>> 956eb2b ([22.12.05,전재호](feat) 모바일토글 버튼 추가)
  const BULLET_SPEED = 20;
 
  const COOL_TIME = 20;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -281,6 +291,14 @@ const MAP_PAD = 100;
 =======
 //
 >>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
+=======
+>>>>>>> 38c75db (c)
+=======
+const MAP_WIDTH = 1000;
+const MAP_HEIGHT = 1000;
+const MAP_PAD = 100;
+//
+>>>>>>> 956eb2b ([22.12.05,전재호](feat) 모바일토글 버튼 추가)
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction,char) {
@@ -492,10 +510,14 @@ const MAP_PAD = 100;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
 =======
 =======
 >>>>>>> 502e498 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
+=======
+>>>>>>> 38c75db (c)
 // 서버에서 사용되는 상수
 //
  const SERVER_PORT = 8000;
@@ -511,6 +533,7 @@ const MAP_PAD = 100;
 
  const COOL_TIME = 20;
 
+<<<<<<< HEAD
 //
 <<<<<<< HEAD
 >>>>>>> ff4ac33 ([22.12.05,전재호](feat) 접속자 표시 기능 추가)
@@ -520,6 +543,14 @@ const MAP_PAD = 100;
 >>>>>>> 502e498 ([22.12.05,전재호](feat) 불필요한 참조관계 제거하고 상수화)
 =======
 >>>>>>> 6ead583 ([22.12.05,전재호](feat) 초록 빨강 색깔로 살았는지 죽었는지 확인가능한 기능 추가, 플레이어리스트 overflow)
+=======
+const MAP_WIDTH = 1000;
+const MAP_HEIGHT = 1000;
+const MAP_PAD = 100;
+//
+>>>>>>> 38c75db (c)
+=======
+>>>>>>> 956eb2b ([22.12.05,전재호](feat) 모바일토글 버튼 추가)
 //Ako.js
 //직업 클래스
 

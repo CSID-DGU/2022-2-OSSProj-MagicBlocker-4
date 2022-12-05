@@ -17,7 +17,6 @@ setTimeout(() => {
 
     const ui_manager = new Ui(socket_manager.mySocket,client_data);
     ui_manager.create_login_ui();
-    ui_manager.popup();
 
 
 
