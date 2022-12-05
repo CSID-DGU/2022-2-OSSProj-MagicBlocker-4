@@ -11,6 +11,8 @@ function SquareMobileController(my_socket){
   const stop_button=document.createElement("button");
   const attack_button=document.createElement("button");
 
+  mobile_controller_div.id=MOBILE_CONTROLLER_ID;
+  mobile_controller_div.style.visibility='hidden';
   document.body.appendChild(mobile_controller_div);
   mobile_controller_div.appendChild(up_button);
   mobile_controller_div.appendChild(down_button);
