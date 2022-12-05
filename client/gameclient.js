@@ -404,22 +404,41 @@ function Ui(my_socket,client_data){
         ui_player_list_box.appendChild(player_list);
 
         //모바일 토글 버튼
-        const ui_mobile_toggle_outline = document.createElement('div');
-        const ui_mobile_toggle_switch = document.createElement('div');
-
+        const joystick = document.getElementById(JOYSTICK_ID)
+        const ui_mobile_toggle_prompt = document.createElement('div');
+        ui_mobile_toggle_prompt.innerText = "모바일";
+        
+        
+        const ui_mobile_toggle_outline = document.createElement('div'); 
+        const ui_mobile_toggle_button = document.createElement('div');
+        
+        ui_mobile_toggle_prompt.id = "mobile_toggle_prompt";
         ui_mobile_toggle_outline.classList.add("mobile_toggle_outline");
-        ui_mobile_toggle_switch.classList.add("mobile_toggle_button");
+        ui_mobile_toggle_button.classList.add("mobile_toggle_button");
+        
+
         ui_mobile_toggle_outline.onclick = ()=>{
             ui_mobile_toggle_outline.classList.toggle('active');
+            if(ui_mobile_toggle_outline.classList.contains('active')){
+                console.log('active!');
+                joystick.style.visibility='visible';
+            }else{
+                joystick.style.visibility='hidden';
+                console.log('disabled!');
+            }
+            
         }
-
+        ui_div.appendChild(ui_mobile_toggle_prompt);
         ui_div.appendChild(ui_mobile_toggle_outline);
-        ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_switch);
+        ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
+
 
         //모바일 전환 버튼
         /*
         ui_mobile_toggle.onclick = function(){
           const joystick = document.getElementById(JOYSTICK_ID)
+          joystick.style.visibility='visible';
+          mobile_attack_button.style.visibility='visible';
         };
         */
 

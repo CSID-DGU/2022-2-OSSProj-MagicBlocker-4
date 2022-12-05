@@ -252,20 +252,34 @@ input::placeholder {
 }
 
 /*모바일 토글 버튼*/
+#mobile_toggle_prompt{
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 2vmax;
+    color: #3f0a0a;
+    left:2%;
+    margin: 2vmax;
+    position:absolute;
+}
+
 .mobile_toggle_outline{
-    width: 100px;
-    margin: 30px;
-    height: 50px;
+    width: 7vmax;
+    margin: 2vmax;
+    height: 3vmax;
     display: block;
-    position: relative;
+    position: absolute;
+    top:6%;
     border-radius: 30px;
     background-color: #fff;
     box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
     cursor: pointer;
+    text-align: center;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 2vmax;
+    color: #3f0a0a;
 }
 .mobile_toggle_outline .mobile_toggle_button{
-    width: 40px;
-    height: 40px;
+    width: 2vmax;
+    height: 2vmax;
     position: absolute;
     top: 50%;
     left: 4px;
@@ -277,7 +291,7 @@ input::placeholder {
     background: #f03d3d;
   }
 .mobile_toggle_outline.active .mobile_toggle_button{
-    left: calc(100% - 44px);
+    left: calc(100% - 2.5vmax);
     background: #fff;
 }
 .mobile_toggle_outline, .mobile_toggle_button {
