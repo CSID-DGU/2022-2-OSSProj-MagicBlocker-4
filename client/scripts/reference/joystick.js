@@ -74,7 +74,8 @@
  {
      parameters = parameters || {};
      var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title),
-         width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
+         //width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
+         width=1000,
          height = (typeof parameters.height === "undefined" ? 0 : parameters.height),
          internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "#66000000" : parameters.internalFillColor),
          internalLineWidth = (typeof parameters.internalLineWidth === "undefined" ? 2 : parameters.internalLineWidth),
@@ -101,13 +102,16 @@
      var context=canvas.getContext("2d");
  
      var pressed = 0; // Bool - 1=Yes - 0=No
+     var extra_button_pressed = 0;
      var circumference = 2 * Math.PI;
-     var internalRadius = (canvas.width-((canvas.width/2)+10))/2;
+     //var internalRadius = (canvas.width-((canvas.width/2)+10))/2;
+     var internalRadius = 20;
      var maxMoveStick = internalRadius + 5;
-     var externalRadius = internalRadius + 30;
-     var centerX = canvas.width / 2;
-     var centerY = canvas.height / 2;
-     var directionHorizontalLimitPos = canvas.width / 10;
+     var externalRadius = internalRadius + 20;
+     //var centerX = canvas.width / 2;
+     var centerX = 200;
+     var centerY = canvas.height /2;
+     var directionHorizontalLimitPos = 1;
      var directionHorizontalLimitNeg = directionHorizontalLimitPos * -1;
      var directionVerticalLimitPos = canvas.height / 10;
      var directionVerticalLimitNeg = directionVerticalLimitPos * -1;
@@ -137,9 +141,13 @@
      {
          context.beginPath();
          context.arc(centerX, centerY, externalRadius, 0, circumference, false);
+         context.fillStyle = "rgba(0, 0, 0, 0.45)";
+         context.fillRect(centerX+500,50,100,100);
          context.lineWidth = externalLineWidth;
          context.strokeStyle = externalStrokeColor;
          context.stroke();
+         //jeho
+         
      }
  
      /**
@@ -172,6 +180,11 @@
      function onTouchStart(event) 
      {
          pressed = 1;
+         console.log(event.touches[0].clientX);
+         if(event.touches[1]!==undefined){
+            alert("multi touch!!");
+         }
+         
      }
  
      function onTouchMove(event)

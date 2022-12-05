@@ -392,6 +392,7 @@ function Ui(my_socket,client_data){
         ui_mobile_attack_button.addEventListener("touchstart",mobile_attack);
         
         function mobile_attack(e){
+            e.preventDefault();
             console.log("clicked!");
             my_socket.emit("keyPress",{inputId:'shoot',state:true});
         }
@@ -429,7 +430,7 @@ function Ui(my_socket,client_data){
             ui_mobile_toggle_outline.classList.toggle('active');
             if(ui_mobile_toggle_outline.classList.contains('active')){
                 joystick.style.visibility='visible';
-                ui_mobile_attack_button.style.visibility='visible';
+                //ui_mobile_attack_button.style.visibility='visible';
             }else{
                 joystick.style.visibility='hidden';
                 ui_mobile_attack_button.style.visibility='hidden';
