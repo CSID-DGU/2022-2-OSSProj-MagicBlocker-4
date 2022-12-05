@@ -12,29 +12,21 @@ function SquareMobileController(my_socket){
   controller_canvas.addEventListener("touchend",touchend_handler);
   const BUTTON_SIZE = 100;
   const BUTTON_PAD = 100;
-
-  let up = false;
-  let down = false;
-  let left = false;
-  let right = false;
-  let stop = false;
-  let attack = false;
-
   //왼쪽 대각선 위 좌표
-  const button_up = {x:150,y:50}//위
-  const button_down = {x:150,y:250}//아래
-  const button_left = {x:50,y:150}//왼
-  const button_right = {x:250,y:150}//오른
+  const button_vertical_pos = {x:150,y:50}//위
+  const button_vertical_neg = {x:150,y:250}//아래
+  const button_horizontal_neg = {x:50,y:150}//왼
+  const button_horizontal_pos = {x:250,y:150}//오른
   const button_attack = {x:1550,y:150}//공격
   
   function draw_button(button){
     ctx.fillRect(button.x,button.y,BUTTON_SIZE,BUTTON_SIZE);
   }
   ctx.fillStyle = "green";
-  draw_button(button_up);
-  draw_button(button_down);
-  draw_button(button_left);
-  draw_button(button_right);
+  draw_button(button_vertical_pos);
+  draw_button(button_vertical_neg);
+  draw_button(button_horizontal_neg);
+  draw_button(button_horizontal_pos);
   draw_button(button_attack);
 
   function isButtonClicked(button,x,y){
@@ -45,20 +37,20 @@ function SquareMobileController(my_socket){
 
   function touchstart_handler(e){
     for(item of e.touches){
-      if(isButtonClicked(button_up,item.clientX,item.clientY)){
-        up=true;
+      if(isButtonClicked(button_vertical_pos,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_up',state:true});
       }
-      if(isButtonClicked(button_down,item.clientX,item.clientY)){
-        down=true;
+      if(isButtonClicked(button_vertical_neg,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_down',state:true});
       }
-      if(isButtonClicked(button_left,item.clientX,item.clientY)){
-        left=true;
+      if(isButtonClicked(button_horizontal_neg,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_left',state:true});
       }
-      if(isButtonClicked(button_right,item.clientX,item.clientY)){
-        right=true;
+      if(isButtonClicked(button_horizontal_pos,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_right',state:true});
       }
       if(isButtonClicked(button_attack,item.clientX,item.clientY)){
-        attack=true;
+        my_socket.emit("keyPress",{inputId:'shoot',state:true})
       }
     }
   }
@@ -66,39 +58,54 @@ function SquareMobileController(my_socket){
     for(item of e.changedTouches){
 
       if(isButtonClicked(button_vertical_pos,item.clientX,item.clientY)){
-        stop=true;
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
       }
       if(isButtonClicked(button_vertical_neg,item.clientX,item.clientY)){
-        stop=true;
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
       }
       if(isButtonClicked(button_horizontal_neg,item.clientX,item.clientY)){
-        stop=true;
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
       }
       if(isButtonClicked(button_horizontal_pos,item.clientX,item.clientY)){
-        stop=true;
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
       }
       if(isButtonClicked(button_attack,item.clientX,item.clientY)){
-        stop=true;
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
       }
     }
   }
   document.body.appendChild(controller_canvas);
-
-  setInterval(()=>{
-    if(up===true){
-      my_socket.emit('keyPress',{inputId:'joy_up',state:true});
-    }
-    if(down===true){
-      my_socket.emit('keyPress',{inputId:'joy_down',state:true});
-    }
-    if(left===true){
-      my_socket.emit('keyPress',{inputId:'joy_left',state:true});
-    }
-    if(right===true){
-      my_socket.emit('keyPress',{inputId:'joy_right',state:true});
-    }
-    if(stop===true){
-      my_socket.emit('keyPress',{inputId:'joy_stop'});
-    }
-  },CLIENT_FRAME_RATE)
 }
+/*
+  if(stick=='E'){
+    my_socket.emit('keyPress',{inputId:'joy_right',state:true});
+  }else if(stick=='W'){
+    my_socket.emit('keyPress',{inputId:'joy_left',state:true});
+  }else if(stick=='N'){
+    my_socket.emit('keyPress',{inputId:'joy_up',state:true});
+  }else if(stick=='S'){
+    my_socket.emit('keyPress',{inputId:'joy_down',state:true});
+  }else if(stick=='C'){
+    my_socket.emit('keyPress',{inputId:'joy_stop'});
+  }
+}
+*/
+/*
+function MobileController(my_socket){
+    let Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
+        let stick = stickData.cardinalDirection;
+            //정지시 C
+            if(stick=='E'){
+              my_socket.emit('keyPress',{inputId:'joy_right',state:true});
+            }else if(stick=='W'){
+              my_socket.emit('keyPress',{inputId:'joy_left',state:true});
+            }else if(stick=='N'){
+              my_socket.emit('keyPress',{inputId:'joy_up',state:true});
+            }else if(stick=='S'){
+              my_socket.emit('keyPress',{inputId:'joy_down',state:true});
+            }else if(stick=='C'){
+              my_socket.emit('keyPress',{inputId:'joy_stop'});
+            }
+          });
+}
+*/
