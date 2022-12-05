@@ -169,9 +169,6 @@ function SquareMobileController(my_socket){
       if(isButtonClicked(button_horizontal_pos,item.clientX,item.clientY)){
         my_socket.emit('keyPress',{inputId:'joy_stop'});
       }
-      if(isButtonClicked(button_attack,item.clientX,item.clientY)){
-        my_socket.emit('keyPress',{inputId:'joy_stop'});
-      }
     }
   }
   document.body.appendChild(controller_canvas);
