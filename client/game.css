@@ -104,7 +104,6 @@ body{
 
 .ui{ /*로그인 ui 전체*/
     text-align: center;
-    padding: 30px;
     border: none;
     box-shadow: 0 0 30px 3px rgba(0, 0, 255, 0.3);
     background-color: rgba(0, 0, 205, 0.3);
@@ -206,6 +205,8 @@ body{
 
 .char_button{
     font-size: 1vmax;
+    font-weight:bold;
+
 }
 
 .char_button_image{
@@ -217,6 +218,7 @@ body{
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     font-size: 2vmax;
     color: #3c3e70;
+    margin:0.5vmax;
 }
 #char_selected_prompt_picked{
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
@@ -225,22 +227,14 @@ body{
 }
 
 .how-to-play{
-    top: 55%;
-    left: 60%;
-    padding: 3px;
+    top: 20%;
+    left: 2%;
+    padding: 1vmax;
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
     color: #fffff0;
-    font-size: 1.5vmin;
-    transition:0.3s;
-}
-.guide{
-    top: 58%;
-    left: 27%;
-    padding: 3px;
-    background-color: rgb(117, 109, 109, 0.5);
-    box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
-    color: #fffff0;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 4vmin;
     transition:0.3s;
 }
 
@@ -268,6 +262,7 @@ input::placeholder {
     display: block;
     position: absolute;
     top:6%;
+    left:1%;
     border-radius: 30px;
     background-color: #fff;
     box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
