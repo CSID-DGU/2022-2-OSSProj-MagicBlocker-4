@@ -219,7 +219,13 @@ var Player = function (id, name, points) {
 
  const COOL_TIME = 20;
 
+<<<<<<< HEAD
 >>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
+=======
+const MAP_WIDTH = 1000;
+const MAP_HEIGHT = 1000;
+const MAP_PAD = 100;
+>>>>>>> 7ea989a ([22.12.05,전재호](feat) 모바일과 pc에서 동일하게 보이도록 캔버스를 정사각형으로 수정)
 //
 <<<<<<< HEAD
 =======
@@ -313,6 +319,7 @@ var Player = function (id, name, points) {
     this.speed=PLAYER_SPEED;
     
     this.updatePosition = function () {
+        
         if (this.rightPress){
             this.x += this.speed;
             this.direction='right';
@@ -333,7 +340,18 @@ var Player = function (id, name, points) {
             this.direction='down';
             //console.log('down!!!')
         }
-            
+        if(this.x<0){
+            this.x+=this.speed;
+        }
+        if(this.x>MAP_WIDTH-MAP_PAD){
+            this.x-=this.speed;
+        }
+        if(this.y<0){
+            this.y+=this.speed;
+        }
+        if(this.y>MAP_HEIGHT-MAP_PAD){
+            this.y-=this.speed;
+        }
     };
 
 
