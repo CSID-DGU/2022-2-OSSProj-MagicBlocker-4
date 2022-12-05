@@ -5,9 +5,9 @@ function SquareMobileController(my_socket){
   const controller_canvas = document.createElement('canvas');
   const ctx = controller_canvas.getContext("2d");
   controller_canvas.id = "square_mobile_controller";
-  controller_canvas.width = 2000;
-  controller_canvas.height = 400;
-  controller_canvas.style="border:solid;position:absolute";
+  controller_canvas.width = 1000;
+  controller_canvas.height = 100;
+  controller_canvas.style="border:solid;position:absolute;height:70%";
   controller_canvas.addEventListener("touchstart",touchstart_handler);
   controller_canvas.addEventListener("touchend",touchend_handler);
   const BUTTON_SIZE = 100;
