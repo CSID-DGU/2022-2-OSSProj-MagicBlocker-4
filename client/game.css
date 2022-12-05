@@ -10,7 +10,9 @@
   }
 }
 
-
+body{
+    background-color: #3c3e70;
+}
 
 /*게임이 렌더링되는 캔버스*/
 #gameCanvas{
@@ -73,7 +75,9 @@
 
 #ui_player_list_box{
     width: 15vw;
-    height: 80vh;
+    /*height: 80vh;*/
+    height: fit-content;
+    white-space:nowrap;
     padding: 20px;
     position: absolute;
     z-index: 1000;
