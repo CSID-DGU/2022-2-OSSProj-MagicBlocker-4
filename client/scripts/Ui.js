@@ -122,16 +122,13 @@ function Ui(my_socket,client_data){
         mobile_controller_div=document.createElement('div');
         mobile_controller_div.id=JOYSTICK_ID;
         document.body.appendChild(mobile_controller_div);
-
-        ui_mobile_attack_button = document.createElement('canvas');
-        ui_mobile_attack_button.id = "mobile_attack_button";
-        ui_mobile_attack_button.onclick=()=>{
-            my_socket.emit("keyPress",{inputId:'shoot',state:true});
-        }
-        document.body.appendChild(ui_mobile_attack_button);
-        ui_mobile_attack_button.style.visibility='hidden';
         //
         
+        const ui_guide_page = document.createElement('div'); //조작법 안내 세부 페이지
+        ui_guide_page.classList.add('ui');
+        ui_guide_page.classList.add('guide');
+        ui_guide_page.id = "guideID";
+        ui_guide_page.innerHTML='이동 : w a s d \n 발사 : k';
 
         const ui_player_list_box = document.createElement('div'); //접속중인 플레이어 표시 박스
         ui_player_list_box.id = 'ui_player_list_box';
@@ -161,16 +158,16 @@ function Ui(my_socket,client_data){
         ui_mobile_toggle_outline.onclick = ()=>{
             ui_mobile_toggle_outline.classList.toggle('active');
             if(ui_mobile_toggle_outline.classList.contains('active')){
+                console.log('active!');
                 joystick.style.visibility='visible';
-                ui_mobile_attack_button.style.visibility='visible';
             }else{
                 joystick.style.visibility='hidden';
-                ui_mobile_attack_button.style.visibility='hidden';
+                console.log('disabled!');
             }
             
         }
-        document.body.appendChild(ui_mobile_toggle_prompt);
-        document.body.appendChild(ui_mobile_toggle_outline);
+        ui_div.appendChild(ui_mobile_toggle_prompt);
+        ui_div.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
 
 
