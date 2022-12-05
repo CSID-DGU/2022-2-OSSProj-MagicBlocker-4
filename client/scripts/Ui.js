@@ -141,25 +141,26 @@ function Ui(my_socket,client_data){
 
         ui_player_list_box.appendChild(player_list);
 
-        //모바일 전환 버튼
-        const ui_mobile_toggle = document.createElement('button');
-        ui_mobile_toggle.classList.add('ui');
-        ui_mobile_toggle.classList.add('mobile');
-        ui_mobile_toggle.id = "ui_mobile_toggle_button";
-        ui_mobile_toggle.innerHTML="I'm Mobile!!";
-        ui_div.appendChild(ui_mobile_toggle);
+        //모바일 토글 버튼
+        const ui_mobile_toggle_outline = document.createElement('div');
+        const ui_mobile_toggle_switch = document.createElement('div');
 
-        ui_mobile_toggle.onclick = function(){
-          const joystick = document.getElementById(JOYSTICK_ID);  
-          joystick.style.visibility='visible';
-          mobile_attack_button.style.visibility='visible';
-        };
-
-
-        this.popup = function(){ //팝업 UI
-            const popUpBox = document.createElement("div");
-            // popUpBox.innerHTML="pop up!!!";
-            document.body.appendChild(popUpBox);
+        ui_mobile_toggle_outline.classList.add("mobile_toggle_outline");
+        ui_mobile_toggle_switch.classList.add("mobile_toggle_button");
+        ui_mobile_toggle_outline.onclick = ()=>{
+            ui_mobile_toggle_outline.classList.toggle('active');
+            
         }
+
+        ui_div.appendChild(ui_mobile_toggle_outline);
+        ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_switch);
+
+        //모바일 전환 버튼
+        /*
+        ui_mobile_toggle.onclick = function(){
+          const joystick = document.getElementById(JOYSTICK_ID)
+        };
+        */
+
     }
 }
