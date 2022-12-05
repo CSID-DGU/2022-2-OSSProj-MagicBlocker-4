@@ -169,6 +169,9 @@ function SquareMobileController(my_socket){
       if(isButtonClicked(button_horizontal_pos,item.clientX,item.clientY)){
         my_socket.emit('keyPress',{inputId:'joy_stop'});
       }
+      if(isButtonClicked(button_attack,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
+      }
     }
   }
   document.body.appendChild(controller_canvas);
@@ -544,9 +547,10 @@ const CLIENT_FRAME_RATE=5;
 const PLAYER_LIST_ID='player_list';
 const GAME_CANVAS_ID='gameCanvas';
 
+
 setTimeout(() => {
     console.log("script start...");
-
+    mobile_pinch_block();
 
     const socket_manager = new SocketConnection();
 
@@ -567,6 +571,23 @@ setTimeout(() => {
 
 
 }, SCRIPT_LOAD_DELAY);
+
+function mobile_pinch_block(){
+    document.documentElement.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+             event.preventDefault(); 
+           } 
+       }, false);
+   
+   var lastTouchEnd = 0; 
+   
+   document.documentElement.addEventListener('touchend', function (event) {
+        var now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+             event.preventDefault(); 
+           } lastTouchEnd = now; 
+       }, false);
+}
 //
 //
 //
