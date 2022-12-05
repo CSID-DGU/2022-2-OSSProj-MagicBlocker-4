@@ -125,7 +125,10 @@ function Ui(my_socket,client_data){
 
         ui_mobile_attack_button = document.createElement('canvas');
         ui_mobile_attack_button.id = "mobile_attack_button";
-        ui_mobile_attack_button.onclick=()=>{
+        ui_mobile_attack_button.addEventListener("touchstart",mobile_attack);
+        
+        function mobile_attack(e){
+            console.log("clicked!");
             my_socket.emit("keyPress",{inputId:'shoot',state:true});
         }
         document.body.appendChild(ui_mobile_attack_button);

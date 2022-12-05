@@ -389,18 +389,16 @@ function Ui(my_socket,client_data){
 
         ui_mobile_attack_button = document.createElement('canvas');
         ui_mobile_attack_button.id = "mobile_attack_button";
-        ui_mobile_attack_button.onclick=()=>{
+        ui_mobile_attack_button.addEventListener("touchstart",mobile_attack);
+        
+        function mobile_attack(e){
+            console.log("clicked!");
             my_socket.emit("keyPress",{inputId:'shoot',state:true});
         }
         document.body.appendChild(ui_mobile_attack_button);
         ui_mobile_attack_button.style.visibility='hidden';
         //
         
-        const ui_guide_page = document.createElement('div'); //조작법 안내 세부 페이지
-        ui_guide_page.classList.add('ui');
-        ui_guide_page.classList.add('guide');
-        ui_guide_page.id = "guideID";
-        ui_guide_page.innerHTML='이동 : w a s d \n 발사 : k';
 
         const ui_player_list_box = document.createElement('div'); //접속중인 플레이어 표시 박스
         ui_player_list_box.id = 'ui_player_list_box';
