@@ -47,27 +47,15 @@ function SquareMobileController(my_socket){
     for(item of e.touches){
       if(isButtonClicked(button_up,item.clientX,item.clientY)){
         up=true;
-        let down = false;
-        let left = false;
-        let right = false;
       }
       if(isButtonClicked(button_down,item.clientX,item.clientY)){
         down=true;
-        let up = false;
-        let left = false;
-        let right = false;
       }
       if(isButtonClicked(button_left,item.clientX,item.clientY)){
         left=true;
-        let up = false;
-        let down = false;
-        let right = false;
       }
       if(isButtonClicked(button_right,item.clientX,item.clientY)){
         right=true;
-        let up = false;
-        let down = false;
-        let left = false;
       }
       if(isButtonClicked(button_attack,item.clientX,item.clientY)){
         attack=true;
@@ -77,16 +65,16 @@ function SquareMobileController(my_socket){
   function touchend_handler(e){
     for(item of e.changedTouches){
 
-      if(isButtonClicked(button_up,item.clientX,item.clientY)){
+      if(isButtonClicked(button_vertical_pos,item.clientX,item.clientY)){
         stop=true;
       }
-      if(isButtonClicked(button_down,item.clientX,item.clientY)){
+      if(isButtonClicked(button_vertical_neg,item.clientX,item.clientY)){
         stop=true;
       }
-      if(isButtonClicked(button_left,item.clientX,item.clientY)){
+      if(isButtonClicked(button_horizontal_neg,item.clientX,item.clientY)){
         stop=true;
       }
-      if(isButtonClicked(button_right,item.clientX,item.clientY)){
+      if(isButtonClicked(button_horizontal_pos,item.clientX,item.clientY)){
         stop=true;
       }
       if(isButtonClicked(button_attack,item.clientX,item.clientY)){
