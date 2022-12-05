@@ -111,6 +111,8 @@ function SquareMobileController(my_socket){
   const stop_button=document.createElement("button");
   const attack_button=document.createElement("button");
 
+  mobile_controller_div.id=MOBILE_CONTROLLER_ID;
+  mobile_controller_div.style.visibility='hidden';
   document.body.appendChild(mobile_controller_div);
   mobile_controller_div.appendChild(up_button);
   mobile_controller_div.appendChild(down_button);
@@ -564,11 +566,9 @@ function Ui(my_socket,client_data){
         ui_mobile_toggle_outline.onclick = ()=>{
             ui_mobile_toggle_outline.classList.toggle('active');
             if(ui_mobile_toggle_outline.classList.contains('active')){
-                console.log('active!');
-                joystick.style.visibility='visible';
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='visible';
             }else{
-                joystick.style.visibility='hidden';
-                console.log('disabled!');
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='hidden';
             }
             
         }
@@ -596,6 +596,7 @@ const SCRIPT_LOAD_DELAY=1000;
 const CLIENT_FRAME_RATE=5;
 const PLAYER_LIST_ID='player_list';
 const GAME_CANVAS_ID='gameCanvas';
+const MOBILE_CONTROLLER_ID='mobile_controller_div';
 
 
 setTimeout(() => {
