@@ -225,13 +225,14 @@ body{
 }
 
 .how-to-play{
-    top: 55%;
-    left: 60%;
-    padding: 3px;
+    top: 10%;
+    left: 2%;
+    padding: 4vmax;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
     color: #fffff0;
-    font-size: 1.5vmin;
+    font-size: 2vmax;
     transition:0.3s;
 }
 .guide{
@@ -256,7 +257,7 @@ input::placeholder {
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     font-size: 2vmax;
     color: #3f0a0a;
-    left:2%;
+    left:5%;
     margin: 2vmax;
     position:absolute;
 }
@@ -268,6 +269,7 @@ input::placeholder {
     display: block;
     position: absolute;
     top:6%;
+    left:4%;
     border-radius: 30px;
     background-color: #fff;
     box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
