@@ -74,7 +74,8 @@
  {
      parameters = parameters || {};
      var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title),
-         width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
+         //width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
+         width=1000,
          height = (typeof parameters.height === "undefined" ? 0 : parameters.height),
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -117,13 +118,16 @@
      var context=canvas.getContext("2d");
  
      var pressed = 0; // Bool - 1=Yes - 0=No
+     var extra_button_pressed = 0;
      var circumference = 2 * Math.PI;
-     var internalRadius = (canvas.width-((canvas.width/2)+10))/2;
+     //var internalRadius = (canvas.width-((canvas.width/2)+10))/2;
+     var internalRadius = 20;
      var maxMoveStick = internalRadius + 5;
-     var externalRadius = internalRadius + 30;
-     var centerX = canvas.width / 2;
-     var centerY = canvas.height / 2;
-     var directionHorizontalLimitPos = canvas.width / 10;
+     var externalRadius = internalRadius + 20;
+     //var centerX = canvas.width / 2;
+     var centerX = 200;
+     var centerY = canvas.height /2;
+     var directionHorizontalLimitPos = 1;
      var directionHorizontalLimitNeg = directionHorizontalLimitPos * -1;
      var directionVerticalLimitPos = canvas.height / 10;
      var directionVerticalLimitNeg = directionVerticalLimitPos * -1;
@@ -132,18 +136,12 @@
      var movedY=centerY;
  
      // Check if the device support the touch or not
-     if("ontouchstart" in document.documentElement)
-     {
-         canvas.addEventListener("touchstart", onTouchStart, false);
-         document.addEventListener("touchmove", onTouchMove, false);
-         document.addEventListener("touchend", onTouchEnd, false);
-     }
-     else
-     {
-         canvas.addEventListener("mousedown", onMouseDown, false);
-         document.addEventListener("mousemove", onMouseMove, false);
-         document.addEventListener("mouseup", onMouseUp, false);
-     }
+
+    canvas.addEventListener("touchstart", onTouchStart, false);
+    document.addEventListener("touchmove", onTouchMove, false);
+    document.addEventListener("touchend", onTouchEnd, false);
+
+
      // Draw the object
      drawExternal();
      drawInternal();
@@ -159,9 +157,13 @@
      {
          context.beginPath();
          context.arc(centerX, centerY, externalRadius, 0, circumference, false);
+         context.fillStyle = "rgba(0, 0, 0, 0.45)";
+         context.fillRect(centerX+500,50,100,100);
          context.lineWidth = externalLineWidth;
          context.strokeStyle = externalStrokeColor;
          context.stroke();
+         //jeho
+         
      }
  
      /**
@@ -194,6 +196,11 @@
      function onTouchStart(event) 
      {
          pressed = 1;
+         console.log(event.touches[0].clientX);
+         if(event.touches[1]!==undefined){
+            alert("multi touch!!");
+         }
+         
      }
  
      function onTouchMove(event)
@@ -230,72 +237,6 @@
      } 
  
      function onTouchEnd(event) 
-     {
-         pressed = 0;
-         // If required reset position store variable
-         if(autoReturnToCenter)
-         {
-             movedX = centerX;
-             movedY = centerY;
-         }
-         // Delete canvas
-         context.clearRect(0, 0, canvas.width, canvas.height);
-         // Redraw object
-         drawExternal();
-         drawInternal();
- 
-         // Set attribute of callback
-         StickStatus.xPosition = movedX;
-         StickStatus.yPosition = movedY;
-         StickStatus.x = (100*((movedX - centerX)/maxMoveStick)).toFixed();
-         StickStatus.y = ((100*((movedY - centerY)/maxMoveStick))*-1).toFixed();
-         StickStatus.cardinalDirection = getCardinalDirection();
-         callback(StickStatus);
-     }
- 
-     /**
-      * @desc Events for manage mouse
-      */
-     function onMouseDown(event) 
-     {
-         pressed = 1;
-     }
- 
-     /* To simplify this code there was a new experimental feature here: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetX , but it present only in Mouse case not metod presents in Touch case :-( */
-     function onMouseMove(event) 
-     {
-         if(pressed === 1)
-         {
-             movedX = event.pageX;
-             movedY = event.pageY;
-             // Manage offset
-             if(canvas.offsetParent.tagName.toUpperCase() === "BODY")
-             {
-                 movedX -= canvas.offsetLeft;
-                 movedY -= canvas.offsetTop;
-             }
-             else
-             {
-                 movedX -= canvas.offsetParent.offsetLeft;
-                 movedY -= canvas.offsetParent.offsetTop;
-             }
-             // Delete canvas
-             context.clearRect(0, 0, canvas.width, canvas.height);
-             // Redraw object
-             drawExternal();
-             drawInternal();
- 
-             // Set attribute of callback
-             StickStatus.xPosition = movedX;
-             StickStatus.yPosition = movedY;
-             StickStatus.x = (100*((movedX - centerX)/maxMoveStick)).toFixed();
-             StickStatus.y = ((100*((movedY - centerY)/maxMoveStick))*-1).toFixed();
-             StickStatus.cardinalDirection = getCardinalDirection();
-             callback(StickStatus);
-         }
-     }
- 
-     function onMouseUp(event) 
      {
          pressed = 0;
          // If required reset position store variable

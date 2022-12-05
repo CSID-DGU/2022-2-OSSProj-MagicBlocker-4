@@ -158,6 +158,7 @@ body{
 
 .ui{ /*로그인 ui 전체*/
     text-align: center;
+    padding: 30px;
     border: none;
     box-shadow: 0 0 30px 3px rgba(0, 0, 255, 0.3);
     background-color: rgba(0, 0, 205, 0.3);
@@ -186,7 +187,7 @@ body{
 
 #username_input{
     width:30%;
-    height:2vmin;
+    height:4vmax;
     top: 30%;
     left: 45%;
     transform:translateX(-50%);
@@ -206,8 +207,8 @@ body{
 }
 
 #play_button {
-    width: fit-content;
-    height: fit-content;
+    width: 8vmax;
+    height: 4vmax;
     top: 30%;
     left: 65%;
     transform:translateX(-50%);
@@ -259,8 +260,6 @@ body{
 
 .char_button{
     font-size: 1vmax;
-    font-weight:bold;
-
 }
 
 .char_button_image{
@@ -272,7 +271,6 @@ body{
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     font-size: 2vmax;
     color: #3c3e70;
-    margin:0.5vmax;
 }
 #char_selected_prompt_picked{
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
@@ -281,14 +279,23 @@ body{
 }
 
 .how-to-play{
-    top: 20%;
+    top: 10%;
     left: 2%;
-    padding: 1vmax;
+    padding: 4vmax;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
     color: #fffff0;
-    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
-    font-size: 4vmin;
+    font-size: 2vmax;
+    transition:0.3s;
+}
+.guide{
+    top: 58%;
+    left: 27%;
+    padding: 3px;
+    background-color: rgb(117, 109, 109, 0.5);
+    box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
+    color: #fffff0;
     transition:0.3s;
 }
 
@@ -304,7 +311,7 @@ input::placeholder {
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     font-size: 2vmax;
     color: #3f0a0a;
-    left:2%;
+    left:5%;
     margin: 2vmax;
     position:absolute;
 }
@@ -316,7 +323,7 @@ input::placeholder {
     display: block;
     position: absolute;
     top:6%;
-    left:1%;
+    left:4%;
     border-radius: 30px;
     background-color: #fff;
     box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
