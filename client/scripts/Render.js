@@ -15,6 +15,8 @@ function Render(canvas_id,client_data){
     img_width = client_data.img_width;
     img_height = client_data.img_height;
 
+    const PAD = 50;//게임화면 옆에 남는 공백공간 상수
+
     //Render 생성자 호출시 미리 이미지 객체를 생성 (이미지를 불러와서 Render 객체에 저장). (렌더링 성능 최적화)
     const player_sprite_list={};
     for(item of client_data.char_list){
@@ -31,27 +33,38 @@ function Render(canvas_id,client_data){
 
     //
     this.client_data = client_data;//클라이언트 데이터(player와 bullet의 좌표,방향)를 참조하여 렌더링
-
-    //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
+    
+    //게임화면 캔버스 크기의 비율을 기기의 window로 보여줄수있는, 화면이 잘리지않는 가장 큰 정사각형으로 보여줌
     function auto_scaile(){
-        my_canvas.width = window.innerWidth;
-        my_canvas.height = window.innerHeight;
+        let max_side;
+        if(window.innerWidth>window.innerHeight){
+            max_side=window.innerHeight;
+        }else{
+            max_side=window.innerWidth;
+        }
+        console.log(max_side);
+        my_canvas.style.width = max_side-PAD;
+        my_canvas.style.height = max_side-PAD;
         ctx.font = '20px Arial';
 
         //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
         //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
+        /*
         window.addEventListener("resize",()=>{
             my_canvas.width = window.innerWidth;
             my_canvas.height = window.innerHeight;
             ctx.font = '20px Arial';
 
         });
+        */
     }
 
     //클라이언트 데이터 객체에서 뽑아낸 좌표 데이터로 한 프레임을 화면에 그림. main함수에서 setInterval안에 넣어서 framarate와 함께 사용할 것.
+    my_canvas.width=1000;
+    my_canvas.height=1000;
     this.draw_client_data=function(){
         auto_scaile();
-        
+        ctx.clearRect(0, 0, my_canvas.width, my_canvas.height);
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
