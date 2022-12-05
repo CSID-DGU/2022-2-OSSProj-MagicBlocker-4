@@ -5,6 +5,7 @@ const SCRIPT_LOAD_DELAY=1000;
 const CLIENT_FRAME_RATE=5;
 const PLAYER_LIST_ID='player_list';
 const GAME_CANVAS_ID='gameCanvas';
+const MOBILE_CONTROLLER_ID='mobile_controller_div';
 
 
 setTimeout(() => {

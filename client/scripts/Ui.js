@@ -158,11 +158,9 @@ function Ui(my_socket,client_data){
         ui_mobile_toggle_outline.onclick = ()=>{
             ui_mobile_toggle_outline.classList.toggle('active');
             if(ui_mobile_toggle_outline.classList.contains('active')){
-                console.log('active!');
-                joystick.style.visibility='visible';
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='visible';
             }else{
-                joystick.style.visibility='hidden';
-                console.log('disabled!');
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='hidden';
             }
             
         }

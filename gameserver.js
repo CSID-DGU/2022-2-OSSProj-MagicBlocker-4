@@ -185,6 +185,7 @@ var Player = function (id, name, points) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // 서버에서 사용되는 상수
 //
 <<<<<<< HEAD
@@ -232,6 +233,10 @@ var Player = function (id, name, points) {
 // 서버에서 사용되는 상수
 //
 >>>>>>> d3bccd7 ([22.12.05,전재호](feat) 버튼요소로 만든 멈춤버튼이 있는 모바일 컨트롤러)
+=======
+// 서버에서 사용되는 상수
+//
+>>>>>>> f293088 ([22.12.05,류강현](feat) 조이스틱 기본값 숨김으로 바꿈,토글버튼으로 숨길수있게함)
  const SERVER_PORT = 8000;
  const REFRESH_RATE = 25;
  
@@ -241,6 +246,7 @@ var Player = function (id, name, points) {
  const STARTING_DIR = 'down';
  const STARTING_CHAR = 'warrior';
  const MONGO_REPO = "Account";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -270,10 +276,13 @@ var Player = function (id, name, points) {
 >>>>>>> e894f02 ([22.12.05,전재호](feat) 새로운 방향키 방식 모바일 ui 테스트)
 =======
 >>>>>>> d3bccd7 ([22.12.05,전재호](feat) 버튼요소로 만든 멈춤버튼이 있는 모바일 컨트롤러)
+=======
+>>>>>>> f293088 ([22.12.05,류강현](feat) 조이스틱 기본값 숨김으로 바꿈,토글버튼으로 숨길수있게함)
  const BULLET_SPEED = 20;
 
  const COOL_TIME = 20;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -331,10 +340,13 @@ const MAP_PAD = 100;
 >>>>>>> e894f02 ([22.12.05,전재호](feat) 새로운 방향키 방식 모바일 ui 테스트)
 =======
 >>>>>>> d3bccd7 ([22.12.05,전재호](feat) 버튼요소로 만든 멈춤버튼이 있는 모바일 컨트롤러)
+=======
+>>>>>>> f293088 ([22.12.05,류강현](feat) 조이스틱 기본값 숨김으로 바꿈,토글버튼으로 숨길수있게함)
 const MAP_WIDTH = 1000;
 const MAP_HEIGHT = 1000;
 const MAP_PAD = 100;
 //
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -353,6 +365,8 @@ const MAP_PAD = 100;
 >>>>>>> d3bccd7 ([22.12.05,전재호](feat) 버튼요소로 만든 멈춤버튼이 있는 모바일 컨트롤러)
 =======
 >>>>>>> 6698447 ([22.12.05,전재호](fix) play를 누르면 모바일 토글버튼이 숨겨지는 버그 fix)
+=======
+>>>>>>> f293088 ([22.12.05,류강현](feat) 조이스틱 기본값 숨김으로 바꿈,토글버튼으로 숨길수있게함)
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction,char) {
@@ -573,6 +587,7 @@ const MAP_PAD = 100;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
 =======
 =======
@@ -650,6 +665,8 @@ const MAP_PAD = 100;
 >>>>>>> d3bccd7 ([22.12.05,전재호](feat) 버튼요소로 만든 멈춤버튼이 있는 모바일 컨트롤러)
 =======
 >>>>>>> 6698447 ([22.12.05,전재호](fix) play를 누르면 모바일 토글버튼이 숨겨지는 버그 fix)
+=======
+>>>>>>> f293088 ([22.12.05,류강현](feat) 조이스틱 기본값 숨김으로 바꿈,토글버튼으로 숨길수있게함)
 //Ako.js
 //직업 클래스
 
