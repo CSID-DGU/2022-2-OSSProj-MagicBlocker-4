@@ -4,12 +4,11 @@
 //
 function Ui(my_socket,client_data){
     this.my_socket = my_socket;
-    this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스    
     this.JOYSTICK_ID = "joyDiv"; //조이스틱과 연결하기 위한 인터페이스
     this.selected_char = 'none';
 
-    GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
     JOYSTICK_ID=this.JOYSTICK_ID;
+    
     selected_char = 'none';
 
 
@@ -99,10 +98,12 @@ function Ui(my_socket,client_data){
             //console.log(item);
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
+            temp_char_button.classList.add("char_button");
             temp_char_button.innerText=client_data.charname_list[item];
 
             const char_button_image = new Image();
             char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';
+            char_button_image.classList.add('char_button_image');
             ui_char_select.appendChild(temp_char_button);
             temp_char_button.appendChild(char_button_image);
         }
@@ -136,29 +137,46 @@ function Ui(my_socket,client_data){
         game_div.appendChild(ui_player_list_box);
 
         const player_list = document.createElement('div'); //접속중인 플레이어 리스트. 접속중인 플레이어 표시 박스 안에 자식요소로 삽입됨.
-        player_list.id = 'player_list';
+        player_list.id = PLAYER_LIST_ID;
 
         ui_player_list_box.appendChild(player_list);
 
-        //모바일 전환 버튼
-        const ui_mobile_toggle = document.createElement('button');
-        ui_mobile_toggle.classList.add('ui');
-        ui_mobile_toggle.classList.add('mobile');
-        ui_mobile_toggle.id = "ui_mobile_toggle_button";
-        ui_mobile_toggle.innerHTML="I'm Mobile!!";
-        ui_div.appendChild(ui_mobile_toggle);
+        //모바일 토글 버튼
+        const joystick = document.getElementById(JOYSTICK_ID)
+        const ui_mobile_toggle_prompt = document.createElement('div');
+        ui_mobile_toggle_prompt.innerText = "모바일";
+        
+        
+        const ui_mobile_toggle_outline = document.createElement('div'); 
+        const ui_mobile_toggle_button = document.createElement('div');
+        
+        ui_mobile_toggle_prompt.id = "mobile_toggle_prompt";
+        ui_mobile_toggle_outline.classList.add("mobile_toggle_outline");
+        ui_mobile_toggle_button.classList.add("mobile_toggle_button");
+        
 
+        ui_mobile_toggle_outline.onclick = ()=>{
+            ui_mobile_toggle_outline.classList.toggle('active');
+            if(ui_mobile_toggle_outline.classList.contains('active')){
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='visible';
+            }else{
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='hidden';
+            }
+            
+        }
+        document.body.appendChild(ui_mobile_toggle_prompt);
+        document.body.appendChild(ui_mobile_toggle_outline);
+        ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
+
+
+        //모바일 전환 버튼
+        /*
         ui_mobile_toggle.onclick = function(){
-          const joystick = document.getElementById(JOYSTICK_ID);  
+          const joystick = document.getElementById(JOYSTICK_ID)
           joystick.style.visibility='visible';
           mobile_attack_button.style.visibility='visible';
         };
+        */
 
-
-        this.popup = function(){ //팝업 UI
-            const popUpBox = document.createElement("div");
-            // popUpBox.innerHTML="pop up!!!";
-            document.body.appendChild(popUpBox);
-        }
     }
 }

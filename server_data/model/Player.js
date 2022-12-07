@@ -28,6 +28,7 @@
     this.speed=PLAYER_SPEED;
     
     this.updatePosition = function () {
+        
         if (this.rightPress){
             this.x += this.speed;
             this.direction='right';
@@ -48,7 +49,18 @@
             this.direction='down';
             //console.log('down!!!')
         }
-            
+        if(this.x<0){
+            this.x+=this.speed;
+        }
+        if(this.x>MAP_WIDTH-MAP_PAD){
+            this.x-=this.speed;
+        }
+        if(this.y<0){
+            this.y+=this.speed;
+        }
+        if(this.y>MAP_HEIGHT-MAP_PAD){
+            this.y-=this.speed;
+        }
     };
 
 

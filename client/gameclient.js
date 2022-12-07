@@ -101,32 +101,174 @@ function KeyboardController(mySocket){
 //
 //MobileController.js
 //
-function MobileController(mySocket){
+function SquareMobileController(my_socket){
+
+  const mobile_controller_div=document.createElement("div");
+  const up_button=document.createElement("button");
+  const down_button=document.createElement("button");
+  const left_button=document.createElement("button");
+  const right_button=document.createElement("button");
+  const stop_button=document.createElement("button");
+  const attack_button=document.createElement("button");
+
+  mobile_controller_div.id=MOBILE_CONTROLLER_ID;
+  mobile_controller_div.style.visibility='hidden';
+  document.body.appendChild(mobile_controller_div);
+  mobile_controller_div.appendChild(up_button);
+  mobile_controller_div.appendChild(down_button);
+
+  mobile_controller_div.appendChild(left_button);
+  mobile_controller_div.appendChild(right_button);
+  mobile_controller_div.appendChild(stop_button);
+  mobile_controller_div.appendChild(attack_button);
+
+  up_button.style="width:100px;height:100px;position:fixed;top:60%;left:10%;border-radius: 10px;";
+  down_button.style="width:100px;height:100px;position:fixed;top:80%;left:10%;border-radius: 10px;";
+  left_button.style="width:100px;height:100px;position:fixed;top:70%;left:5%;border-radius: 10px;";
+  right_button.style="width:100px;height:100px;position:fixed;top:70%;left:15%;border-radius: 10px;";
+
+  stop_button.style="width:100px;height:100px;position:fixed;top:70%;left:10%";
+  attack_button.style="width:100px;height:100px;position:fixed;top:70%;left:80%";
+
+  up_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_up',state:true});
+  }
+  down_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_down',state:true});
+  }
+  left_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_left',state:true});
+  }
+  right_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_right',state:true});
+  }
+  stop_button.onclick=()=>{
+    my_socket.emit('keyPress',{inputId:'joy_stop'});
+  }
+  attack_button.onclick=()=>{
+    my_socket.emit("keyPress",{inputId:'shoot',state:true})
+  }
+
+
+}
+
+/*
+function SquareMobileController(my_socket){
+  const controller_canvas = document.createElement('canvas');
+  const ctx = controller_canvas.getContext("2d");
+  controller_canvas.id = "square_mobile_controller";
+  controller_canvas.width = window.innerWidth;
+  controller_canvas.height = 300;
+  controller_canvas.style="border:solid;position:absolute;top:70%;";
+  controller_canvas.addEventListener("touchstart",touchstart_handler);
+  controller_canvas.addEventListener("touchend",touchend_handler);
+  const BUTTON_SIZE = 100;
+  const BUTTON_PAD = 100;
+  //왼쪽 대각선 위 좌표
+  const button_vertical_pos = {x:150,y:50}//위
+  const button_vertical_neg = {x:150,y:250}//아래
+  const button_horizontal_neg = {x:50,y:150}//왼
+  const button_horizontal_pos = {x:250,y:150}//오른
+  const button_attack = {x:1550,y:150}//공격
+  
+  function draw_button(button){
+    ctx.fillRect(button.x,button.y,BUTTON_SIZE,BUTTON_SIZE);
+  }
+  ctx.fillStyle = "green";
+  draw_button(button_vertical_pos);
+  draw_button(button_vertical_neg);
+  draw_button(button_horizontal_neg);
+  draw_button(button_horizontal_pos);
+  draw_button(button_attack);
+
+  function isButtonClicked(button,x,y){
+    if(x>button.x&&x<button.x+BUTTON_SIZE&&y>button.y&&button.y+BUTTON_SIZE){
+      return true;
+    }
+  }
+
+  function touchstart_handler(e){
+    for(item of e.touches){
+      if(isButtonClicked(button_vertical_pos,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_up',state:true});
+      }
+      if(isButtonClicked(button_vertical_neg,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_down',state:true});
+      }
+      if(isButtonClicked(button_horizontal_neg,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_left',state:true});
+      }
+      if(isButtonClicked(button_horizontal_pos,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_right',state:true});
+      }
+      if(isButtonClicked(button_attack,item.clientX,item.clientY)){
+        my_socket.emit("keyPress",{inputId:'shoot',state:true})
+      }
+    }
+  }
+  function touchend_handler(e){
+    for(item of e.changedTouches){
+
+      if(isButtonClicked(button_vertical_pos,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
+      }
+      if(isButtonClicked(button_vertical_neg,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
+      }
+      if(isButtonClicked(button_horizontal_neg,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
+      }
+      if(isButtonClicked(button_horizontal_pos,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
+      }
+      if(isButtonClicked(button_attack,item.clientX,item.clientY)){
+        my_socket.emit('keyPress',{inputId:'joy_stop'});
+      }
+    }
+  }
+  document.body.appendChild(controller_canvas);
+}
+/*
+  if(stick=='E'){
+    my_socket.emit('keyPress',{inputId:'joy_right',state:true});
+  }else if(stick=='W'){
+    my_socket.emit('keyPress',{inputId:'joy_left',state:true});
+  }else if(stick=='N'){
+    my_socket.emit('keyPress',{inputId:'joy_up',state:true});
+  }else if(stick=='S'){
+    my_socket.emit('keyPress',{inputId:'joy_down',state:true});
+  }else if(stick=='C'){
+    my_socket.emit('keyPress',{inputId:'joy_stop'});
+  }
+}
+*/
+/*
+function MobileController(my_socket){
     let Joy1 = new JoyStick('joyDiv', {}, function(stickData) {
         let stick = stickData.cardinalDirection;
             //정지시 C
             if(stick=='E'){
-              mySocket.emit('keyPress',{inputId:'joy_right',state:true});
+              my_socket.emit('keyPress',{inputId:'joy_right',state:true});
             }else if(stick=='W'){
-              mySocket.emit('keyPress',{inputId:'joy_left',state:true});
+              my_socket.emit('keyPress',{inputId:'joy_left',state:true});
             }else if(stick=='N'){
-              mySocket.emit('keyPress',{inputId:'joy_up',state:true});
+              my_socket.emit('keyPress',{inputId:'joy_up',state:true});
             }else if(stick=='S'){
-              mySocket.emit('keyPress',{inputId:'joy_down',state:true});
+              my_socket.emit('keyPress',{inputId:'joy_down',state:true});
             }else if(stick=='C'){
-              mySocket.emit('keyPress',{inputId:'joy_stop'});
+              my_socket.emit('keyPress',{inputId:'joy_stop'});
             }
           });
 }
+*/
 //
 //Render.js
 //
 
 
-function Render(canvas_id,client_data){
+function Render(client_data){
 
-    this.canvas_id = canvas_id;//렌더링객체를 캔버스와 연결해야 사용가능    
-    this.my_canvas=document.getElementById(canvas_id);
+    this.my_canvas=document.getElementById(GAME_CANVAS_ID);
     const my_canvas = this.my_canvas;
     const ctx = my_canvas.getContext("2d"); //내부 함수가 사용하기 위한 참조
     
@@ -134,6 +276,8 @@ function Render(canvas_id,client_data){
     img_frame_index=client_data.img_frame_index;
     img_width = client_data.img_width;
     img_height = client_data.img_height;
+
+    const PAD = 50;//게임화면 옆에 남는 공백공간 상수
 
     //Render 생성자 호출시 미리 이미지 객체를 생성 (이미지를 불러와서 Render 객체에 저장). (렌더링 성능 최적화)
     const player_sprite_list={};
@@ -151,30 +295,48 @@ function Render(canvas_id,client_data){
 
     //
     this.client_data = client_data;//클라이언트 데이터(player와 bullet의 좌표,방향)를 참조하여 렌더링
-
-    //게임화면 캔버스 크기를 window크기에 맞춰서 자동변환.
+    
+    //게임화면 캔버스 크기의 비율을 기기의 window로 보여줄수있는, 화면이 잘리지않는 가장 큰 정사각형으로 보여줌
     function auto_scaile(){
-        my_canvas.width = window.innerWidth;
-        my_canvas.height = window.innerHeight;
+        let max_side;
+        if(window.innerWidth>window.innerHeight){
+            max_side=window.innerHeight;
+        }else{
+            max_side=window.innerWidth;
+        }
+        my_canvas.style.width = max_side-PAD;
+        my_canvas.style.height = max_side-PAD;
         ctx.font = '20px Arial';
 
         //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
         //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
+        /*
         window.addEventListener("resize",()=>{
             my_canvas.width = window.innerWidth;
             my_canvas.height = window.innerHeight;
             ctx.font = '20px Arial';
 
         });
+        */
     }
 
     //클라이언트 데이터 객체에서 뽑아낸 좌표 데이터로 한 프레임을 화면에 그림. main함수에서 setInterval안에 넣어서 framarate와 함께 사용할 것.
+    my_canvas.width=1000;
+    my_canvas.height=1000;
     this.draw_client_data=function(){
         auto_scaile();
-        
+        document.getElementById(PLAYER_LIST_ID).innerHTML = ''; //접속자 잔상 제거
+
+        ctx.clearRect(0, 0, my_canvas.width, my_canvas.height);
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
+            if(player.isalive){
+                document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🟢"+player.username + '</div>'; //접속자 표시
+            }else{
+                document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🔴"+player.username + '</div>'; //접속자 표시
+            }
+            
             ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
             draw_player(player);
         }
@@ -247,12 +409,11 @@ function SocketConnection(){
 //
 function Ui(my_socket,client_data){
     this.my_socket = my_socket;
-    this.GAME_CANVAS_ID = "gameCanvas";//렌더링매니저와 연결하기 위한 인터페이스    
     this.JOYSTICK_ID = "joyDiv"; //조이스틱과 연결하기 위한 인터페이스
     this.selected_char = 'none';
 
-    GAME_CANVAS_ID=this.GAME_CANVAS_ID;//생성자 내부함수는 this에 접근 불가
     JOYSTICK_ID=this.JOYSTICK_ID;
+    
     selected_char = 'none';
 
 
@@ -342,10 +503,12 @@ function Ui(my_socket,client_data){
             //console.log(item);
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
+            temp_char_button.classList.add("char_button");
             temp_char_button.innerText=client_data.charname_list[item];
 
             const char_button_image = new Image();
             char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';
+            char_button_image.classList.add('char_button_image');
             ui_char_select.appendChild(temp_char_button);
             temp_char_button.appendChild(char_button_image);
         }
@@ -379,30 +542,47 @@ function Ui(my_socket,client_data){
         game_div.appendChild(ui_player_list_box);
 
         const player_list = document.createElement('div'); //접속중인 플레이어 리스트. 접속중인 플레이어 표시 박스 안에 자식요소로 삽입됨.
-        player_list.id = 'player_list';
+        player_list.id = PLAYER_LIST_ID;
 
         ui_player_list_box.appendChild(player_list);
 
-        //모바일 전환 버튼
-        const ui_mobile_toggle = document.createElement('button');
-        ui_mobile_toggle.classList.add('ui');
-        ui_mobile_toggle.classList.add('mobile');
-        ui_mobile_toggle.id = "ui_mobile_toggle_button";
-        ui_mobile_toggle.innerHTML="I'm Mobile!!";
-        ui_div.appendChild(ui_mobile_toggle);
+        //모바일 토글 버튼
+        const joystick = document.getElementById(JOYSTICK_ID)
+        const ui_mobile_toggle_prompt = document.createElement('div');
+        ui_mobile_toggle_prompt.innerText = "모바일";
+        
+        
+        const ui_mobile_toggle_outline = document.createElement('div'); 
+        const ui_mobile_toggle_button = document.createElement('div');
+        
+        ui_mobile_toggle_prompt.id = "mobile_toggle_prompt";
+        ui_mobile_toggle_outline.classList.add("mobile_toggle_outline");
+        ui_mobile_toggle_button.classList.add("mobile_toggle_button");
+        
 
+        ui_mobile_toggle_outline.onclick = ()=>{
+            ui_mobile_toggle_outline.classList.toggle('active');
+            if(ui_mobile_toggle_outline.classList.contains('active')){
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='visible';
+            }else{
+                document.getElementById(MOBILE_CONTROLLER_ID).style.visibility='hidden';
+            }
+            
+        }
+        document.body.appendChild(ui_mobile_toggle_prompt);
+        document.body.appendChild(ui_mobile_toggle_outline);
+        ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
+
+
+        //모바일 전환 버튼
+        /*
         ui_mobile_toggle.onclick = function(){
-          const joystick = document.getElementById(JOYSTICK_ID);  
+          const joystick = document.getElementById(JOYSTICK_ID)
           joystick.style.visibility='visible';
           mobile_attack_button.style.visibility='visible';
         };
+        */
 
-
-        this.popup = function(){ //팝업 UI
-            const popUpBox = document.createElement("div");
-            // popUpBox.innerHTML="pop up!!!";
-            document.body.appendChild(popUpBox);
-        }
     }
 }
 
@@ -411,9 +591,14 @@ function Ui(my_socket,client_data){
 //
 const SCRIPT_LOAD_DELAY=1000;
 const CLIENT_FRAME_RATE=5;
+const PLAYER_LIST_ID='player_list';
+const GAME_CANVAS_ID='gameCanvas';
+const MOBILE_CONTROLLER_ID='mobile_controller_div';
+
+
 setTimeout(() => {
     console.log("script start...");
-
+    mobile_pinch_block();
 
     const socket_manager = new SocketConnection();
 
@@ -422,19 +607,35 @@ setTimeout(() => {
 
     const ui_manager = new Ui(socket_manager.mySocket,client_data);
     ui_manager.create_login_ui();
-    ui_manager.popup();
 
 
 
-    const render_manager = new Render(ui_manager.GAME_CANVAS_ID,client_data);
+    const render_manager = new Render(client_data);
 
     setInterval(render_manager.draw_client_data,CLIENT_FRAME_RATE);
     
     const keyboard_controller = new KeyboardController(socket_manager.mySocket);
-    const mobile_controller = new MobileController(socket_manager.mySocket);
+    const square_mobile_controller = new SquareMobileController(socket_manager.mySocket);
 
 
 }, SCRIPT_LOAD_DELAY);
+
+function mobile_pinch_block(){
+    document.documentElement.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+             event.preventDefault(); 
+           } 
+       }, false);
+   
+   var lastTouchEnd = 0; 
+   
+   document.documentElement.addEventListener('touchend', function (event) {
+        var now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+             event.preventDefault(); 
+           } lastTouchEnd = now; 
+       }, false);
+}
 //
 //
 //

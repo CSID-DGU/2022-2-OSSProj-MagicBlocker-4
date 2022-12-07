@@ -10,12 +10,20 @@
   }
 }
 
-
+body{
+    background-color: #3c3e70;
+}
 
 /*게임이 렌더링되는 캔버스*/
 #gameCanvas{
+    /*
     width:100%;
     height:100%;
+    */
+    position:absolute;
+    left:50%;
+    height:99%;
+    transform:translateX(-50%);
     border:1px solid black;
     float:left;
 
@@ -23,7 +31,7 @@
     /* 더블탭으로 인한 확대 비허용 */
     touch-action: manipulation;
 
-    /*object-fit: cover;*/
+    object-fit: cover;
 
 }
 
@@ -43,8 +51,8 @@
 }
 
 #ui_mobile_toggle_button{
-    top: 60%;
-    left: 60%;
+    top: 10%;
+    left: 10%;
 }
 
 #mobile_attack_button{
@@ -67,16 +75,23 @@
 
 #ui_player_list_box{
     width: 15vw;
-    height: 80vh;
+    /*height: 80vh;*/
+    height: fit-content;
+    white-space:nowrap;
     padding: 20px;
-    position: absolute;
+    position: fixed;
     z-index: 1000;
     top: 7%;
-    left: 90%;
+    left: 85%;
+    text-align: center;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size:3vmin;
+    color: #c5c5c5;
     background-color: rgba(0,0,0,0.4);
     border-radius: 30px;
     transform:translate(-50%);
     animation:fadein 3s;
+    overflow: hidden;
   }
 
   /*----로그인 UI창 -----*/
@@ -107,7 +122,8 @@
     width: 50vw;
     height: 20vh;
     top: 10%;
-    left: 20%;
+    left: 50%;
+    transform:translateX(-50%);
     font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     font-size: 4vmax;
     background-color: rgba(0, 0, 0, 0);
@@ -116,31 +132,32 @@
 }
 
 #username_input{
-    width: 15vw;
-    height:7vh;
-    top: 35%;
-    left: 60%;
+    width:30%;
+    height:4vmax;
+    top: 30%;
+    left: 45%;
+    transform:translateX(-50%);
     padding: 28px;
     background-color: rgba(0, 0, 0, 0.4);
     transition:0.5s;
     font-size: 3vmax;
 }
 #username_input::placeholder{
-    font-size: 1vmax;
+    font-size: 2vmax;
 }
 
 #username_input:focus{
-    width: 18vw;
     border-color: #fce181;
     border-radius: 20px;
     transition:0.5s; /*서서히 커짐*/
 }
 
 #play_button {
-    width: 10vw;
-    height: 8vh;
-    top: 45%;
-    left: 60%;
+    width: 8vmax;
+    height: 4vmax;
+    top: 30%;
+    left: 65%;
+    transform:translateX(-50%);
     font-size: 2vmin;
     padding: 15px 30px;
     border: 3px solid #fffff0;
@@ -179,15 +196,21 @@
 /*캐릭터 선택창*/
 .char-select{
     width: 40%;
-    top: 30%;
-    left: 10%;  
+    top: 40%;
+    left: 50%;  
     background-color: rgba(239, 235, 235, 0.5);
+    transform:translateX(-50%)
 }
 
 /*캐릭터 선택창 버튼 이미지 크기 설정*/
-.char-select-button{
-    width:60px;
-    height:60px;
+
+.char_button{
+    font-size: 1vmax;
+}
+
+.char_button_image{
+    width:5vmax;
+    height:5vmax;
 }
 
 #char_select_prompt{
@@ -202,13 +225,14 @@
 }
 
 .how-to-play{
-    top: 55%;
-    left: 60%;
-    padding: 3px;
+    top: 10%;
+    left: 2%;
+    padding: 4vmax;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 30px 3px rgba(0, 0, 0, 0);
     color: #fffff0;
-    font-size: 1.5vmin;
+    font-size: 2vmax;
     transition:0.3s;
 }
 .guide{
@@ -228,9 +252,59 @@ input::placeholder {
     font-style: italic;
 }
 
+/*모바일 토글 버튼*/
+#mobile_toggle_prompt{
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 2vmax;
+    color: #3f0a0a;
+    left:5%;
+    margin: 2vmax;
+    position:absolute;
+}
+
+.mobile_toggle_outline{
+    width: 7vmax;
+    margin: 2vmax;
+    height: 3vmax;
+    display: block;
+    position: absolute;
+    top:6%;
+    left:4%;
+    border-radius: 30px;
+    background-color: #fff;
+    box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Black Han Sans', sans-serif; /*웹폰트*/
+    font-size: 2vmax;
+    color: #3f0a0a;
+}
+.mobile_toggle_outline .mobile_toggle_button{
+    width: 2vmax;
+    height: 2vmax;
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #f03d3d;
+}
+.mobile_toggle_outline.active {
+    background: #f03d3d;
+  }
+.mobile_toggle_outline.active .mobile_toggle_button{
+    left: calc(100% - 2.5vmax);
+    background: #fff;
+}
+.mobile_toggle_outline, .mobile_toggle_button {
+    transition: all 0.2s ease-in;
+}
+
+
+/*모바일 버튼 레거시*/
 .mobile{
-    top: 66%;
-    left: 27%;
+    top: 10%;
+    left: 10%;
     width: 10vw;
     height: 9vh;
     font-size: 1.5vmin;

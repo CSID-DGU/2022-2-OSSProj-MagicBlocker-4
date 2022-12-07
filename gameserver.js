@@ -14,6 +14,9 @@
 
  const COOL_TIME = 20;
 
+const MAP_WIDTH = 1000;
+const MAP_HEIGHT = 1000;
+const MAP_PAD = 100;
 //
 //Bullet.js
 //투사체 클래스
@@ -83,6 +86,7 @@
     this.speed=PLAYER_SPEED;
     
     this.updatePosition = function () {
+        
         if (this.rightPress){
             this.x += this.speed;
             this.direction='right';
@@ -103,7 +107,18 @@
             this.direction='down';
             //console.log('down!!!')
         }
-            
+        if(this.x<0){
+            this.x+=this.speed;
+        }
+        if(this.x>MAP_WIDTH-MAP_PAD){
+            this.x-=this.speed;
+        }
+        if(this.y<0){
+            this.y+=this.speed;
+        }
+        if(this.y>MAP_HEIGHT-MAP_PAD){
+            this.y-=this.speed;
+        }
     };
 
 
@@ -746,6 +761,7 @@ const ThenPromise = require('promise');
              direction: player.direction,
              char: player.char,
              hp:player.hp,
+             isalive:player.isalive,
          });
          
          
