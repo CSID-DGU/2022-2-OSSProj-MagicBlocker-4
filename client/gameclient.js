@@ -337,7 +337,14 @@ function Render(client_data){
                 document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🔴"+player.username + '</div>'; //접속자 표시
             }
             
-            ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
+            ctx.fillText(player.username+" / "+player.hp, player.x-20, player.y-10); //닉네임 표시
+
+            // 플레이어의 체력을 플레이어 이름 위에 표시
+            ctx.strokeRect(player.x-20, player.y-50, 150, 18);
+            ctx.fillRect(player.x-20, player.y-50, player.hp*1.5, 18);
+            // ctx.clearRect(player.x-20, player.y-50, player.hp*1.5, 18 )
+            // ctx.moveTo(0, 0);
+
             draw_player(player);
         }
         for(let bullet of bullet_pack){    
@@ -572,6 +579,11 @@ function Ui(my_socket,client_data){
         document.body.appendChild(ui_mobile_toggle_prompt);
         document.body.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
+
+        // const hp_bar = document.createElement('progress'); //캐릭터 위 체력바 표시
+        // hp_bar.id = 'my_skill';
+        // hp_bar.value = '0';
+        // hp_bar.max = '100';
 
 
         //모바일 전환 버튼

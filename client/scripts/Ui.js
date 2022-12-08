@@ -168,6 +168,11 @@ function Ui(my_socket,client_data){
         document.body.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
 
+        // const hp_bar = document.createElement('progress'); //캐릭터 위 체력바 표시
+        // hp_bar.id = 'my_skill';
+        // hp_bar.value = '0';
+        // hp_bar.max = '100';
+
 
         //모바일 전환 버튼
         /*
