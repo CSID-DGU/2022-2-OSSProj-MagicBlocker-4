@@ -120,7 +120,7 @@ function Ui(my_socket,client_data){
 
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');
-        mobile_controller_div.id=JOYSTICK_ID;
+        // mobile_controller_div.id=JOYSTICK_ID;
         document.body.appendChild(mobile_controller_div);
         //
         

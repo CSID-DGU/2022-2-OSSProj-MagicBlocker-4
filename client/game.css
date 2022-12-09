@@ -315,8 +315,10 @@ input::placeholder {
     font-size: 2vmin;
     transition:0.3s;
 }
-/* 체력바 */
-/* #my_skill {
-    width: 100%;
-    height: 50px;
-} */
+
+#mobile_controller_div{ /*모바일용 조종키*/
+    top: 80%;
+    left: 10%;
+    width: 20vmin;
+    height: 20vmin;
+}

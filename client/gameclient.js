@@ -118,17 +118,23 @@ function SquareMobileController(my_socket){
   mobile_controller_div.appendChild(down_button);
 
   mobile_controller_div.appendChild(left_button);
-  mobile_controller_div.appendChild(right_button);
   mobile_controller_div.appendChild(stop_button);
+  mobile_controller_div.appendChild(right_button);
+
   mobile_controller_div.appendChild(attack_button);
 
-  up_button.style="width:100px;height:100px;position:fixed;top:60%;left:10%;border-radius: 10px;";
-  down_button.style="width:100px;height:100px;position:fixed;top:80%;left:10%;border-radius: 10px;";
-  left_button.style="width:100px;height:100px;position:fixed;top:70%;left:5%;border-radius: 10px;";
-  right_button.style="width:100px;height:100px;position:fixed;top:70%;left:15%;border-radius: 10px;";
+  up_button.style="width:3rem;height:3rem;position:absolute;top:65%;left:20%;border-radius: 10px;";
+  down_button.style="width:3rem;height:3rem;position:absolute;top:83%;left:20%;border-radius: 10px;";
+  left_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:4%;border-radius: 10px;";
+  right_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:36%;border-radius: 10px;";
 
-  stop_button.style="width:100px;height:100px;position:fixed;top:70%;left:10%";
-  attack_button.style="width:100px;height:100px;position:fixed;top:70%;left:80%";
+  // up_button.style="width:100px;height:100px;position:absolute;top:60%;left:10%;border-radius: 10px;";
+  // down_button.style="width:100px;height:100px;position:absolute;top:80%;left:10%;border-radius: 10px;";
+  // left_button.style="width:100px;height:100px;position:absolute;top:70%;left:5%;border-radius: 10px;";
+  // right_button.style="width:100px;height:100px;position:absolute;top:70%;left:15%;border-radius: 10px;";
+
+  stop_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:20%;border-radius: 10px;";
+  attack_button.style="width:3rem;height:3rem;position:fixed;top:74%;left:80%";
 
   up_button.onclick=()=>{
     my_socket.emit('keyPress',{inputId:'joy_up',state:true});
@@ -343,7 +349,6 @@ function Render(client_data){
             ctx.strokeRect(player.x-20, player.y-50, 150, 18);
             ctx.fillRect(player.x-20, player.y-50, player.hp*1.5, 18);
             // ctx.clearRect(player.x-20, player.y-50, player.hp*1.5, 18 )
-            // ctx.moveTo(0, 0);
 
             draw_player(player);
         }
@@ -532,7 +537,7 @@ function Ui(my_socket,client_data){
 
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');
-        mobile_controller_div.id=JOYSTICK_ID;
+        // mobile_controller_div.id=JOYSTICK_ID;
         document.body.appendChild(mobile_controller_div);
         //
         
