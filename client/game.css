@@ -83,7 +83,7 @@ body{
     z-index: 1000;
     top: 7%;
     left: 85%;
-    text-align:left;
+    text-align:center;
     font-family: 'Black Han Sans', sans-serif;
     font-size:3vmin;
     color: #c5c5c5;
@@ -153,14 +153,14 @@ body{
 }
 
 #play_button {
-    width: 9%;
-    height: 4vmax;
+    width: 10vmin;
+    height: 8vmin;
     top: 30%;
     left: 65%;
     transform:translateX(-50%);
     font-size: 3vmin;
     /* padding: 1vw 2vh; */
-    padding:26.5px;
+    padding:0;
     border: 2px solid #fffff0;
     background-color: transparent;
     color: #fffff0;
