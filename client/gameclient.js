@@ -128,11 +128,6 @@ function SquareMobileController(my_socket){
   left_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:4%;border-radius: 10px;";
   right_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:36%;border-radius: 10px;";
 
-  // up_button.style="width:100px;height:100px;position:absolute;top:60%;left:10%;border-radius: 10px;";
-  // down_button.style="width:100px;height:100px;position:absolute;top:80%;left:10%;border-radius: 10px;";
-  // left_button.style="width:100px;height:100px;position:absolute;top:70%;left:5%;border-radius: 10px;";
-  // right_button.style="width:100px;height:100px;position:absolute;top:70%;left:15%;border-radius: 10px;";
-
   stop_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:20%;border-radius: 10px;";
   attack_button.style="width:3rem;height:3rem;position:fixed;top:74%;left:80%";
 
@@ -516,7 +511,7 @@ function Ui(my_socket,client_data){
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
             temp_char_button.classList.add("char_button");
-            temp_char_button.innerText=client_data.charname_list[item];
+            // temp_char_button.innerText=client_data.charname_list[item];
 
             const char_button_image = new Image();
             char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';

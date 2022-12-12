@@ -83,7 +83,7 @@ body{
     z-index: 1000;
     top: 7%;
     left: 85%;
-    text-align: center;
+    text-align:left;
     font-family: 'Black Han Sans', sans-serif;
     font-size:3vmin;
     color: #c5c5c5;
@@ -153,14 +153,15 @@ body{
 }
 
 #play_button {
-    width: 8vmax;
+    width: 9%;
     height: 4vmax;
     top: 30%;
     left: 65%;
     transform:translateX(-50%);
-    font-size: 2vmin;
-    padding: 15px 30px;
-    border: 3px solid #fffff0;
+    font-size: 3vmin;
+    /* padding: 1vw 2vh; */
+    padding:26.5px;
+    border: 2px solid #fffff0;
     background-color: transparent;
     color: #fffff0;
     text-align:center;
@@ -206,11 +207,13 @@ body{
 
 .char_button{
     font-size: 1vmax;
+    width:10vmin;
+    height:10vmin;
 }
 
 .char_button_image{
-    width:5vmax;
-    height:5vmax;
+    width:5vmin;
+    height:5vmin;
 }
 
 #char_select_prompt{
