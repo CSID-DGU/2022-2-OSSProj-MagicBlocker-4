@@ -127,10 +127,6 @@
 
         if(this.isShoot&&this.cooldown===0){
             let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
-<<<<<<< HEAD
->>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
-=======
->>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
         }
@@ -150,9 +146,5 @@
         this.isalive=false;
         this.char='ghost';
     }
-<<<<<<< HEAD
->>>>>>> 9200ee8 ([22.12.05,전재호](fix) 체력 추가, 다른 직업의 bullet image가 보이는 오류 fix)
-=======
 
->>>>>>> ae06adc ([22.12.05,전재호])(feat) ghost관전기능 추가, hit함수 오류 fix)
 };

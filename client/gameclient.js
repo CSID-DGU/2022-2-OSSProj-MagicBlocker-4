@@ -118,17 +118,18 @@ function SquareMobileController(my_socket){
   mobile_controller_div.appendChild(down_button);
 
   mobile_controller_div.appendChild(left_button);
-  mobile_controller_div.appendChild(right_button);
   mobile_controller_div.appendChild(stop_button);
+  mobile_controller_div.appendChild(right_button);
+
   mobile_controller_div.appendChild(attack_button);
 
-  up_button.style="width:100px;height:100px;position:fixed;top:60%;left:10%;border-radius: 10px;";
-  down_button.style="width:100px;height:100px;position:fixed;top:80%;left:10%;border-radius: 10px;";
-  left_button.style="width:100px;height:100px;position:fixed;top:70%;left:5%;border-radius: 10px;";
-  right_button.style="width:100px;height:100px;position:fixed;top:70%;left:15%;border-radius: 10px;";
+  up_button.style="width:3rem;height:3rem;position:absolute;top:65%;left:20%;border-radius: 10px;";
+  down_button.style="width:3rem;height:3rem;position:absolute;top:83%;left:20%;border-radius: 10px;";
+  left_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:4%;border-radius: 10px;";
+  right_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:36%;border-radius: 10px;";
 
-  stop_button.style="width:100px;height:100px;position:fixed;top:70%;left:10%";
-  attack_button.style="width:100px;height:100px;position:fixed;top:70%;left:80%";
+  stop_button.style="width:3rem;height:3rem;position:absolute;top:74%;left:20%;border-radius: 10px;";
+  attack_button.style="width:3rem;height:3rem;position:fixed;top:74%;left:80%";
 
   up_button.onclick=()=>{
     my_socket.emit('keyPress',{inputId:'joy_up',state:true});
@@ -325,12 +326,9 @@ function Render(client_data){
     my_canvas.height=1000;
     this.draw_client_data=function(){
         auto_scaile();
-<<<<<<< HEAD
-        ctx.clearRect(0, 0, my_canvas.width, my_canvas.height);
-=======
         document.getElementById(PLAYER_LIST_ID).innerHTML = ''; //접속자 잔상 제거
 
->>>>>>> ff4ac33 ([22.12.05,전재호](feat) 접속자 표시 기능 추가)
+        ctx.clearRect(0, 0, my_canvas.width, my_canvas.height);
         const player_pack = client_data.get_player_pack();
         const bullet_pack = client_data.get_bullet_pack();
         for(let player of player_pack){
@@ -340,7 +338,13 @@ function Render(client_data){
                 document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🔴"+player.username + '</div>'; //접속자 표시
             }
             
-            ctx.fillText(player.username+"/"+player.hp,player.x,player.y-10); //닉네임 표시
+            ctx.fillText(player.username+" / "+player.hp, player.x-20, player.y-10); //닉네임 표시
+
+            // 플레이어의 체력을 플레이어 이름 위에 표시
+            ctx.strokeRect(player.x-20, player.y-50, 150, 18);
+            ctx.fillRect(player.x-20, player.y-50, player.hp*1.5, 18);
+            // ctx.clearRect(player.x-20, player.y-50, player.hp*1.5, 18 )
+
             draw_player(player);
         }
         for(let bullet of bullet_pack){    
@@ -507,7 +511,7 @@ function Ui(my_socket,client_data){
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
             temp_char_button.classList.add("char_button");
-            temp_char_button.innerText=client_data.charname_list[item];
+            // temp_char_button.innerText=client_data.charname_list[item];
 
             const char_button_image = new Image();
             char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';
@@ -528,7 +532,7 @@ function Ui(my_socket,client_data){
 
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');
-        mobile_controller_div.id=JOYSTICK_ID;
+        // mobile_controller_div.id=JOYSTICK_ID;
         document.body.appendChild(mobile_controller_div);
         //
         
@@ -575,6 +579,11 @@ function Ui(my_socket,client_data){
         document.body.appendChild(ui_mobile_toggle_prompt);
         document.body.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
+
+        // const hp_bar = document.createElement('progress'); //캐릭터 위 체력바 표시
+        // hp_bar.id = 'my_skill';
+        // hp_bar.value = '0';
+        // hp_bar.max = '100';
 
 
         //모바일 전환 버튼

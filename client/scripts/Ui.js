@@ -99,7 +99,7 @@ function Ui(my_socket,client_data){
             let temp_char_button = document.createElement('button');
             temp_char_button.id = item+'-id';
             temp_char_button.classList.add("char_button");
-            temp_char_button.innerText=client_data.charname_list[item];
+            // temp_char_button.innerText=client_data.charname_list[item];
 
             const char_button_image = new Image();
             char_button_image.src = 'client/sprites/sprite_select/'+item+'_select.png';
@@ -120,7 +120,7 @@ function Ui(my_socket,client_data){
 
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');
-        mobile_controller_div.id=JOYSTICK_ID;
+        // mobile_controller_div.id=JOYSTICK_ID;
         document.body.appendChild(mobile_controller_div);
         //
         
@@ -167,6 +167,11 @@ function Ui(my_socket,client_data){
         document.body.appendChild(ui_mobile_toggle_prompt);
         document.body.appendChild(ui_mobile_toggle_outline);
         ui_mobile_toggle_outline.appendChild(ui_mobile_toggle_button);
+
+        // const hp_bar = document.createElement('progress'); //캐릭터 위 체력바 표시
+        // hp_bar.id = 'my_skill';
+        // hp_bar.value = '0';
+        // hp_bar.max = '100';
 
 
         //모바일 전환 버튼

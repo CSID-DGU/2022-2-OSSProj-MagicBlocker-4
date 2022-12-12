@@ -110,7 +110,8 @@ const ThenPromise = require('promise');
                      }
                      
                  }
-                 if(player.hp<0){
+                 if(player.hp<=0){
+                    player.hp = 0
                     player.die();
                  }
              }
