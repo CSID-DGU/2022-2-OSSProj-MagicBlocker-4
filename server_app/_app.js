@@ -84,6 +84,9 @@ const ThenPromise = require('promise');
              char: player.char,
              hp:player.hp,
              isalive:player.isalive,
+             chat:player.chat,
+             cc:player.cc,
+             
          });
          
          

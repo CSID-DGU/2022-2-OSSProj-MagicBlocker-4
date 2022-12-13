@@ -35,6 +35,29 @@ function Render(client_data){
     
     //게임화면 캔버스 크기의 비율을 기기의 window로 보여줄수있는, 화면이 잘리지않는 가장 큰 정사각형으로 보여줌
     function auto_scaile(){
+        //실시간으로 윈도우의 크기를 측정해서, mobile과 desktop에 다른 ui css 클래스를 적용한다.
+        /*
+        if(document.getElementById("mobile_toggle_outline").classList.contains('active')){ //모바일버튼을 보이게할지 숨길지
+            document.getElementById("mobile_controller_id").style.visibility='visible';
+            }else{
+            document.getElementById("mobile_controller_id").style.visibility='hidden';
+        }   
+        */
+           //윈도우 크기를 조절하면, 모바일 조이스틱을 표시할지 검사한다.
+           if(window.innerWidth<700){
+            //console.log("mobile!");
+            //document.getElementById("mobile_toggle_outline").classList.add('active');
+            document.getElementById("ui_chat_form").style.top="60%";
+            document.getElementById("ui_chat_form").style.left="50%";
+            document.getElementById("ui_chat_input").style.width="80vmin";
+        }else{
+            //console.log("desktop!!");
+            //document.getElementById("mobile_toggle_outline").classList.remove('active');
+            document.getElementById("ui_chat_form").style.top="50%";
+            document.getElementById("ui_chat_form").style.left="15%";
+            document.getElementById("ui_chat_input").style.width="40vmin";
+        }
+
         let max_side;
         if(window.innerWidth>window.innerHeight){
             max_side=window.innerHeight;
@@ -44,18 +67,11 @@ function Render(client_data){
         my_canvas.style.width = max_side-PAD;
         my_canvas.style.height = max_side-PAD;
         ctx.font = '20px Arial';
-
-        //게임화면 크기를 조절하면, 이벤트가 발생해서, 이벤트가 발생했을 때만 다시 캔버스 크기를 조정한다(윈도우 크기로)
-        //브라우저 크기를 늘렸다 줄이면 캔버스크기가 맞게 변화한다.(Auto Scaling)
-        /*
-        window.addEventListener("resize",()=>{
-            my_canvas.width = window.innerWidth;
-            my_canvas.height = window.innerHeight;
-            ctx.font = '20px Arial';
-
-        });
-        */
     }
+
+ 
+
+        
 
     //클라이언트 데이터 객체에서 뽑아낸 좌표 데이터로 한 프레임을 화면에 그림. main함수에서 setInterval안에 넣어서 framarate와 함께 사용할 것.
     my_canvas.width=1000;
@@ -73,11 +89,14 @@ function Render(client_data){
             }else{
                 document.getElementById(PLAYER_LIST_ID).innerHTML += '<div>' + "🔴"+player.username + '</div>'; //접속자 표시
             }
-            
-            ctx.fillText(player.username+" / "+player.hp, player.x-20, player.y-10); //닉네임 표시
+            ctx.fillStyle = "#1f004d";
+            ctx.fillText(player.username+" "+player.cc, player.x-20, player.y-10); //닉네임 표시
+
+            ctx.fillText(">"+player.chat,player.x-10,player.y+120);
 
             // 플레이어의 체력을 플레이어 이름 위에 표시
             ctx.strokeRect(player.x-20, player.y-50, 150, 18);
+            ctx.fillStyle = "#00cc66";
             ctx.fillRect(player.x-20, player.y-50, player.hp*1.5, 18);
             // ctx.clearRect(player.x-20, player.y-50, player.hp*1.5, 18 )
 

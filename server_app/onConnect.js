@@ -67,8 +67,9 @@ function onConnect(socket, userData) {
        });
 
     socket.on('sendMsgToServer', function (data) {
-        let playerName = ("" + player.username);
-        toAllChat(playerName + ': ' + data);
+        //let playerName = ("" + player.username);
+        //toAllChat(playerName + ': ' + data);
+        player.chat = data;
     });
 
     socket.on('kms', function () {

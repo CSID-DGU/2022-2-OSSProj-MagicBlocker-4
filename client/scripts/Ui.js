@@ -121,6 +121,7 @@ function Ui(my_socket,client_data){
         //모바일 컨트롤러
         mobile_controller_div=document.createElement('div');
         // mobile_controller_div.id=JOYSTICK_ID;
+        mobile_controller_div.id="mobile_controller_id";
         document.body.appendChild(mobile_controller_div);
         //
         
@@ -141,6 +142,28 @@ function Ui(my_socket,client_data){
 
         ui_player_list_box.appendChild(player_list);
 
+        //채팅 입력폼
+        const ui_chat_form = document.createElement('form');
+        ui_chat_form.id = "ui_chat_form";
+
+        game_div.appendChild(ui_chat_form);
+
+        const ui_chat_input = document.createElement('input');
+        ui_chat_input.id= "ui_chat_input";
+        ui_chat_input.setAttribute('maxlength','15');
+        ui_chat_input.setAttribute('placeholder','채팅창');
+        ui_chat_input.setAttribute("type","text");
+
+        ui_chat_form.appendChild(ui_chat_input);
+
+        ui_chat_form.onsubmit = function(event){
+            event.preventDefault();
+            my_socket.emit('sendMsgToServer',ui_chat_input.value);
+            ui_chat_input.value='';
+
+            
+        }
+
         //모바일 토글 버튼
         const joystick = document.getElementById(JOYSTICK_ID)
         const ui_mobile_toggle_prompt = document.createElement('div');
@@ -151,6 +174,7 @@ function Ui(my_socket,client_data){
         const ui_mobile_toggle_button = document.createElement('div');
         
         ui_mobile_toggle_prompt.id = "mobile_toggle_prompt";
+        ui_mobile_toggle_outline.id = "mobile_toggle_outline";
         ui_mobile_toggle_outline.classList.add("mobile_toggle_outline");
         ui_mobile_toggle_button.classList.add("mobile_toggle_button");
         

@@ -13,10 +13,21 @@ function KeyboardController(mySocket){
     leftkey=KEYCODE_LEFT;
     rightkey=KEYCODE_RIGHT;
     attackkey=KEYCODE_ATTACK;
+    
+     //채팅기능을 사용하고있을때 키보드 입력 방지
+function inTextField(event) {
+  var elem = event.target || event.srcElement;
+  if (elem.nodeType == 3)
+      elem = elem.parentNode;
+
+  return (elem.tagName == "TEXTAREA" ||
+      (elem.tagName == "INPUT" && (elem.getAttribute("type") == "text")));
+}
+
+
 
     document.onkeyup=function(event){
-      //if (!inTextField(event)) //채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
-      if (event.keyCode === rightkey)
+        if (event.keyCode === rightkey)
         mySocket.emit('keyPress', { inputId: 'right', state: false});
       else if (event.keyCode === downkey)
         mySocket.emit('keyPress', { inputId: 'down', state: false});
@@ -26,9 +37,10 @@ function KeyboardController(mySocket){
           mySocket.emit('keyPress', { inputId: 'up', state: false});
       else if (event.keyCode === attackkey)
           mySocket.emit('keyPress', { inputId: 'shoot', state: false});
-      };
+    } 
+      
     document.onkeydown=function(event){
-      //if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
+      if (!inTextField(event)) {//채팅창에 포커싱이 되어있을때, 방향키 입력이 안먹게 하는 코드
         if (event.keyCode === rightkey)
         mySocket.emit('keyPress', { inputId: 'right', state: true});
         else if (event.keyCode === downkey) 
@@ -41,3 +53,4 @@ function KeyboardController(mySocket){
           mySocket.emit('keyPress', { inputId: 'shoot', state: true});
       }
   }
+}

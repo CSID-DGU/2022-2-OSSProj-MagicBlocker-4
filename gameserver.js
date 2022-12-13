@@ -1,23 +1,4 @@
 //
-// 서버에서 사용되는 상수
-//
- const SERVER_PORT = 8000;
- const REFRESH_RATE = 25;
- 
- const X_STARTING_POS = 30;
- const Y_STARTING_POS = 30;
- const PLAYER_SPEED = 10;
- const STARTING_DIR = 'down';
- const STARTING_CHAR = 'warrior';
- const MONGO_REPO = "Account";
- const BULLET_SPEED = 20;
-
- const COOL_TIME = 20;
-
-const MAP_WIDTH = 1000;
-const MAP_HEIGHT = 1000;
-const MAP_PAD = 100;
-//
 //Bullet.js
 //투사체 클래스
  function Bullet(playerId,posX,posY,direction,char) {
@@ -73,8 +54,11 @@ const MAP_PAD = 100;
     this.hp=100;
     this.isalive=true;
     isalive = this.isalive;
-
-
+    this.host_char = char;
+    this.slowRate=1;
+    slowRate = this.slowRate;
+    this.isSlowed=false;
+    this.slowTime=0;
     this.cooldown = 0;
 
     this.rightPress = false;
@@ -82,11 +66,38 @@ const MAP_PAD = 100;
     this.downPress=false;
     this.upPress=false;
     this.isShoot=false;
-    
+    this.cc="";
     this.speed=PLAYER_SPEED;
     
+    this.chat = "";//채팅기능
+    this.chat_duration = CHAT_DURATION; //채팅지속시간
+
     this.updatePosition = function () {
+        //onsole.log("slowTime:"+this.slowTime);
+        //console.log("slowRate:"+this.slowRate);
+        //console.log("speed:"+this.speed);
+
+        if(this.chat_duration>-100){
+            this.chat_duration-=1;
+        }
+
+        if(this.slowTime>0){
+            if(this.isSlowed==false){
+                this.speed=this.speed*this.slowRate;
+                this.isSlowed=true;
+                this.cc="느려짐!";
+            }
+        }else{
+            this.speed = PLAYER_SPEED;
+            this.cc="";
+            this.isSlowed=false;
+        }
         
+        if(this.chat!=="" && this.chat_duration<0){
+            this.chat="";
+            this.chat_duration=CHAT_DURATION;
+        }
+
         if (this.rightPress){
             this.x += this.speed;
             this.direction='right';
@@ -123,72 +134,60 @@ const MAP_PAD = 100;
 
 
     this.shootBullet = function (){
+        /*
         if(this.isShoot&&this.cooldown===0&&this.isalive===true){
             let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
         }
-
-        /*류강현 클래스 투사체 코드 
-        if(this.isShoot&&this.cooldown===0&&char=="ako"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="ashe"){
-            let bullet = new Ashe(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="buzzi"){
-            let bullet = new Buzzi(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="dad"){
-            let bullet = new Dad(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="ezreal"){
-            let bullet = new Ezreal(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="kitty"){
-            let bullet = new Kitty(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="monk"){
-            let bullet = new Monk(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="pepe"){
-            let bullet = new Pepe(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="santa"){
-            let bullet = new Santa(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="soldier"){
-            let bullet = new Soldier(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
-            let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
-
-        if(this.isShoot&&this.cooldown===0){
-            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-        }
         */
+
+
+        if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="ako"){
+            let bullet = new Ako(this.id,this.x,this.y,this.direction,char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="ashe"){
+            let bullet = new Ashe(this.id,this.x,this.y,this.direction,this.host_char,false);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="buzzi"){
+            let bullet = new Buzzi(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="dad"){
+            let bullet = new Dad(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="ezreal"){
+            let bullet = new Ezreal(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="kitty"){
+            let bullet = new Kitty(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="monk"){
+            let bullet = new Monk(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="pepe"){
+            let bullet = new Pepe(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="santa"){
+            let bullet = new Santa(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="soldier"){
+            let bullet = new Soldier(this.id,this.x,this.y,this.direction,this.host_char,false);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="zed"){
+            let bullet = new Zed(this.id,this.x,this.y,this.direction,this.host_char,false);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+    }
         
         
         
@@ -197,6 +196,9 @@ const MAP_PAD = 100;
     this.updateCooldown = function(){
         if(this.cooldown>0){
             this.cooldown-=1;
+        }
+        if(this.slowTime>0){
+            this.slowTime-=1;
         }
     }
 
@@ -207,25 +209,53 @@ const MAP_PAD = 100;
 
 };
 //
-//Ako.js
-//직업 클래스
+// 서버에서 사용되는 상수
+//
+ const SERVER_PORT = 8000;
+ const REFRESH_RATE = 25;
+ 
+ const X_STARTING_POS = 30;
+ const Y_STARTING_POS = 30;
+ const PLAYER_SPEED = 10;
+ const STARTING_DIR = 'down';
+ const STARTING_CHAR = 'warrior';
+ const MONGO_REPO = "Account";
+ const BULLET_SPEED = 20;
 
-function Ako(playerId,posX,posY,direction,char) {
+ const COOL_TIME = 20;
+
+const MAP_WIDTH = 1000;
+const MAP_HEIGHT = 1000;
+const MAP_PAD = 100;
+
+const CHAT_DURATION = 250;
+//
+//Ako.js
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Ako(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
     this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -239,27 +269,76 @@ function Ako(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){//관통형 중복데미지
+        player.hp -= damage;
+        isHit=true;
+
+    }
 }
 //
 //Ashe.js
-//직업 클래스
-
-function Ashe(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Ashe(playerId,posX,posY,direction,char,isScatter) {
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
     this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+    this.isScatter=isScatter;
+
+    this.scatter=function(){
+        if(direction=='up'){
+            let bullet1 = new Ashe(playerId,posX+30,posY,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Ashe(playerId,posX-30,posY,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }else if(direction=='down'){
+            let bullet1 = new Ashe(playerId,posX+30,posY,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Ashe(playerId,posX-30,posY,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }else if(direction=='left'){
+            let bullet1 = new Ashe(playerId,posX,posY+30,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Ashe(playerId,posX,posY-30,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }else if(direction=='right'){
+            let bullet1 = new Ashe(playerId,posX,posY+30,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Ashe(playerId,posX,posY-30,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }
+    }
+
+    if(this.isScatter===false){
+        this.scatter();
+    }
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -273,27 +352,45 @@ function Ashe(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            player.slowTime = 50;
+            player.slowRate = 0.5;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Buzzi.js
-//직업 클래스
-
-function Buzzi(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Buzzi(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
     this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -307,27 +404,45 @@ function Buzzi(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            player.slowTime = 50;
+            player.slowRate = 0.8;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Dad.js
-//직업 클래스
-
-function Dad(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Dad(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
     this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -341,27 +456,43 @@ function Dad(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Ezreal.js
-//직업 클래스
-
-function Ezreal(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Ezreal(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.speed=BULLET_SPEED*2;
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=20;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -375,27 +506,43 @@ function Ezreal(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Kitty.js
-//직업 클래스
-
-function Kitty(playerId,posX,posY,direction,char) {
+//총알 클래스
+//
+function Kitty(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.speed=BULLET_SPEED*0.6;
+    this.timer=20;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -409,27 +556,39 @@ function Kitty(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){ //관통형 중복데미지
+            player.hp -= damage;
+
+    }
 }
 //
 //Monk.js
-//직업 클래스
-
-function Monk(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Monk(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
     this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -443,27 +602,43 @@ function Monk(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Pepe.js
-//직업 클래스
-
-function Pepe(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Pepe(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.speed=BULLET_SPEED*2;
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -477,27 +652,43 @@ function Pepe(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Santa.js
-//직업 클래스
-
-function Santa(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Santa(playerId,posX,posY,direction,char){
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
     this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -511,27 +702,79 @@ function Santa(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Soldier.js
-//직업 클래스
-
-function Soldier(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Soldier(playerId,posX,posY,direction,char,isScatter) {
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
     this.speed=BULLET_SPEED;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=15;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+    this.isScatter=isScatter;
+
+    this.scatter=function(){
+        if(direction=='up'){
+            let bullet1 = new Soldier(playerId,posX,posY+40,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Soldier(playerId,posX,posY+80,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }else if(direction=='down'){
+            let bullet1 = new Soldier(playerId,posX,posY+40,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Soldier(playerId,posX,posY+80,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }else if(direction=='left'){
+            let bullet1 = new Soldier(playerId,posX+40,posY,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Soldier(playerId,posX+80,posY,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }else if(direction=='right'){
+            let bullet1 = new Soldier(playerId,posX+40,posY,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+            let bullet2 = new Soldier(playerId,posX+80,posY,direction,char,true);
+            bulletList[bullet2.id] = bullet2;
+            bullet2.cooldown=COOL_TIME;
+        }
+    }
+
+    if(this.isScatter===false){
+        this.scatter();
+    }
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 30) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -545,27 +788,67 @@ function Soldier(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+            this.toRemove = true;
+        }
+
+    }
 }
 //
 //Zed.js
-//직업 클래스
-
-function Zed(playerId,posX,posY,direction,char) {
+//총알 클래스
+//한번에 세개의 총알을 발사한다.
+function Zed(playerId,posX,posY,direction,char,isScatter) {
     this.type = 'bullet';
     this.id=Math.random();
     this.x=posX+25;//25는 플레이어 중앙에서 투사체가 나가는것을 방지(테스트필요)
     this.y=posY+25;
     this.playerId=playerId;//누가 발사한 투사체인지
-    this.speed=BULLET_SPEED+150;
-    this.timer=0;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
+    this.speed=BULLET_SPEED;
+    this.timer=100;//투사체 소멸시간. 사정거리방식 도입이후 교체 예정
     this.toRemove=false;//투사체 소멸트리거
     this.direction = direction;
     this.char=char;
-    
+
+    this.damage=30;
+    damage=this.damage;
+
+    this.isHit = false;
+    isHit = this.isHit;
+
+    this.isScatter=isScatter;
+
+    this.scatter=function(){
+        if(direction=='up'){
+            let bullet1 = new Zed(playerId,posX+30,posY+10,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+        }else if(direction=='down'){
+            let bullet1 = new Zed(playerId,posX+30,posY-10,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+        }else if(direction=='left'){
+            let bullet1 = new Zed(playerId,posX-10,posY+30,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+        }else if(direction=='right'){
+            let bullet1 = new Zed(playerId,posX+10,posY+30,direction,char,true);
+            bulletList[bullet1.id] = bullet1;
+            bullet1.cooldown=COOL_TIME;
+        }
+    }
+
+    if(this.isScatter===false){
+        this.scatter();
+    }
 
     this.update = function(){
         this.updatePosition();
-        if (this.timer++ > 1) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
+        if (this.timer-- < 0) //특정 시간이 지나면 this 소멸. server 과부하 막기위함. 사정거리로 바꿀것임.
         this.toRemove = true;
     };
 
@@ -579,6 +862,14 @@ function Zed(playerId,posX,posY,direction,char) {
     else if (this.direction === 'down')
         this.y += this.speed;
     };
+
+    this.hit = function(player){ //관통형, 비중복데미지
+        if(isHit==false){
+            player.hp -= damage;
+            isHit=true;
+        }
+
+    }
 }
 //
 //onConnect.js
@@ -649,8 +940,9 @@ function onConnect(socket, userData) {
        });
 
     socket.on('sendMsgToServer', function (data) {
-        let playerName = ("" + player.username);
-        toAllChat(playerName + ': ' + data);
+        //let playerName = ("" + player.username);
+        //toAllChat(playerName + ': ' + data);
+        player.chat = data;
     });
 
     socket.on('kms', function () {
@@ -762,6 +1054,9 @@ const ThenPromise = require('promise');
              char: player.char,
              hp:player.hp,
              isalive:player.isalive,
+             chat:player.chat,
+             cc:player.cc,
+             
          });
          
          

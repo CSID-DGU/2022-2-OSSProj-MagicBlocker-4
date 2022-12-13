@@ -325,3 +325,31 @@ input::placeholder {
     width: 20vmin;
     height: 20vmin;
 }
+
+/*채팅폼*/
+#ui_chat_form{
+    position: absolute;
+}
+
+#ui_chat_input{
+    width:40vmin;
+    height:4vmin;
+    border-radius: 10px;
+    transform:translateX(-50%);
+    padding: 28px;
+    color: #fffff0;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition:0.5s;
+    font-size: 3vmin;
+
+}
+
+#ui_chat_input::placeholder{
+    font-size: 2vmax;
+}
+
+#ui_chat_input:focus{
+    border-color: #fce181;
+    border-radius: 20px;
+    transition:0.5s; /*서서히 커짐*/
+}

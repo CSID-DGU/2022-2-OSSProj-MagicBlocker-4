@@ -15,8 +15,11 @@
     this.hp=100;
     this.isalive=true;
     isalive = this.isalive;
-
-
+    this.host_char = char;
+    this.slowRate=1;
+    slowRate = this.slowRate;
+    this.isSlowed=false;
+    this.slowTime=0;
     this.cooldown = 0;
 
     this.rightPress = false;
@@ -24,11 +27,38 @@
     this.downPress=false;
     this.upPress=false;
     this.isShoot=false;
-    
+    this.cc="";
     this.speed=PLAYER_SPEED;
     
+    this.chat = "";//채팅기능
+    this.chat_duration = CHAT_DURATION; //채팅지속시간
+
     this.updatePosition = function () {
+        //onsole.log("slowTime:"+this.slowTime);
+        //console.log("slowRate:"+this.slowRate);
+        //console.log("speed:"+this.speed);
+
+        if(this.chat_duration>-100){
+            this.chat_duration-=1;
+        }
+
+        if(this.slowTime>0){
+            if(this.isSlowed==false){
+                this.speed=this.speed*this.slowRate;
+                this.isSlowed=true;
+                this.cc="느려짐!";
+            }
+        }else{
+            this.speed = PLAYER_SPEED;
+            this.cc="";
+            this.isSlowed=false;
+        }
         
+        if(this.chat!=="" && this.chat_duration<0){
+            this.chat="";
+            this.chat_duration=CHAT_DURATION;
+        }
+
         if (this.rightPress){
             this.x += this.speed;
             this.direction='right';
@@ -65,72 +95,60 @@
 
 
     this.shootBullet = function (){
+        /*
         if(this.isShoot&&this.cooldown===0&&this.isalive===true){
             let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
             bulletList[bullet.id] = bullet;
             this.cooldown=COOL_TIME;
         }
-
-        /*류강현 클래스 투사체 코드 
-        if(this.isShoot&&this.cooldown===0&&char=="ako"){
-            let bullet = new Ako(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="ashe"){
-            let bullet = new Ashe(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="buzzi"){
-            let bullet = new Buzzi(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="dad"){
-            let bullet = new Dad(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="ezreal"){
-            let bullet = new Ezreal(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="kitty"){
-            let bullet = new Kitty(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="monk"){
-            let bullet = new Monk(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="pepe"){
-            let bullet = new Pepe(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="santa"){
-            let bullet = new Santa(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="soldier"){
-            let bullet = new Soldier(this.id,this.x,this.y,this.direction,host_char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-            console.log(bullet.char);
-        }else if(this.isShoot&&this.cooldown===0&&char=="zed"){
-            let bullet = new Zed(this.id,this.x,this.y,this.direction,host_char);
-
-        if(this.isShoot&&this.cooldown===0){
-            let bullet = new Bullet(this.id,this.x,this.y,this.direction,this.char);
-            bulletList[bullet.id] = bullet;
-            this.cooldown=COOL_TIME;
-        }
         */
+
+
+        if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="ako"){
+            let bullet = new Ako(this.id,this.x,this.y,this.direction,char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="ashe"){
+            let bullet = new Ashe(this.id,this.x,this.y,this.direction,this.host_char,false);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="buzzi"){
+            let bullet = new Buzzi(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="dad"){
+            let bullet = new Dad(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="ezreal"){
+            let bullet = new Ezreal(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="kitty"){
+            let bullet = new Kitty(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="monk"){
+            let bullet = new Monk(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="pepe"){
+            let bullet = new Pepe(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="santa"){
+            let bullet = new Santa(this.id,this.x,this.y,this.direction,this.host_char);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="soldier"){
+            let bullet = new Soldier(this.id,this.x,this.y,this.direction,this.host_char,false);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+        }else if(this.isShoot&&this.cooldown===0&&this.isalive===true&&char=="zed"){
+            let bullet = new Zed(this.id,this.x,this.y,this.direction,this.host_char,false);
+            bulletList[bullet.id] = bullet;
+            this.cooldown=COOL_TIME;
+    }
         
         
         
@@ -139,6 +157,9 @@
     this.updateCooldown = function(){
         if(this.cooldown>0){
             this.cooldown-=1;
+        }
+        if(this.slowTime>0){
+            this.slowTime-=1;
         }
     }
 
