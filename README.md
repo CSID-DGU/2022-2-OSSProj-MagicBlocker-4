@@ -77,10 +77,4 @@ https://github.com/jojoee/blocker
 
 https://github.com/bobboteck/JoyStick
 
-# 연락처
-
-- 전재호 -> email : sachim1379@gmail.com / TEL : 010-4821-1386 / Github : https://github.com/sprout88
-- 류강현 -> email : fbrkdgus1101@gmail.com / TEL : 010-3817-8803 / Github : https://github.com/kh9486
-- 백성욱 -> email : subaek0704@naver.com / TEL : 010-5195-6992 / Github : https://github.com/subaek0704
-
 -----
